@@ -15,7 +15,7 @@ public class Duplicata {
     private long id;
     @ManyToOne
     @JoinColumn(name = "documento_id")
-    private DocumentoFiscal documentoFiscal;
+    private DocumentoFiscal documento;
     private int numDup;
     private LocalDate dataVencimento;
     private TipoPagamento tipoPagamento;
@@ -33,7 +33,7 @@ public class Duplicata {
     private Usuario usuario;
 
     public long getId() {return id;}
-    public DocumentoFiscal getDocumentoFiscal() {return documentoFiscal;}
+    public DocumentoFiscal getDocumento() {return documento;}
     public int getNumDup() {return numDup;}
     public LocalDate getDataVencimento() {return dataVencimento;}
     public TipoPagamento getTipoPagamento() {return tipoPagamento;}

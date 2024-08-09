@@ -5,6 +5,7 @@ import com.santacarolina.financeiro.models.enums.FluxoCaixa;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "documentos")
@@ -30,6 +31,10 @@ public class DocumentoFiscal{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Usuario usuario;
+    @OneToMany(mappedBy = "documento")
+    private List<Duplicata> duplicataList;
+    @OneToMany(mappedBy = "documento")
+    private List<Produto> produtoList;
 
     public long getId() {return id;}
     public String getDocNumero() {return docNumero;}
@@ -40,5 +45,13 @@ public class DocumentoFiscal{
     public double getValor() {return valor;}
     public LocalDate getDataEmissao() {return dataEmissao;}
     public FluxoCaixa getFluxoCaixa() {return fluxoCaixa;}
-
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    public List<Duplicata> getDuplicataList() {
+        return duplicataList;
+    }
+    public List<Produto> getProdutoList() {
+        return produtoList;
+    }
 }

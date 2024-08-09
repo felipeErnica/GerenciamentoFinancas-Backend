@@ -1,10 +1,14 @@
 package com.santacarolina.financeiro.models;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.Transient;
 
+@Entity
+@Table(name = "produtos")
 public class Produto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @ManyToOne
     @JoinColumn(name = "documento_id")
