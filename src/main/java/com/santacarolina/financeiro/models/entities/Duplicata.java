@@ -1,4 +1,4 @@
-package com.santacarolina.financeiro.models;
+package com.santacarolina.financeiro.models.entities;
 
 import com.santacarolina.financeiro.models.enums.TipoPagamento;
 import jakarta.persistence.*;

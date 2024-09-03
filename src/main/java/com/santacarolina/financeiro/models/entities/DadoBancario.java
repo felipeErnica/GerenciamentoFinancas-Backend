@@ -1,6 +1,5 @@
-package com.santacarolina.financeiro.models;
+package com.santacarolina.financeiro.models.entities;
 
-import com.santacarolina.financeiro.models.enums.TipoPix;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,21 +14,29 @@ public class DadoBancario {
     @JoinColumn(name = "banco_id")
     private Banco banco;
     private String numeroConta;
-    private TipoPix tipoPix;
-    private String chavePix;
     @ManyToOne
     @JoinColumn(name = "contato_id")
     private Contato contato;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Usuario usuario;
+    @OneToOne(mappedBy = "dadoBancario", fetch = FetchType.LAZY)
+    private ChavePix chavePix;
 
     public long getId() {return id;}
     public String getAgencia() {return agencia;}
     public Banco getBanco() {return banco;}
     public String getNumeroConta() {return numeroConta;}
-    public TipoPix getTipoPix() {return tipoPix;}
-    public String getChavePix() {return chavePix;}
     public Contato getContato() {return contato;}
+    public ChavePix getChavePix() { return chavePix; }
 
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("DadoBancario{");
+        sb.append("id=").append(id);
+        sb.append(", agencia='").append(agencia).append('\'');
+        sb.append(", banco=").append(banco);
+        sb.append(", numeroConta='").append(numeroConta).append('\'');
+        sb.append(", contato=").append(contato);
+        sb.append('}');
+        return sb.toString();
+    }
 }

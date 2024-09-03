@@ -1,52 +1,58 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.models.Contato;
+import com.santacarolina.financeiro.models.dto.DadoDTO;
+import com.santacarolina.financeiro.models.dto.PixDTO;
+import com.santacarolina.financeiro.models.services.DadoService;
+import com.santacarolina.financeiro.models.entities.Contato;
+import com.santacarolina.financeiro.models.services.PixService;
 import com.santacarolina.financeiro.repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/contatos")
 public class ContatoController {
 
-    @Autowired
     private ContatoRepository repository;
+    private DadoService dadoService;
+    private PixService pixService;
+
+    @Autowired
+    public ContatoController(ContatoRepository repository, DadoService dadoService, PixService pixService) {
+        this.repository = repository;
+        this.dadoService = dadoService;
+        this.pixService = pixService;
+    }
 
     @GetMapping
-    public List<Contato> getAll(){
-        return repository.findAll();
+    public List<Contato> getAll(){ return repository.findAll(); }
+
+    @GetMapping("/doc")
+    public Contato getByDocNumber(@RequestParam("cpf") Optional<String> paramCpf,
+                                  @RequestParam("cnpj") Optional<String> paramCnpj,
+                                  @RequestParam("ie") Optional<String> paramIe) {
+        String cpf = paramCpf.orElse(null);
+        String cnpj = paramCnpj.orElse(null);
+        String ie = paramIe.orElse(null);
+        return repository.getByDocNumber(cpf,cnpj,ie).orElse(null);
     }
 
     @GetMapping("/{id}")
-    public Contato getContato(@PathVariable long id){
-        Optional<Contato> optional = repository.findById(id);
-        return optional.orElse(null);
-    }
-
-    @GetMapping("/contato")
-    public Contato getByCnpj(@RequestParam String cnpj){
-        Optional<Contato> optional = repository.findByCnpj(cnpj);
-        return optional.orElse(null);
-    }
-
-    @PostMapping("/postList")
-    public void addContato(@RequestBody List<Contato> contatos){
-        contatos.forEach(c->repository.save(c));
-    }
-
-    @PostMapping(value = "/post")
-    public void addContato(@RequestBody Contato contato){
-        repository.save(contato);
-    }
-
+    public Contato getContato(@PathVariable long id){ return repository.findById(id).orElse(null); }
+    @GetMapping("/info")
+    public Contato getByNome(@RequestParam String nome) { return repository.getByNome(nome).orElse(null); }
+    @GetMapping("/{id}/contas")
+    public List<DadoDTO> getDadosBancarios(@PathVariable long id) { return dadoService.getDadosBancarios(id); }
+    @GetMapping("/{id}/pix")
+    public List<PixDTO> getPix(@PathVariable long id) { return pixService.getPixByContato(id); }
+    @PostMapping("/batch")
+    public void addContato(@RequestBody List<Contato> contatos){ repository.saveAll(contatos); }
+    @PostMapping
+    public void addContato(@RequestBody Contato contato){ repository.save(contato); }
     @DeleteMapping("/{id}")
-    public void deleteContato(@PathVariable long id){
-        repository.deleteById(id);
-    }
+    public void deleteContato(@PathVariable long id){ repository.deleteById(id); }
 
 }

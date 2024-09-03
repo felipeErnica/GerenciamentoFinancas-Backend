@@ -2,11 +2,11 @@ package com.santacarolina.financeiro.models.enums;
 
 public enum TipoPix {
 
-    CPF(1),
-    CNPJ(2),
-    EMAIL(3),
-    TELEFONE(4),
-    CHAVE_ALEATORIA(5);
+    CPF(0),
+    CNPJ(1),
+    EMAIL(2),
+    TELEFONE(3),
+    CHAVE_ALEATORIA(4);
 
     private int tipoPix;
 

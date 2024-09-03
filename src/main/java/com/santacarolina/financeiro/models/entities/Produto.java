@@ -1,7 +1,6 @@
-package com.santacarolina.financeiro.models;
+package com.santacarolina.financeiro.models.entities;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "produtos")
@@ -13,20 +12,20 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "documento_id")
     private DocumentoFiscal documento;
-    private long classificacaoFiscal;
+    @ManyToOne
+    @JoinColumn(name = "classificacao_id")
+    private ClassificacaoContabil classificacao;
     private String descricao;
     private String und;
     private double quantidade;
     private double valorUnit;
-    @Transient
-    private double valorTotal;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Usuario usuario;
 
     public long getId() {return id;}
     public DocumentoFiscal getDocumento() {return documento;}
-    public long getClassificacaoFiscal() {return classificacaoFiscal;}
+    public ClassificacaoContabil getClassificacao() {return classificacao;}
     public String getDescricao() {return descricao;}
     public String getUnd() {return und;}
     public double getQuantidade() {return quantidade;}

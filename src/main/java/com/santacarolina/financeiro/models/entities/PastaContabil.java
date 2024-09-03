@@ -1,4 +1,4 @@
-package com.santacarolina.financeiro.models;
+package com.santacarolina.financeiro.models.entities;
 
 import jakarta.persistence.*;
 
