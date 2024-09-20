@@ -1,6 +1,6 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.models.entities.ClassificacaoContabil;
+import com.santacarolina.financeiro.models.ClassificacaoContabil;
 import com.santacarolina.financeiro.repository.ClassificacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

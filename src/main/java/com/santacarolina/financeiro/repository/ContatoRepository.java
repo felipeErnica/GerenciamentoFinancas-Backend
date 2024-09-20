@@ -1,8 +1,8 @@
 package com.santacarolina.financeiro.repository;
 
-import com.santacarolina.financeiro.models.entities.ChavePix;
-import com.santacarolina.financeiro.models.entities.Contato;
-import com.santacarolina.financeiro.models.entities.DadoBancario;
+import com.santacarolina.financeiro.models.ChavePix;
+import com.santacarolina.financeiro.models.Contato;
+import com.santacarolina.financeiro.models.DadoBancario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +25,8 @@ public interface ContatoRepository extends JpaRepository<Contato,Long> {
 
     @Query("SELECT c FROM Contato c WHERE c.nome ILIKE :nome")
     Optional<Contato> getByNome(String nome);
+
+    Optional <Contato> findByCpf(String cpf);
+    Optional<Contato> findByCnpj(String cnpj);
+    Optional<Contato> findByIe(String ie);
 }

@@ -1,6 +1,6 @@
 package com.santacarolina.financeiro.repository;
 
-import com.santacarolina.financeiro.models.entities.ClassificacaoContabil;
+import com.santacarolina.financeiro.models.ClassificacaoContabil;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

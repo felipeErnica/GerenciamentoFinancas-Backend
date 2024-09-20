@@ -1,12 +1,13 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.models.dto.DadoDTO;
-import com.santacarolina.financeiro.models.dto.PixDTO;
-import com.santacarolina.financeiro.models.services.DadoService;
-import com.santacarolina.financeiro.models.entities.Contato;
-import com.santacarolina.financeiro.models.services.PixService;
+import com.santacarolina.financeiro.dto.DadoDTO;
+import com.santacarolina.financeiro.dto.PixDTO;
+import com.santacarolina.financeiro.services.DadoService;
+import com.santacarolina.financeiro.models.Contato;
+import com.santacarolina.financeiro.services.PixService;
 import com.santacarolina.financeiro.repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,24 @@ public class ContatoController {
         String cnpj = paramCnpj.orElse(null);
         String ie = paramIe.orElse(null);
         return repository.getByDocNumber(cpf,cnpj,ie).orElse(null);
+    }
+
+    @GetMapping("/cpf={cpf}")
+    public ResponseEntity<Contato> findByCpf(@PathVariable String cpf) {
+        return repository.findByCpf(cpf).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/cnpj={cnpj}")
+    public ResponseEntity<Contato> findByCnpj(@PathVariable String cnpj) {
+        return repository.findByCnpj(cnpj).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/ie={ie}")
+    public ResponseEntity<Contato> findByIe(@PathVariable String ie) {
+        return repository.findByIe(ie).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
