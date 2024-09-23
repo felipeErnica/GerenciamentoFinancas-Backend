@@ -1,77 +1,113 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.dto.DadoDTO;
-import com.santacarolina.financeiro.dto.PixDTO;
-import com.santacarolina.financeiro.services.DadoService;
-import com.santacarolina.financeiro.models.Contato;
-import com.santacarolina.financeiro.services.PixService;
-import com.santacarolina.financeiro.repository.ContatoRepository;
+import com.santacarolina.financeiro.dao.ContatoDAO;
+import com.santacarolina.financeiro.dto.ContatoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/contatos")
 public class ContatoController {
 
-    private ContatoRepository repository;
-    private DadoService dadoService;
-    private PixService pixService;
-
     @Autowired
-    public ContatoController(ContatoRepository repository, DadoService dadoService, PixService pixService) {
-        this.repository = repository;
-        this.dadoService = dadoService;
-        this.pixService = pixService;
-    }
+    private ContatoDAO dao;
 
     @GetMapping
-    public List<Contato> getAll(){ return repository.findAll(); }
-
-    @GetMapping("/doc")
-    public Contato getByDocNumber(@RequestParam("cpf") Optional<String> paramCpf,
-                                  @RequestParam("cnpj") Optional<String> paramCnpj,
-                                  @RequestParam("ie") Optional<String> paramIe) {
-        String cpf = paramCpf.orElse(null);
-        String cnpj = paramCnpj.orElse(null);
-        String ie = paramIe.orElse(null);
-        return repository.getByDocNumber(cpf,cnpj,ie).orElse(null);
+    public ResponseEntity<List<ContatoDTO>> findAll(){
+        try {
+            return ResponseEntity.ok(dao.findAll());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/cpf={cpf}")
-    public ResponseEntity<Contato> findByCpf(@PathVariable String cpf) {
-        return repository.findByCpf(cpf).map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ContatoDTO> findByCpf(@PathVariable String cpf) {
+        try {
+            return dao.findByCpf(cpf)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/cnpj={cnpj}")
-    public ResponseEntity<Contato> findByCnpj(@PathVariable String cnpj) {
-        return repository.findByCnpj(cnpj).map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ContatoDTO> findByCnpj(@PathVariable String cnpj) {
+        try {
+            return dao.findByCnpj(cnpj)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/ie={ie}")
-    public ResponseEntity<Contato> findByIe(@PathVariable String ie) {
-        return repository.findByIe(ie).map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ContatoDTO> findByIe(@PathVariable String ie) {
+        try {
+            return dao.findByIe(ie)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public Contato getContato(@PathVariable long id){ return repository.findById(id).orElse(null); }
-    @GetMapping("/info")
-    public Contato getByNome(@RequestParam String nome) { return repository.getByNome(nome).orElse(null); }
-    @GetMapping("/{id}/contas")
-    public List<DadoDTO> getDadosBancarios(@PathVariable long id) { return dadoService.getDadosBancarios(id); }
-    @GetMapping("/{id}/pix")
-    public List<PixDTO> getPix(@PathVariable long id) { return pixService.getPixByContato(id); }
+    public ResponseEntity<ContatoDTO> getContato(@PathVariable long id){
+        try {
+            return dao.findById(id)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/nome={nome}")
+    public ResponseEntity<ContatoDTO> getByNome(@RequestParam String nome) {
+        try {
+            return dao.getByNome(nome)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping("/batch")
-    public void addContato(@RequestBody List<Contato> contatos){ repository.saveAll(contatos); }
+    public ResponseEntity addContato(@RequestBody List<ContatoDTO> contatos) {
+        try {
+            dao.saveAll(contatos);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping
-    public void addContato(@RequestBody Contato contato){ repository.save(contato); }
+    public ResponseEntity addContato(@RequestBody ContatoDTO contato) {
+        try {
+            dao.save(contato);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
-    public void deleteContato(@PathVariable long id){ repository.deleteById(id); }
+    public ResponseEntity deleteContato(@PathVariable long id) {
+        try {
+            dao.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
 }

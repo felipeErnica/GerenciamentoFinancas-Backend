@@ -7,6 +7,7 @@ import com.santacarolina.financeiro.util.CommonDAO;
 import com.santacarolina.financeiro.util.DataBaseConn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,9 +43,7 @@ public class DuplicataDAO implements DAO<DuplicataDTO> {
     private CommonDAO<DuplicataDTO> commonDAO;
 
     @Autowired
-    public DuplicataDAO(DataBaseConn conn) {
-        this.commonDAO = new CommonDAO<>(this, conn);
-    }
+    public DuplicataDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public List<DuplicataDTO> findAll() throws SQLException {
         String query = SELECT_QUERY + "\nORDER BY dup.data_vencimento DESC;";

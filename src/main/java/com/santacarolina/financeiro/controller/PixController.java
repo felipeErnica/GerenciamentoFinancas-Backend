@@ -1,5 +1,7 @@
 package com.santacarolina.financeiro.controller;
 
+import com.santacarolina.financeiro.dao.PixDAO;
+import com.santacarolina.financeiro.dto.DadoDTO;
 import com.santacarolina.financeiro.dto.PixDTO;
 import com.santacarolina.financeiro.models.ChavePix;
 import com.santacarolina.financeiro.services.PixService;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,27 +18,66 @@ import java.util.Optional;
 public class PixController {
 
     @Autowired
-    private PixService service;
+    private PixDAO dao;
 
     @GetMapping
-    public List<PixDTO> findAll() { return service.findAll(); }
+    public ResponseEntity<List<PixDTO>> findAll() {
+        try {
+            return ResponseEntity.ok(dao.findAll());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     @GetMapping("/{id}")
-    public Optional<PixDTO> findById(@PathVariable long id) { return service.findById(id); }
+    public ResponseEntity<PixDTO> findById(@PathVariable long id) {
+        try {
+            return dao.findById(id)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
-    @GetMapping("/")
-    public PixDTO findByChave (@RequestParam String chave) { return service.findByChavePix(chave).orElse(null); }
+    @GetMapping("/chave={chave}")
+    public ResponseEntity<PixDTO> findByChave (@PathVariable String chave) {
+        try {
+            return dao.findByChavePix(chave)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/contato={contatoId}")
+    public ResponseEntity<List<PixDTO>> getDadosBancarios(@PathVariable long contatoId) {
+        try {
+            return ResponseEntity.ok(dao.findByContato(contatoId));
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     @PostMapping
-    public ChavePix save (@RequestBody ChavePix chavePix) {
-        service.save(chavePix);
-        return chavePix;
+    public ResponseEntity save (@RequestBody PixDTO chavePix) {
+        try {
+            dao.save(chavePix);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ChavePix> deleteById (@PathVariable long id) {
-        System.out.println("Delete id: " + id);
-        return service.delete(id);
+    public ResponseEntity deleteById (@PathVariable long id) {
+        try {
+            dao.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 }

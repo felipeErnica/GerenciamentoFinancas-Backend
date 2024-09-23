@@ -6,6 +6,13 @@ public enum FluxoCaixa {
 
     private int fluxoCaixa;
     FluxoCaixa(int fluxoCaixa) { this.fluxoCaixa = fluxoCaixa; }
-    public int getFluxoCaixa() { return fluxoCaixa; }
+    public int getValue() { return fluxoCaixa; }
+
+    public static FluxoCaixa fromValue(int value) {
+        for (FluxoCaixa f : FluxoCaixa.values()) {
+            if (f.getValue() == value) return f;
+        }
+        throw  new ArrayIndexOutOfBoundsException();
+    }
 
 }

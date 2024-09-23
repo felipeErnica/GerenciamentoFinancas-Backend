@@ -7,6 +7,7 @@ import com.santacarolina.financeiro.util.CommonDAO;
 import com.santacarolina.financeiro.util.DataBaseConn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,15 @@ import java.util.List;
 @Component
 public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
 
-    private static final String UPDATE_QUERY = "UPDATE conciliacoes SET tipo_movimento = ?, duplicata_id = ?, extrato_id = ? WHERE id = ?";
-    private static final String INSERT_QUERY = "INSERT INTO conciliacoes(tipo_movimento, duplicata_id, extrato_id) VALUES (?,?,?)";
+    private static final String UPDATE_QUERY = """
+        UPDATE conciliacoes 
+        SET tipo_movimento = ?, duplicata_id = ?, extrato_id = ? 
+        WHERE id = ?
+        """;
+    private static final String INSERT_QUERY = """
+        INSERT INTO conciliacoes(tipo_movimento, duplicata_id, extrato_id) 
+        VALUES (?,?,?)
+        """;
 
     private DataBaseConn conn;
     private CommonDAO<ConciliacaoDTO> commonDAO;

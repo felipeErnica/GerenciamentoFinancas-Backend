@@ -3,9 +3,12 @@ package com.santacarolina.financeiro.dao;
 import com.santacarolina.financeiro.dto.DocumentoDTO;
 import com.santacarolina.financeiro.enums.FluxoCaixa;
 import com.santacarolina.financeiro.enums.TipoDocumento;
+import com.santacarolina.financeiro.interfaces.DAO;
+import com.santacarolina.financeiro.util.CommonDAO;
 import com.santacarolina.financeiro.util.DataBaseConn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class DocumentoDAO {
+public class DocumentoDAO implements DAO<DocumentoDTO> {
+
+    private static final String SELECT_QUERY = """
+            SELECT id, doc_tipo, doc_numero, emissor_id, pasta_id, data_emissao, valor, caminho_documento, fluxo_caixa
+            FROM documentos
+            """;
+    private static final String UPDATE_QUERY = """
+            """;
+
+    private CommonDAO<DocumentoDTO> commonDAO;
 
     @Autowired
-    private DataBaseConn conn;
-    private ResultSet rs;
-    private PreparedStatement ps;
+    public DocumentoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public List<DocumentoDTO> findAll() throws SQLException {
         String query = """

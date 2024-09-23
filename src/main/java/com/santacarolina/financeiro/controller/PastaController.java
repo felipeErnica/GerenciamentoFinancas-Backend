@@ -1,42 +1,70 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.models.PastaContabil;
-import com.santacarolina.financeiro.repository.PastaRepository;
+import com.santacarolina.financeiro.dao.PastaDAO;
+import com.santacarolina.financeiro.dto.PastaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pastaContabil")
 public class PastaController {
 
     @Autowired
-    private PastaRepository repository;
+    private PastaDAO dao;
 
     @GetMapping
-    public List<PastaContabil> getAll(){ return repository.findAll(); }
+    public ResponseEntity<List<PastaDTO>> findAll(){
+        try {
+            return ResponseEntity.ok(dao.findAll());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
-    @GetMapping("/")
-    public Optional<PastaContabil> findByNome(@RequestParam String nome) { return repository.findByNomeIgnoreCase(nome); }
+    @GetMapping("/nome={nome}")
+    public ResponseEntity<PastaDTO> findByNome(@PathVariable String nome) {
+        try {
+            return dao.findByNome(nome)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     @GetMapping("/{id}")
-    public PastaContabil get(@PathVariable long id){
-        Optional<PastaContabil> optional = repository.findById(id);
-        return optional.orElse(null);
+    public ResponseEntity<PastaDTO> findById(@PathVariable long id) {
+        try {
+            return dao.findById(id)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping
-    public void addPasta (@RequestBody PastaContabil pasta){ repository.save(pasta); }
+    public ResponseEntity save (@RequestBody PastaDTO pasta){
+        try {
+            dao.save(pasta);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PastaContabil> deletePasta (@PathVariable long id){
-        Optional<PastaContabil> p = repository.findById(id);
-        if (p.isPresent()) {
-            repository.delete(p.get());
+    public ResponseEntity deletePasta (@PathVariable long id){
+        try {
+            dao.deleteById(id);
             return ResponseEntity.ok().build();
-        } else return ResponseEntity.notFound().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
+
 }

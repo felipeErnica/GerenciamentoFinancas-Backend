@@ -10,11 +10,14 @@ public enum TipoPix {
 
     private int tipoPix;
 
-    TipoPix(int tipoPix) {
-        this.tipoPix = tipoPix;
+    TipoPix(int tipoPix) { this.tipoPix = tipoPix; }
+    public int getValue() { return tipoPix; }
+
+    public static TipoPix fromValue (int value) {
+        for (TipoPix t : TipoPix.values()) {
+            if (t.getValue() == value) return t;
+        }
+        throw new ArrayIndexOutOfBoundsException();
     }
 
-    public int getTipoPix() {
-        return tipoPix;
-    }
 }
