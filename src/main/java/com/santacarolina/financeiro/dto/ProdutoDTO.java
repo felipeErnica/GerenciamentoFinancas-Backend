@@ -18,7 +18,7 @@ public class ProdutoDTO implements DataDAO {
     private String nomePasta;
     private long emissorId;
     private String nomeContato;
-    private String classificacao;
+    private String nomeClassificacao;
 
     public ProdutoDTO(long id, long docId, long classificacaoId, String descricao, String und, double quantidade,
             double valorUnit, LocalDate dataEmissao, long pastaId, String nomePasta, long emissorId, String nomeContato,
@@ -35,7 +35,7 @@ public class ProdutoDTO implements DataDAO {
         this.nomePasta = nomePasta;
         this.emissorId = emissorId;
         this.nomeContato = nomeContato;
-        this.classificacao = classificacao;
+        this.nomeClassificacao = classificacao;
     }
 
     @Override
@@ -79,8 +79,8 @@ public class ProdutoDTO implements DataDAO {
         return nomeContato;
     }
 
-    public String getClassificacao() {
-        return classificacao;
+    public String getNomeClassificacao() {
+        return nomeClassificacao;
     }
 
     public long getPastaId() {
