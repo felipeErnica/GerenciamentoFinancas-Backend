@@ -1,7 +1,5 @@
 package com.santacarolina.financeiro.util;
 
-import com.zaxxer.hikari.HikariDataSource;
-import com.zaxxer.hikari.util.DriverDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +17,15 @@ public class DataBaseConn {
     private Logger logger = LogManager.getLogger();
 
     public ResultSet getResultSet(String query) throws SQLException {
-        System.out.println(query);;
+        logger.info("Query enviada:\n" + query);
         conn = dataSource.getConnection();
         return conn.prepareStatement(query).executeQuery();
     }
 
     public PreparedStatement getStatement(String query) throws SQLException {
-        System.out.println(query);
+        logger.info("Query enviada:\n" + query);
         conn = dataSource.getConnection();
-        return conn.prepareStatement(query);
+        return conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
     }
 
     public void closeConn() throws SQLException { conn.close(); }

@@ -1,10 +1,12 @@
 package com.santacarolina.financeiro.dao;
 
 import com.santacarolina.financeiro.dto.DadoDTO;
+import com.santacarolina.financeiro.enums.TipoPix;
 import com.santacarolina.financeiro.interfaces.DAO;
 import com.santacarolina.financeiro.util.CommonDAO;
 import com.santacarolina.financeiro.util.DataBaseConn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,19 +14,26 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class DadoDAO implements DAO<DadoDTO> {
 
     private static final String SELECT_QUERY = """
-            SELECT id, agencia, banco_id, numero_conta, contato_id, pix_id
-            FROM dados_bancarios
+            SELECT d.id, d.agencia, d.banco_id, d.numero_conta, d.contato_id, 
+                p.id as pix_id, p.chave as chave, p.tipo_pix as tipo_pix,
+                c.nome as nome_contato,
+                b.nome_banco
+            FROM dados_bancarios d
+                LEFT JOIN chaves_pix p ON p.conta_id = d.id
+                LEFT JOIN contatos c ON c.id = d.contato_id
+                LEFT JOIN bancos b ON b.id = d.banco_id
             """;
     private static final String UPDATE_QUERY = """
             UPDATE dados_bancarios
-            SET agencia = ?, banco_id = ?, numero_conta = ?, contato_id = ?, pix_id = ?
+            SET agencia = ?, banco_id = ?, numero_conta = ?, contato_id = ?
             WHERE id = ?
             """;
     private static final String INSERT_QUERY = """
-            INSERT INTO (agencia, banco_id, numero_conta, contato_id, pix_id)
+            INSERT INTO (agencia, banco_id, numero_conta, contato_id)
             VALUES (?,?,?,?,?)
             """;
     private static final String DELETE_QUERY = "DELETE FROM dados_bancarios WHERE id = ?";
@@ -32,32 +41,27 @@ public class DadoDAO implements DAO<DadoDTO> {
     private CommonDAO<DadoDTO> commonDAO;
 
     @Autowired
-    public DadoDAO(DataBaseConn conn) {
-        this.commonDAO = new CommonDAO<>(this, conn);
-    }
-
-    public List<DadoDTO> findAll() throws SQLException {
-        return commonDAO.findList(SELECT_QUERY);
-    }
+    public DadoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public Optional<DadoDTO> findById(long id) throws SQLException {
-        String query = SELECT_QUERY + "WHERE id = " + id;
+        String query = SELECT_QUERY + "WHERE d.id = " + id;
         return commonDAO.findOne(query);
     }
 
     public List<DadoDTO> getPixByContato(long contatoId) throws SQLException {
-        String query = SELECT_QUERY + "WHERE contato_id = " + contatoId;
+        String query = SELECT_QUERY + "WHERE d.contato_id = " + contatoId;
         return commonDAO.findList(query);
     }
 
     public Optional<DadoDTO> getEqual(String agencia, String numeroConta, long bancoId) throws SQLException {
-        String query = SELECT_QUERY + "WHERE agencia = " + agencia +
-                " numero_conta = " + numeroConta +
-                " banco_id = " + bancoId;
+        String query = SELECT_QUERY + "WHERE d.agencia = '" + agencia + "' AND " +
+                " d.numero_conta = '" + numeroConta + "' AND " +
+                " d.banco_id = " + bancoId;
         return commonDAO.findOne(query);
     }
 
-    public void save(DadoDTO d) throws SQLException { commonDAO.save(d, UPDATE_QUERY, INSERT_QUERY); }
+    public List<DadoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public DadoDTO save(DadoDTO d) throws SQLException { return commonDAO.save(d, UPDATE_QUERY, INSERT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
 
     @Override
@@ -68,7 +72,11 @@ public class DadoDAO implements DAO<DadoDTO> {
                 rs.getLong("banco_id"),
                 rs.getString("numero_conta"),
                 rs.getLong("contato_id"),
-                rs.getLong("pix_id")
+                rs.getLong("pix_id"),
+                rs.getString("chave"),
+                TipoPix.fromValue(rs.getInt("tipo_pix")),
+                rs.getString("nome_contato"),
+                rs.getString("nome_banco")
         );
     }
 
@@ -78,10 +86,9 @@ public class DadoDAO implements DAO<DadoDTO> {
         ps.setLong(2, d.getBancoId());
         ps.setString(3, d.getNumeroConta());
         ps.setLong(4, d.getContatoId());
-        ps.setLong(5, d.getPixId());
     }
 
     @Override
-    public int getIdParameterIndex() { return 6; }
+    public int getIdParameterIndex() { return 5; }
 
 }

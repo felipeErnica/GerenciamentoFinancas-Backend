@@ -1,8 +1,7 @@
 package com.santacarolina.financeiro.dto;
 
-import com.santacarolina.financeiro.interfaces.DataDAO;
-import com.santacarolina.financeiro.models.Contato;
 import com.santacarolina.financeiro.enums.TipoPix;
+import com.santacarolina.financeiro.interfaces.DataDAO;
 
 public class PixDTO implements DataDAO {
 
@@ -36,5 +35,8 @@ public class PixDTO implements DataDAO {
     public String getNomeBanco() { return nomeBanco; }
     public String getAgencia() { return agencia; }
     public String getNumeroConta() { return numeroConta; }
+
+    @Override
+    public void setId(long id) { this.id = id; }
 
 }

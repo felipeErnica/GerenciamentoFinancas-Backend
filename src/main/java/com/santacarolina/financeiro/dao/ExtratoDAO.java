@@ -18,8 +18,8 @@ public class ExtratoDAO implements DAO<ExtratoDTO> {
 
     private final static String INSERT_QUERY = """
              INSERT INTO public.extratos(
-                    id, data_transacao, conta_id, categoria_extrato, descricao, valor, user_id, is_conciliado)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                    data_transacao, conta_id, categoria_extrato, descricao, valor, is_conciliado)
+                    VALUES (?, ?, ?, ?, ?, ?);
             """;
     private final static String UPDATE_QUERY = """
                 UPDATE extratos
@@ -34,25 +34,22 @@ public class ExtratoDAO implements DAO<ExtratoDTO> {
                 LEFT JOIN contas_bancarias c ON c.id = e.conta_id
                 LEFT JOIN bancos b ON b.id = c.banco_id 
             """;
+    private static final String DELETE_QUERY = "DELETE FROM extratos WHERE id = ?;";
 
-    private DataBaseConn conn;
     private CommonDAO<ExtratoDTO> runDAO;
 
     @Autowired
-    public ExtratoDAO(DataBaseConn conn) {
-        this.conn = conn;
-        this.runDAO = new CommonDAO<>(this, conn);
-    }
+    public ExtratoDAO(DataBaseConn conn) { this.runDAO = new CommonDAO<>(this, conn); }
 
     public List<ExtratoDTO> findByContaId(long contaId) throws SQLException {
-        String query = SELECT_QUERY  + "\nWHERE conta_id = " + contaId  +
-                "\nORDER BY data_transacao DESC";
+        String query = SELECT_QUERY  + "WHERE conta_id = " + contaId  +
+                " ORDER BY data_transacao DESC";
         return runDAO.findList(query);
     }
 
     public List<ExtratoDTO> findByConciliacao(boolean isConciliado) throws SQLException {
-        String query = SELECT_QUERY  + "\nWHERE is_conciliado = " + isConciliado +
-            "\nORDER BY e.data_transacao DESC;";
+        String query = SELECT_QUERY  + "WHERE is_conciliado = " + isConciliado +
+            " ORDER BY e.data_transacao DESC;";
         return runDAO.findList(query);
     }
 
@@ -70,7 +67,7 @@ public class ExtratoDAO implements DAO<ExtratoDTO> {
         ExtratoDTO dto = new ExtratoDTO(
                 rs.getLong("id"),
                 rs.getLong("conta_id"),
-                rs.getString("data_transacao"),
+                rs.getDate("data_transacao").toLocalDate(),
                 conta,
                 rs.getString("categoria_extrato"),
                 rs.getString("descricao"),

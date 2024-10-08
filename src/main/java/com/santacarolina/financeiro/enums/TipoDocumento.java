@@ -19,12 +19,14 @@ public enum TipoDocumento {
 
     private int tipoDocumento;
 
-    TipoDocumento(int tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
+    TipoDocumento(int tipoDocumento) { this.tipoDocumento = tipoDocumento; }
+    public int getValue() { return tipoDocumento; }
 
-    public int getTipoDocumento() {
-        return tipoDocumento;
+    public static TipoDocumento fromValues(int value) {
+        for (TipoDocumento d : TipoDocumento.values()) {
+            if (d.getValue() == value) return d;
+        }
+        throw new ArrayIndexOutOfBoundsException();
     }
 
 }

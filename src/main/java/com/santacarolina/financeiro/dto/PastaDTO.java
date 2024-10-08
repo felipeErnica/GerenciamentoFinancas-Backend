@@ -22,4 +22,7 @@ public class PastaDTO implements DataDAO {
     public String getCaminhoPasta() { return caminhoPasta; }
     public long getContaId() { return contaId; }
 
+    @Override
+    public void setId(long id) { this.id = id; }
+
 }

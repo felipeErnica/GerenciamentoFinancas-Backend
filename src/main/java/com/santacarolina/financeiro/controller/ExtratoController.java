@@ -2,7 +2,6 @@ package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.ExtratoDAO;
 import com.santacarolina.financeiro.dto.ExtratoDTO;
-import com.santacarolina.financeiro.models.Extrato;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ public class ExtratoController {
 
     @Autowired
     private ExtratoDAO dao;
-    private final Logger logger = LogManager.getLogger();
 
     @GetMapping("/contaId={contaId}")
     public ResponseEntity<List<ExtratoDTO>> findByConta(@PathVariable long contaId) {

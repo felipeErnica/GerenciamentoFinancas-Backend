@@ -37,8 +37,6 @@ public class ContaDAO implements DAO<ContaDTO> {
     @Autowired
     public ContaDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this,conn); }
 
-    public List<ContaDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
-
     public Optional<ContaDTO> findEqual(String agencia, String numeroConta, long bancoId) throws SQLException {
         String query = SELECT_QUERY + """
                 WHERE agencia = %s AND numero_conta = %s + banco_id = %s;
@@ -51,9 +49,9 @@ public class ContaDAO implements DAO<ContaDTO> {
         return commonDAO.findOne(query);
     }
 
+    public List<ContaDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
     public void save(ContaDTO c) throws SQLException { commonDAO.save(c, UPDATE_QUERY, INSERT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
-
 
     @Override
     public ContaDTO getDTO(ResultSet rs) throws SQLException {

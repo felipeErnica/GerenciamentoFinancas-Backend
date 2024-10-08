@@ -18,7 +18,7 @@ import java.util.Optional;
 public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
 
     private static final String SELECT_QUERY = """
-            SELECT id, numero_identificacao, nome_classificacao
+            SELECT id, numero_identificacao, nome_classificacao, fluxo_caixa
             FROM classificacoes_contabeis
             """;
     private static final String UPDATE_QUERY = """
@@ -41,6 +41,11 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
 
     public Optional<ClassificacaoDTO> getByNumero(long numeroIdentificacao) throws SQLException {
         String query = SELECT_QUERY + "WHERE numero_identificacao = " + numeroIdentificacao;
+        return commonDAO.findOne(query);
+    }
+
+    public Optional<ClassificacaoDTO> findById(long id) throws SQLException {
+        String query = SELECT_QUERY + "WHERE id = " + id;
         return commonDAO.findOne(query);
     }
 

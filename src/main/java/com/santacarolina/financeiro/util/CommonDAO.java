@@ -1,5 +1,6 @@
 package com.santacarolina.financeiro.util;
 
+import com.santacarolina.financeiro.dto.ContatoDTO;
 import com.santacarolina.financeiro.interfaces.DAO;
 import com.santacarolina.financeiro.interfaces.DataDAO;
 import org.apache.logging.log4j.LogManager;
@@ -29,8 +30,9 @@ public class CommonDAO<T extends DataDAO> {
     public Optional<T> findOne(String query) throws SQLException {
         try {
             rs = conn.getResultSet(query);
-            rs.next();
-            Optional<T> optionalT = Optional.ofNullable(dao.getDTO(rs));
+            Optional<T> optionalT;
+            if (rs.next()) optionalT = Optional.ofNullable(dao.getDTO(rs));
+            else optionalT = Optional.empty();
             rs.close();
             conn.closeConn();
             return optionalT;
@@ -57,7 +59,7 @@ public class CommonDAO<T extends DataDAO> {
         }
     }
 
-    public void save(T t, String updateQuery, String insertQuery) throws SQLException {
+    public T save(T t, String updateQuery, String insertQuery) throws SQLException {
         try {
             if (t.getId() != 0) {
                 ps = conn.getStatement(updateQuery);
@@ -68,8 +70,12 @@ public class CommonDAO<T extends DataDAO> {
                 dao.prepareValuesDTO(ps, t);
             }
             ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) t.setId(rs.getLong("id"));
             ps.close();
             conn.closeConn();
+            logger.info("Registro salvo: " + t);
+            return t;
         } catch (SQLException e) {
             throwError(e);
             throw new SQLException(e);

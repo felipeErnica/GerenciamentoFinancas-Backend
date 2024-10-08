@@ -5,6 +5,7 @@ import com.santacarolina.financeiro.enums.TipoPix;
 import com.santacarolina.financeiro.interfaces.DAO;
 import com.santacarolina.financeiro.util.CommonDAO;
 import com.santacarolina.financeiro.util.DataBaseConn;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,21 +13,24 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class PixDAO implements DAO<PixDTO> {
 
     private static final String SELECT_QUERY = """
-            SELECT c.id, c.contato_id, c.dado_id, c.tipo_pix, c.chave, b.nome_banco, d.agencia, d.numero_conta
+            SELECT c.id, c.contato_id, c.conta_id, c.tipo_pix, c.chave, 
+                d.agencia, d.numero_conta,
+                b.nome_banco 
             FROM chaves_pix c
-                LEFT JOIN dados_bancarios d ON d.id = c.dado_id
+                LEFT JOIN dados_bancarios d ON d.id = c.conta_id
                 LEFT JOIN bancos b ON b.id = d.banco_id
             """;
     private static final String UPDATE_QUERY = """
             UPDATE chaves_pix 
-            SET contato_id = ?, dado_id = ?, tipo_pix = ?, chave = ?
+            SET contato_id = ?, conta_id = ?, tipo_pix = ?, chave = ?
             WHERE id  = ?;
             """;
     private static final String INSERT_QUERY = """
-            INSERT INTO chaves_pix (contato_id, dado_id, tipo_pix, chave)
+            INSERT INTO chaves_pix (contato_id, conta_id, tipo_pix, chave)
                 VALUES (?, ?, ?, ?)
             """;
     private static final String DELETE_QUERY = "DELETE FROM chaves_pix WHERE id = ?;";
@@ -36,17 +40,17 @@ public class PixDAO implements DAO<PixDTO> {
     public PixDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public Optional<PixDTO> findById(long id) throws SQLException {
-        String query = SELECT_QUERY  + "WHERE id = " + id;
+        String query = SELECT_QUERY  + "WHERE c.id = " + id;
         return commonDAO.findOne(query);
     }
 
     public Optional<PixDTO> findByChavePix(String chave) throws SQLException {
-        String query = SELECT_QUERY + "WHERE chave = " + chave;
+        String query = SELECT_QUERY + "WHERE c.chave = '" + chave + "'";
         return commonDAO.findOne(query);
     }
 
     public List<PixDTO> findByContato(long contatoId) throws SQLException {
-        String query = SELECT_QUERY + "WHERE contato_id = " + contatoId;
+        String query = SELECT_QUERY + "WHERE c.contato_id = " + contatoId;
         return commonDAO.findList(query);
     }
 
@@ -59,7 +63,7 @@ public class PixDAO implements DAO<PixDTO> {
         return new PixDTO(
                 rs.getLong("id"),
                 rs.getLong("contato_id"),
-                rs.getLong("dado_id"),
+                rs.getLong("conta_id"),
                 TipoPix.fromValue(rs.getInt("tipo_pix")),
                 rs.getString("chave"),
                 rs.getString("nome_banco"),

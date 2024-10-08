@@ -23,6 +23,8 @@ public class ConciliacaoDTO implements DataDAO {
     public Long getDuplicataId() { return duplicataId; }
     public long getExtratoId() { return extratoId; }
 
+    @Override
+    public void setId(long id) { this.id = id; }
 
     @Override
     public String toString() {

@@ -2,9 +2,6 @@ package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.DuplicataDAO;
 import com.santacarolina.financeiro.dto.DuplicataDTO;
-import com.santacarolina.financeiro.models.Duplicata;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +17,7 @@ public class DuplicataController {
     private DuplicataDAO dao;
 
     @GetMapping
-    public ResponseEntity<List<DuplicataDTO>> findAllHomePage() {
+    public ResponseEntity<List<DuplicataDTO>> findAll() {
         try {
             return ResponseEntity.ok(dao.findAll());
         } catch (SQLException e) {
@@ -28,10 +25,39 @@ public class DuplicataController {
         }
     }
 
-    @GetMapping("/isPayed={isPayed}")
-    public ResponseEntity<List<DuplicataDTO>> findByConciliacao(@PathVariable boolean isPayed) {
+    @GetMapping("/{id}")
+    public ResponseEntity<DuplicataDTO> findById(@PathVariable long id) {
         try {
-            return ResponseEntity.ok(dao.findByConciliacao(isPayed));
+            return dao.findById(id)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/pagas")
+    public ResponseEntity<List<DuplicataDTO>> findPagas() {
+        try {
+            return ResponseEntity.ok(dao.findPagas());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/naoPagas")
+    public ResponseEntity<List<DuplicataDTO>> findNaoPagas() {
+        try {
+            return ResponseEntity.ok(dao.findNaoPagas());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/documento={documentoId}")
+    public ResponseEntity<List<DuplicataDTO>> findByDoc (@PathVariable long documentoId) {
+        try {
+            return ResponseEntity.ok(dao.findByDoc(documentoId));
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }

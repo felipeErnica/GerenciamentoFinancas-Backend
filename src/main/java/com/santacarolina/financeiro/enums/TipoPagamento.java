@@ -12,12 +12,7 @@ public enum TipoPagamento {
 
     private int tipoPagamento;
 
-    TipoPagamento(int tipoPagamento) {
-        this.tipoPagamento = tipoPagamento;
-    }
-
-    public int getTipoPagamento() {
-        return tipoPagamento;
-    }
+    TipoPagamento(int tipoPagamento) { this.tipoPagamento = tipoPagamento; }
+    public int getTipoPagamento() { return tipoPagamento; }
 
 }

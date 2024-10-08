@@ -25,4 +25,7 @@ public class ContatoDTO implements DataDAO {
     public String getCnpj() { return cnpj; }
     public String getIe() { return ie; }
 
+    @Override
+    public void setId(long id) { this.id = id; }
+
 }

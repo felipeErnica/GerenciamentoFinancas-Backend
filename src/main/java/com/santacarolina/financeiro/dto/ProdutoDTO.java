@@ -1,21 +1,52 @@
 package com.santacarolina.financeiro.dto;
 
-import com.santacarolina.financeiro.models.ClassificacaoContabil;
-import com.santacarolina.financeiro.models.DocumentoFiscal;
-import jakarta.persistence.*;
+import com.santacarolina.financeiro.interfaces.DataDAO;
 
 import java.time.LocalDate;
 
-public record ProdutoDTO(
-        long id,
-        long docId,
-        long classificacaoId,
-        String descricao,
-        String und,
-        double quantidade,
-        double valorUnit,
-        LocalDate dataEmissao,
-        String nomePasta,
-        String nomeContato,
-        String classificacao){
+public class ProdutoDTO implements DataDAO {
+
+    private long id;
+    private long docId;
+    private long classificacaoId;
+    private String descricao;
+    private String und;
+    private double quantidade;
+    private double valorUnit;
+    private LocalDate dataEmissao;
+    private String nomePasta;
+    private String nomeContato;
+    private String classificacao;
+
+    public ProdutoDTO(long id, long docId, long classificacaoId, String descricao, String und, double quantidade,
+                      double valorUnit, LocalDate dataEmissao, String nomePasta, String nomeContato, String classificacao) {
+        this.id = id;
+        this.docId = docId;
+        this.classificacaoId = classificacaoId;
+        this.descricao = descricao;
+        this.und = und;
+        this.quantidade = quantidade;
+        this.valorUnit = valorUnit;
+        this.dataEmissao = dataEmissao;
+        this.nomePasta = nomePasta;
+        this.nomeContato = nomeContato;
+        this.classificacao = classificacao;
+    }
+
+    @Override
+    public long getId() { return id; }
+    public long getDocId() { return docId; }
+    public long getClassificacaoId() { return classificacaoId; }
+    public String getDescricao() { return descricao; }
+    public String getUnd() { return und; }
+    public double getQuantidade() { return quantidade; }
+    public double getValorUnit() { return valorUnit; }
+    public LocalDate getDataEmissao() { return dataEmissao; }
+    public String getNomePasta() { return nomePasta; }
+    public String getNomeContato() { return nomeContato; }
+    public String getClassificacao() { return classificacao; }
+
+    @Override
+    public void setId(long id) { this.id = id; }
+    public void setDocId(long docId) { this.docId = docId; }
 }

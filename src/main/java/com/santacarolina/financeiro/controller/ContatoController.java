@@ -81,7 +81,7 @@ public class ContatoController {
     }
 
     @PostMapping("/batch")
-    public ResponseEntity addContato(@RequestBody List<ContatoDTO> contatos) {
+    public ResponseEntity addContatos(@RequestBody List<ContatoDTO> contatos) {
         try {
             dao.saveAll(contatos);
             return ResponseEntity.ok().build();
@@ -91,10 +91,9 @@ public class ContatoController {
     }
 
     @PostMapping
-    public ResponseEntity addContato(@RequestBody ContatoDTO contato) {
+    public ResponseEntity<ContatoDTO> addContato(@RequestBody ContatoDTO contato) {
         try {
-            dao.save(contato);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(dao.save(contato));
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }

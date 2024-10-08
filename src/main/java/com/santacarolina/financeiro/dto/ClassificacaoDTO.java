@@ -24,4 +24,7 @@ public class ClassificacaoDTO implements DataDAO {
     public long getNumeroIdentificacao() { return numeroIdentificacao; }
     public String getNomeClassificacao() { return nomeClassificacao; }
 
+    @Override
+    public void setId(long id) { this.id = id; }
+
 }

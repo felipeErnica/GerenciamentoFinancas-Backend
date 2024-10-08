@@ -2,17 +2,13 @@ package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.BancoDAO;
 import com.santacarolina.financeiro.dto.BancoDTO;
-import com.santacarolina.financeiro.models.Banco;
-import com.santacarolina.financeiro.repository.BancoRepository;
-import org.apache.coyote.Response;
-import org.hibernate.annotations.processing.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/bancos")
@@ -41,8 +37,8 @@ public class BancoController {
         }
     }
 
-    @GetMapping("/")
-    public ResponseEntity<BancoDTO> findByNomeBanco(@RequestParam String nomeBanco) {
+    @GetMapping("/nomeBanco={nomeBanco}")
+    public ResponseEntity<BancoDTO> findByNomeBanco(@PathVariable String nomeBanco) {
         try {
             return bancoDAO.findByNomeBanco(nomeBanco)
                     .map(ResponseEntity::ok)

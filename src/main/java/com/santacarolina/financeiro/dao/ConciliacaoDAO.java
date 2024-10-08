@@ -26,12 +26,10 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
         VALUES (?,?,?)
         """;
 
-    private DataBaseConn conn;
     private CommonDAO<ConciliacaoDTO> commonDAO;
 
     @Autowired
     public ConciliacaoDAO(DataBaseConn conn) {
-        this.conn = conn;
         this.commonDAO = new CommonDAO<>(this, conn);
     }
 

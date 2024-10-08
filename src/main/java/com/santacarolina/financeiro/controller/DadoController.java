@@ -1,7 +1,9 @@
 package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.DadoDAO;
+import com.santacarolina.financeiro.dao.PixDAO;
 import com.santacarolina.financeiro.dto.DadoDTO;
+import com.santacarolina.financeiro.util.DataBaseConn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +15,19 @@ import java.util.List;
 @RequestMapping("/contas")
 public class DadoController {
 
+    private DadoDAO dadoDAO;
+    private PixDAO pixDAO;
+
     @Autowired
-    private DadoDAO dao;
+    public DadoController(DataBaseConn conn) {
+        this.dadoDAO = new DadoDAO(conn);
+        this.pixDAO = new PixDAO(conn);
+    }
 
     @GetMapping
     public ResponseEntity<List<DadoDTO>> findAll() {
         try {
-            return ResponseEntity.ok(dao.findAll());
+            return ResponseEntity.ok(dadoDAO.findAll());
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -28,7 +36,7 @@ public class DadoController {
     @GetMapping("/{id}")
     public ResponseEntity<DadoDTO> findById(@PathVariable long id) {
         try {
-            return dao.findById(id)
+            return dadoDAO.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (SQLException e) {
@@ -39,7 +47,7 @@ public class DadoController {
     @GetMapping("/contato={contatoId}")
     public ResponseEntity<List<DadoDTO>> findByContato(@PathVariable long contatoId) {
         try {
-            return ResponseEntity.ok(dao.getPixByContato(contatoId));
+            return ResponseEntity.ok(dadoDAO.getPixByContato(contatoId));
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -48,7 +56,7 @@ public class DadoController {
     @GetMapping("/info")
     public ResponseEntity<DadoDTO> getEqual(@RequestParam String agencia, String numeroConta, long bancoId) {
         try {
-            return dao.getEqual(agencia, numeroConta, bancoId)
+            return dadoDAO.getEqual(agencia, numeroConta, bancoId)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (SQLException e) {
@@ -57,10 +65,11 @@ public class DadoController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody DadoDTO d) {
+    public ResponseEntity<DadoDTO> save(@RequestBody DadoDTO d) {
         try {
-            dao.save(d);
-            return ResponseEntity.ok().build();
+            dadoDAO.save(d);
+            if (d.getPixDTO() != null) pixDAO.save(d.getPixDTO());
+            return ResponseEntity.ok(d);
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -69,7 +78,7 @@ public class DadoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById (@PathVariable long id) {
         try {
-            dao.deleteById(id);
+            dadoDAO.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();

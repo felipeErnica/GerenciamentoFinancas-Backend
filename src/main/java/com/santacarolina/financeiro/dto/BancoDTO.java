@@ -19,4 +19,7 @@ public class BancoDTO implements DataDAO {
     public String getNomeBanco() { return nomeBanco; }
     public String getApelidoBanco() { return apelidoBanco; }
 
+    @Override
+    public void setId(long id) { this.id = id; }
+
 }

@@ -1,17 +1,13 @@
 package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.PixDAO;
-import com.santacarolina.financeiro.dto.DadoDTO;
 import com.santacarolina.financeiro.dto.PixDTO;
-import com.santacarolina.financeiro.models.ChavePix;
-import com.santacarolina.financeiro.services.PixService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/chavesPix")
@@ -52,7 +48,7 @@ public class PixController {
     }
 
     @GetMapping("/contato={contatoId}")
-    public ResponseEntity<List<PixDTO>> getDadosBancarios(@PathVariable long contatoId) {
+    public ResponseEntity<List<PixDTO>> findByContato(@PathVariable long contatoId) {
         try {
             return ResponseEntity.ok(dao.findByContato(contatoId));
         } catch (SQLException e) {
