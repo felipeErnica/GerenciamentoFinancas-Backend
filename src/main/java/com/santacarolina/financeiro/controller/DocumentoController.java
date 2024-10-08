@@ -120,10 +120,7 @@ public class DocumentoController {
     @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<DocumentoEntity> list) {
         try {
-            List<Long> idList = list.stream()
-                .map(entity -> entity.getId())
-                .collect(Collectors.toList());
-            repository.deleteAllByIdInBatch(idList);
+            repository.deleteAll(list);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
