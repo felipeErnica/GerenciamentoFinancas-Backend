@@ -9,11 +9,11 @@ public class PastaDTO implements DataDAO {
     private String caminhoPasta;
     private long contaId;
 
-    public PastaDTO(long id, String nome, String caminhoPasta, Long dadoId) {
+    public PastaDTO(long id, String nome, String caminhoPasta, Long contaId) {
         this.id = id;
         this.nome = nome;
         this.caminhoPasta = caminhoPasta;
-        this.contaId = dadoId;
+        this.contaId = contaId;
     }
 
     @Override

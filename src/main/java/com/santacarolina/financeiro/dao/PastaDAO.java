@@ -53,6 +53,7 @@ public class PastaDAO implements DAO<PastaDTO> {
 
     @Override
     public PastaDTO getDTO(ResultSet rs) throws SQLException {
+        System.out.println(rs.getLong("conta_id"));
         return new PastaDTO(
                 rs.getLong("id"),
                 rs.getString("nome"),
