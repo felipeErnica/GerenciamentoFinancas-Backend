@@ -18,7 +18,7 @@ import java.util.Optional;
 public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
 
     private static final String SELECT_QUERY = """
-            SELECT id, categoria_id, numero_identificacao, nome_classificacao, fluxo_caixa,
+            SELECT class.id, class.categoria_id, class.numero_identificacao, class.nome_classificacao, class.fluxo_caixa,
                 cat.nome as nome_categoria
             FROM classificacoes_contabeis class
                 LEFT JOIN categorias_contabeis as cat ON cat.id = class.categoria_id
