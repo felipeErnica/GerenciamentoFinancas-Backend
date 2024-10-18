@@ -18,17 +18,17 @@ import java.util.Optional;
 public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
 
     private static final String SELECT_QUERY = """
-            SELECT id, numero_identificacao, nome_classificacao, fluxo_caixa
+            SELECT id, categoria_id, numero_identificacao, nome_classificacao, fluxo_caixa
             FROM classificacoes_contabeis
             """;
     private static final String UPDATE_QUERY = """
             UPDATE classificacaoes_contabeis
-            SET fluxo_caixa = ?, numero_identificacao = ?, nome_classificacao = ?
+            SET categoria_id = ?, fluxo_caixa = ?, numero_identificacao = ?, nome_classificacao = ?
             WHERE id = ?;
             """;
     private static final String INSERT_QUERY = """
-        INSERT INTO classificacoes_contabeis(fluxo_caixa, numero_identificacao, nome_classificacao) 
-            VALUES(?,?,?)
+        INSERT INTO classificacoes_contabeis(categoria_id, fluxo_caixa, numero_identificacao, nome_classificacao) 
+            VALUES(?,?,?,?)
         """;
     private static final String DELETE_QUERY = "DELETE FROM classificacoes_contabeis WHERE id = ?";
 
@@ -53,6 +53,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     public ClassificacaoDTO getDTO(ResultSet rs) throws SQLException {
         return new ClassificacaoDTO(
                 rs.getLong("id"),
+                rs.getLong("categoria_id"),
                 FluxoCaixa.fromValue(rs.getInt("fluxo_caixa")),
                 rs.getLong("numero_identificacao"),
                 rs.getString("nome_classificacao"));
@@ -60,9 +61,10 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
 
     @Override
     public void prepareValuesDTO(PreparedStatement ps, ClassificacaoDTO c) throws SQLException {
-        ps.setInt(1, c.getFluxoCaixa().getValue());
-        ps.setLong(2, c.getNumeroIdentificacao());
-        ps.setString(3, c.getNomeClassificacao());
+        ps.setLong(1, c.getCategoriaId());
+        ps.setInt(2, c.getFluxoCaixa().getValue());
+        ps.setLong(3, c.getNumeroIdentificacao());
+        ps.setString(4, c.getNomeClassificacao());
     }
 
     @Override
