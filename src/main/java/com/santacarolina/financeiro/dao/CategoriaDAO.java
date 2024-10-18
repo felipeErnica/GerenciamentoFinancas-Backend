@@ -22,18 +22,18 @@ import com.santacarolina.financeiro.util.DataBaseConn;
 public class CategoriaDAO implements DAO<CategoriaDTO> {
 
     private static final String SELECT_QUERY = """
-        SELECT id, fluxo_caixa, nome
+        SELECT id, fluxo_caixa, numero_categoria, nome
         FROM categoria_contabil
     """;
 
     private static final String INSERT_QUERY = """
-        INSERT INTO categoria_contabil(fluxo_caixa, nome)
-        VALUES(?,?)
+        INSERT INTO categoria_contabil(fluxo_caixa, numero_categoria, nome)
+        VALUES(?,?,?)
     """;
 
     private static final String UPDATE_QUERY = """
         UPDATE categoria_contabil
-        SET fluxo_caixa = ?, nome = ?
+        SET fluxo_caixa = ?, numero_categoria = ?, nome = ?
         WHERE id = ?;
     """;
 
@@ -75,6 +75,7 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
         return new CategoriaDTO(
             rs.getLong("id"),
             FluxoCaixa.fromValue(rs.getInt("fluxo_caixa")),
+            rs.getString("numero_categoria"),
             rs.getString("nome")
         );
     }
@@ -83,10 +84,11 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
     public void prepareValuesDTO(PreparedStatement ps, CategoriaDTO t) throws SQLException {
         ps.setLong(1, t.getId());
         ps.setLong(2, t.getFluxoCaixa().getValue());
-        ps.setString(3, t.getNome());
+        ps.setString(3,t.getNumeroCategoria());
+        ps.setString(4, t.getNome());
     }
 
     @Override
-    public int getIdParameterIndex() { return 4; }
+    public int getIdParameterIndex() { return 5; }
 
 }
