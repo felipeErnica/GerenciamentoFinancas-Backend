@@ -18,8 +18,11 @@ import java.util.Optional;
 public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
 
     private static final String SELECT_QUERY = """
-            SELECT id, categoria_id, numero_identificacao, nome_classificacao, fluxo_caixa
-            FROM classificacoes_contabeis
+            SELECT id, categoria_id, numero_identificacao, nome_classificacao, fluxo_caixa,
+                cat.nome as nome_categoria
+            FROM classificacoes_contabeis class
+                LEFT JOIN categorias_contabeis as cat ON cat.id = class.categoria_id
+            ORDER BY fluxo_caixa, categoria_id;
             """;
     private static final String UPDATE_QUERY = """
             UPDATE classificacaoes_contabeis
@@ -54,6 +57,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
         return new ClassificacaoDTO(
                 rs.getLong("id"),
                 rs.getLong("categoria_id"),
+                rs.getString("nome_categoria"),
                 FluxoCaixa.fromValue(rs.getInt("fluxo_caixa")),
                 rs.getLong("numero_identificacao"),
                 rs.getString("nome_classificacao"));
