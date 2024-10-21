@@ -39,7 +39,14 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     @Autowired
     public ClassificacaoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
-    public List<ClassificacaoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY + "ORDER BY class.fluxo_caixa, class.categoria_id"); }
+    public List<ClassificacaoDTO> findAll() throws SQLException {
+        return commonDAO.findList(SELECT_QUERY + "ORDER BY class.fluxo_caixa, class.categoria_id"); 
+    }
+
+    public Optional<ClassificacaoDTO> findByNome(String nome) throws SQLException {
+        String query = SELECT_QUERY + " WHERE class.nome_classificacao = " + nome.replace("+", " ");
+        return commonDAO.findOne(query);
+    }
 
     public Optional<ClassificacaoDTO> getByNumero(long numeroIdentificacao) throws SQLException {
         String query = SELECT_QUERY + " WHERE class.numero_identificacao = " + numeroIdentificacao;

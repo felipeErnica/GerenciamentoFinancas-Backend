@@ -47,4 +47,15 @@ public class ClassificacaoController {
         }
     }
 
+    @GetMapping("/nome={nome}")
+    private ResponseEntity<ClassificacaoDTO> findByNome(@PathVariable String nome) {
+        try {
+            return dao.findByNome(nome)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

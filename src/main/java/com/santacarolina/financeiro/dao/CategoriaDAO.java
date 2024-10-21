@@ -54,7 +54,7 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
     }
 
     public Optional<CategoriaDTO> findByNome(String nome) throws SQLException {
-        String query = SELECT_QUERY + " WHERE nome = '" + nome + "'";
+        String query = SELECT_QUERY + " WHERE nome = '" + nome.replace("+", " ") + "'";
         return commonDAO.findOne(query);
     }
 
