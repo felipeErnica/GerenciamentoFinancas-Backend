@@ -58,6 +58,11 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
         return commonDAO.findOne(query);
     }
 
+    public Optional<CategoriaDTO> findByNumero(String numero) throws SQLException {
+        String query = SELECT_QUERY + " WHERE numero_categoria = '" + numero + "'";
+        return commonDAO.findOne(query);
+    }
+
     public List<CategoriaDTO> findAll() throws SQLException {
         return commonDAO.findList(SELECT_QUERY);
     }

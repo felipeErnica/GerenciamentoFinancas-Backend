@@ -46,6 +46,17 @@ public class CategoriaController {
         }
     }
     
+    @GetMapping("/numero={numero}")
+    public ResponseEntity<CategoriaDTO> findByNumero(@PathVariable String numero) {
+        try {
+            return dao.findByNumero(numero)
+                .map(d -> ResponseEntity.ok(d))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() {
         try {
