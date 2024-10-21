@@ -1,19 +1,17 @@
 package com.santacarolina.financeiro.dao;
 
-import com.santacarolina.financeiro.dto.DuplicataDTO;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.santacarolina.financeiro.dto.ProdutoDTO;
 import com.santacarolina.financeiro.interfaces.DAO;
 import com.santacarolina.financeiro.util.CommonDAO;
 import com.santacarolina.financeiro.util.DataBaseConn;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class ProdutoDAO implements DAO<ProdutoDTO> {

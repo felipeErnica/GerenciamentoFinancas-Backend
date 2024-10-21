@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/conciliacoes")
+@SuppressWarnings("rawtypes")
 public class ConciliacaoController {
 
     @Autowired

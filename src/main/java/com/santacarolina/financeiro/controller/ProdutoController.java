@@ -1,10 +1,8 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.dao.ProdutoDAO;
-import com.santacarolina.financeiro.dto.DuplicataDTO;
-import com.santacarolina.financeiro.dto.ProdutoDTO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
-import java.util.List;
+import com.santacarolina.financeiro.dao.ProdutoDAO;
+import com.santacarolina.financeiro.dto.ProdutoDTO;
 
 @RestController
 @RequestMapping("/produtos")

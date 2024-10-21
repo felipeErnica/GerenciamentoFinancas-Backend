@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/duplicatas")
+@SuppressWarnings("rawtypes")
 public class DuplicataController {
 
     @Autowired

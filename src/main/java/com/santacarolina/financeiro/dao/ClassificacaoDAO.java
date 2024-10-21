@@ -51,6 +51,15 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
         return commonDAO.findOne(query);
     }
 
+    public List<ClassificacaoDTO> findByCategoria(long categoriaId) throws SQLException {
+        String query = SELECT_QUERY + " WHERE class.categoria_id = " + categoriaId;
+        return commonDAO.findList(query);
+    }
+
+    public void deleteBatch(List<ClassificacaoDTO> list) throws SQLException {
+        commonDAO.deleteBatch(DELETE_QUERY, list);
+    }
+
     @Override
     public ClassificacaoDTO getDTO(ResultSet rs) throws SQLException {
         return new ClassificacaoDTO(

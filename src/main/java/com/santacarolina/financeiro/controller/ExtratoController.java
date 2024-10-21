@@ -1,18 +1,23 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.dao.ExtratoDAO;
-import com.santacarolina.financeiro.dto.ExtratoDTO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.santacarolina.financeiro.dao.ExtratoDAO;
+import com.santacarolina.financeiro.dto.ExtratoDTO;
+
 @RestController
 @RequestMapping("/extratos")
+@SuppressWarnings("rawtypes")
 public class ExtratoController {
 
     @Autowired

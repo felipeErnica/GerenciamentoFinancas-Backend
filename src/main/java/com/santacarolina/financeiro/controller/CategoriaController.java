@@ -1,5 +1,6 @@
 package com.santacarolina.financeiro.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.santacarolina.financeiro.dao.CategoriaDAO;
+import com.santacarolina.financeiro.dao.ClassificacaoDAO;
 import com.santacarolina.financeiro.dto.CategoriaDTO;
+import com.santacarolina.financeiro.dto.ClassificacaoDTO;
+import com.santacarolina.financeiro.util.DataBaseConn;
 
 /**
  * CategoriaController
  */
 @RestController
 @RequestMapping("/categoria")
+@SuppressWarnings("rawtypes")
 public class CategoriaController {
 
-    @Autowired
     private CategoriaDAO dao;
+    private ClassificacaoDAO classificacaoDAO;
+
+    @Autowired
+    public CategoriaController(DataBaseConn conn) {
+        dao = new CategoriaDAO(conn);
+        classificacaoDAO = new ClassificacaoDAO(conn);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDTO> findById(@PathVariable long id) {
@@ -30,7 +41,7 @@ public class CategoriaController {
             return dao.findById(id)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -41,7 +52,7 @@ public class CategoriaController {
             return dao.findByNome(nome)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -52,7 +63,7 @@ public class CategoriaController {
             return dao.findByNumero(numero)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -61,7 +72,7 @@ public class CategoriaController {
     public ResponseEntity<List<CategoriaDTO>> findAll() {
         try {
             return ResponseEntity.ok(dao.findAll());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -71,7 +82,7 @@ public class CategoriaController {
         try {
             dao.save(t);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -80,8 +91,10 @@ public class CategoriaController {
     public ResponseEntity deleteById(long id) {
         try {
             dao.deleteById(id);
+            List<ClassificacaoDTO> listClassificacao = classificacaoDAO.findByCategoria(id);
+            classificacaoDAO.deleteBatch(listClassificacao);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

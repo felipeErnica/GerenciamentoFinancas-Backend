@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contasAdm")
+@SuppressWarnings("rawtypes")
 public class ContaController {
 
     @Autowired

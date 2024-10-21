@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contas")
+@SuppressWarnings("rawtypes")
 public class DadoController {
 
     private DadoDAO dadoDAO;

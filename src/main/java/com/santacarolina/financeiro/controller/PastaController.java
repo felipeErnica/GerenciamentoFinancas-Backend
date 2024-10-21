@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pastaContabil")
+@SuppressWarnings("rawtypes")
 public class PastaController {
 
     @Autowired

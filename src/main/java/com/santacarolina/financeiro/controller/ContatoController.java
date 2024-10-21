@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contatos")
+@SuppressWarnings("rawtypes")
 public class ContatoController {
 
     @Autowired
