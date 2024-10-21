@@ -39,15 +39,15 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     @Autowired
     public ClassificacaoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
-    public List<ClassificacaoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY + "ORDER BY fluxo_caixa, categoria_id"); }
+    public List<ClassificacaoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY + "ORDER BY class.fluxo_caixa, class.categoria_id"); }
 
     public Optional<ClassificacaoDTO> getByNumero(long numeroIdentificacao) throws SQLException {
-        String query = SELECT_QUERY + "WHERE numero_identificacao = " + numeroIdentificacao;
+        String query = SELECT_QUERY + " WHERE class.numero_identificacao = " + numeroIdentificacao;
         return commonDAO.findOne(query);
     }
 
     public Optional<ClassificacaoDTO> findById(long id) throws SQLException {
-        String query = SELECT_QUERY + "WHERE id = " + id;
+        String query = SELECT_QUERY + " WHERE class.id = " + id;
         return commonDAO.findOne(query);
     }
 
