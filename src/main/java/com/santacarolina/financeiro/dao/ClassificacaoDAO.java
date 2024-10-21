@@ -22,7 +22,6 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
                 cat.nome as nome_categoria
             FROM classificacoes_contabeis class
                 LEFT JOIN categorias_contabeis as cat ON cat.id = class.categoria_id
-            ORDER BY fluxo_caixa, categoria_id;
             """;
     private static final String UPDATE_QUERY = """
             UPDATE classificacaoes_contabeis
@@ -40,7 +39,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     @Autowired
     public ClassificacaoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
-    public List<ClassificacaoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<ClassificacaoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY + "ORDER BY fluxo_caixa, categoria_id"); }
 
     public Optional<ClassificacaoDTO> getByNumero(long numeroIdentificacao) throws SQLException {
         String query = SELECT_QUERY + "WHERE numero_identificacao = " + numeroIdentificacao;
