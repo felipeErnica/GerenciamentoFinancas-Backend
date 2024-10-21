@@ -1,17 +1,18 @@
 package com.santacarolina.financeiro.dao;
 
-import com.santacarolina.financeiro.dto.PastaDTO;
-import com.santacarolina.financeiro.interfaces.DAO;
-import com.santacarolina.financeiro.util.CommonDAO;
-import com.santacarolina.financeiro.util.DataBaseConn;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.santacarolina.financeiro.dto.PastaDTO;
+import com.santacarolina.financeiro.interfaces.DAO;
+import com.santacarolina.financeiro.util.CommonDAO;
+import com.santacarolina.financeiro.util.DataBaseConn;
 
 @Component
 public class PastaDAO implements DAO<PastaDTO> {
@@ -53,7 +54,6 @@ public class PastaDAO implements DAO<PastaDTO> {
 
     @Override
     public PastaDTO getDTO(ResultSet rs) throws SQLException {
-        System.out.println(rs.getLong("conta_id"));
         return new PastaDTO(
                 rs.getLong("id"),
                 rs.getString("nome"),

@@ -23,22 +23,22 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
 
     private static final String SELECT_QUERY = """
         SELECT id, fluxo_caixa, numero_categoria, nome
-        FROM categoria_contabil
+        FROM categorias_contabeis
     """;
 
     private static final String INSERT_QUERY = """
-        INSERT INTO categoria_contabil(fluxo_caixa, numero_categoria, nome)
+        INSERT INTO categorias_contabeis(fluxo_caixa, numero_categoria, nome)
         VALUES(?,?,?)
     """;
 
     private static final String UPDATE_QUERY = """
-        UPDATE categoria_contabil
+        UPDATE categorias_contabeis
         SET fluxo_caixa = ?, numero_categoria = ?, nome = ?
         WHERE id = ?;
     """;
 
     private static final String DELETE_QUERY = """
-        DELETE FROM categoria_contabil WHERE id = ?;
+        DELETE FROM categorias_contabeis WHERE id = ?;
     """;
 
     private CommonDAO<CategoriaDTO> commonDAO;
