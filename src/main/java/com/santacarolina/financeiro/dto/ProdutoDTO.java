@@ -14,12 +14,14 @@ public class ProdutoDTO implements DataDAO {
     private double quantidade;
     private double valorUnit;
     private LocalDate dataEmissao;
+    private long pastaId;
     private String nomePasta;
+    private long emissorId;
     private String nomeContato;
     private String classificacao;
 
     public ProdutoDTO(long id, long docId, long classificacaoId, String descricao, String und, double quantidade,
-                      double valorUnit, LocalDate dataEmissao, String nomePasta, String nomeContato, String classificacao) {
+                      double valorUnit, LocalDate dataEmissao, long pastaId, String nomePasta, long emissorId, String nomeContato, String classificacao) {
         this.id = id;
         this.docId = docId;
         this.classificacaoId = classificacaoId;
@@ -28,7 +30,9 @@ public class ProdutoDTO implements DataDAO {
         this.quantidade = quantidade;
         this.valorUnit = valorUnit;
         this.dataEmissao = dataEmissao;
+        this.pastaId = pastaId;
         this.nomePasta = nomePasta;
+        this.emissorId = emissorId;
         this.nomeContato = nomeContato;
         this.classificacao = classificacao;
     }
@@ -45,8 +49,11 @@ public class ProdutoDTO implements DataDAO {
     public String getNomePasta() { return nomePasta; }
     public String getNomeContato() { return nomeContato; }
     public String getClassificacao() { return classificacao; }
+    public long getPastaId() { return pastaId; }
+    public long getEmissorId() { return emissorId; }
 
     @Override
     public void setId(long id) { this.id = id; }
     public void setDocId(long docId) { this.docId = docId; }
+
 }

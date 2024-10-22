@@ -19,8 +19,8 @@ public class ProdutoDAO implements DAO<ProdutoDTO> {
     private static  final String SELECT_QUERY = """
                 SELECT p.id, p.documento_id, p.classificacao_id, p.descricao, p.und, p.quantidade, p.valor_unit,
                     d.data_emissao,
-                    c.nome as nome_contato,
-                    pc.nome as nome_pasta,
+                    c.id as emissor_id, c.nome as nome_contato,
+                    pc.id as pasta_id, pc.nome as nome_pasta,
                     cc.nome_classificacao
                 FROM produtos p
                     LEFT JOIN documentos d ON d.id = p.documento_id
@@ -70,7 +70,9 @@ public class ProdutoDAO implements DAO<ProdutoDTO> {
                 rs.getDouble("quantidade"),
                 rs.getDouble("valor_unit"),
                 rs.getDate("data_emissao").toLocalDate(),
+                rs.getLong("pasta_id"),
                 rs.getString("nome_pasta"),
+                rs.getLong("emissor_id"),
                 rs.getString("nome_contato"),
                 rs.getString("nome_classificacao")
         );
