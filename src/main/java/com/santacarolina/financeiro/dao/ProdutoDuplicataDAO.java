@@ -46,6 +46,7 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
         this.commonDAO = new CommonDAO<>(this, conn);
     }
 
+    //Teste
     public List<ProdutoDuplicataDTO> findAll() throws SQLException {
         long start = System.nanoTime();
         List<ProdutoDuplicataDTO> list = commonDAO.findList(SELECT_QUERY); 
