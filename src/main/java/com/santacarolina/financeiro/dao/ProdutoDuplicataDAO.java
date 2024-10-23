@@ -22,7 +22,7 @@ import com.santacarolina.financeiro.util.DataBaseConn;
 public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
 
     private static final String SELECT_QUERY = """
-        SELECT prod.descricao, prod.und, prod.quantidade, prod.valor_unitario, prod.documento_id, prod.id as prod_id, prod.classificacao_id,
+        SELECT prod.descricao, prod.und, prod.quantidade, prod.valor_unit, prod.documento_id, prod.id as prod_id, prod.classificacao_id,
             doc.doc_tipo, doc.doc_numero, doc.pasta_id, doc.emissor_id,
             dup.id as dup_id, dup.data_vencimento,
             pasta.nome as nome_pasta,
@@ -50,9 +50,9 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
     public ProdutoDuplicataDTO getDTO(ResultSet rs) throws SQLException {
         return new ProdutoDuplicataDTO(rs.getLong("prod_id"),
             rs.getString("descricao"),
-            rs.getString("unidade"),
+            rs.getString("unid"),
             rs.getDouble("quantidade"),
-            rs.getDouble("valor_unitario"),
+            rs.getDouble("valor_unit"),
             rs.getLong("documento_id"),
             TipoDocumento.fromValues(rs.getInt("doc_tipo")),
             rs.getLong("doc_numero"),
