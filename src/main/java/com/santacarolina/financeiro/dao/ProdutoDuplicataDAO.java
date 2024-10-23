@@ -6,7 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
+import org.apache.logging.log4j.core.util.ExecutorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -50,22 +55,23 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
         long start = System.nanoTime();
         List<ProdutoDuplicataDTO> list = commonDAO.findList(SELECT_QUERY); 
         List<ProdutoDuplicataDTO> list1 = list.subList(0, list.size()/2);
-        List<ProdutoDuplicataDTO> list2 = list.subList(list.size()/2, list.size() - 1);
-        Thread thread = new Thread(() -> transformList(list1));
-        Thread thread1 = new Thread(() -> transformList(list2));
-        thread.start();
-        thread1.start();
+        List<ProdutoDuplicataDTO> list2 = list.subList(list.size()/2, list.size());
+
+        ExecutorService services = Executors.newFixedThreadPool(2);
+
+        Future<?> thread = services.submit(() -> transformList(list1));
+        Future<?> thread1 = services.submit(() -> transformList(list2));
+
         try {
-            thread.join();
-            thread1.join();
+            thread.get();
+            thread1.get();
             long finish = System.nanoTime();
             System.out.println(finish - start);
             return list;
-        } catch (InterruptedException e) {
+            //transformList(list);
+        } catch (ExecutionException | InterruptedException e) {
             throw new SQLException();
         }
-        //transformList(list);
-        //return list;
     }
 
     private void transformList(List<ProdutoDuplicataDTO> list) {
@@ -78,7 +84,7 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
             while (dto.getDocId() == docId && i < list.size()) {
                 dto = list.get(i);
                 listSameDoc.add(dto); 
-                i++;
+                i++;    
             }
             for (ProdutoDuplicataDTO dtoEqual : listSameDoc) dtoEqual.setQuantidade(dtoEqual.getQuantidade()/listSameDoc.size());
             listSameDoc = new ArrayList<>();
