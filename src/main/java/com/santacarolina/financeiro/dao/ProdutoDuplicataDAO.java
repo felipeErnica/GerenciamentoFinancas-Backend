@@ -46,27 +46,26 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
         this.commonDAO = new CommonDAO<>(this, conn);
     }
 
-    //Teste
     public List<ProdutoDuplicataDTO> findAll() throws SQLException {
         long start = System.nanoTime();
         List<ProdutoDuplicataDTO> list = commonDAO.findList(SELECT_QUERY); 
-        //List<ProdutoDuplicataDTO> list1 = list.subList(0, list.size()/2);
-        //List<ProdutoDuplicataDTO> list2 = list.subList(list.size()/2, list.size() - 1);
-        //Thread thread = new Thread(() -> transformList(list1));
-        //Thread thread1 = new Thread(() -> transformList(list2));
-        //thread.start();
-        //thread1.start();
-        //try {
-            //thread.join();
-            //thread1.join();
-            //return list;
-        //} catch (InterruptedException e) {
-            //throw new SQLException();
-        //}
-        transformList(list);
-        long finish = System.nanoTime();
-        System.out.println(finish - start);
-        return list;
+        List<ProdutoDuplicataDTO> list1 = list.subList(0, list.size()/2);
+        List<ProdutoDuplicataDTO> list2 = list.subList(list.size()/2, list.size() - 1);
+        Thread thread = new Thread(() -> transformList(list1));
+        Thread thread1 = new Thread(() -> transformList(list2));
+        thread.start();
+        thread1.start();
+        try {
+            thread.join();
+            thread1.join();
+            long finish = System.nanoTime();
+            System.out.println(finish - start);
+            return list;
+        } catch (InterruptedException e) {
+            throw new SQLException();
+        }
+        //transformList(list);
+        //return list;
     }
 
     private void transformList(List<ProdutoDuplicataDTO> list) {
