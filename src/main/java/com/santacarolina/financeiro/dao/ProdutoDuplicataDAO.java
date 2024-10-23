@@ -54,24 +54,10 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
     public List<ProdutoDuplicataDTO> findAll() throws SQLException {
         long start = System.nanoTime();
         List<ProdutoDuplicataDTO> list = commonDAO.findList(SELECT_QUERY); 
-        List<ProdutoDuplicataDTO> list1 = list.subList(0, list.size()/2);
-        List<ProdutoDuplicataDTO> list2 = list.subList(list.size()/2, list.size());
-
-        ExecutorService services = Executors.newFixedThreadPool(2);
-
-        Future<?> thread = services.submit(() -> transformList(list1));
-        Future<?> thread1 = services.submit(() -> transformList(list2));
-
-        try {
-            thread.get();
-            thread1.get();
-            long finish = System.nanoTime();
-            System.out.println(finish - start);
-            return list;
-            //transformList(list);
-        } catch (ExecutionException | InterruptedException e) {
-            throw new SQLException();
-        }
+        transformList(list);
+        long finish = System.nanoTime();
+        System.out.println(finish - start);
+        return list;
     }
 
     private void transformList(List<ProdutoDuplicataDTO> list) {
