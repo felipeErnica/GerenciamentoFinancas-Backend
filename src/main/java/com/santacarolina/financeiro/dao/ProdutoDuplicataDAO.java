@@ -48,10 +48,25 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
 
     public List<ProdutoDuplicataDTO> findAll() throws SQLException {
         List<ProdutoDuplicataDTO> list = commonDAO.findList(SELECT_QUERY); 
+        List<ProdutoDuplicataDTO> list1 = list.subList(0, list.size()/2);
+        List<ProdutoDuplicataDTO> list2 = list.subList(list.size()/2, list.size() - 1);
+        Thread thread = new Thread(() -> transformList(list1));
+        Thread thread1 = new Thread(() -> transformList(list2));
+        thread.start();
+        thread1.start();
+        try {
+            thread.join();
+            thread1.join();
+            return list;
+        } catch (InterruptedException e) {
+            throw new SQLException();
+        }
+    }
+
+    private void transformList(List<ProdutoDuplicataDTO> list) {
         List<ProdutoDuplicataDTO> listSameDoc = new ArrayList<>();
         int i = 0;
         long docId = 0;
-
         while (i < list.size()) {
             ProdutoDuplicataDTO dto = list.get(i);
             docId = dto.getDocId();
@@ -64,9 +79,8 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
             listSameDoc = new ArrayList<>();
             i++;
         }
-
-        return list;
     }
+    
 
     @Override
     public ProdutoDuplicataDTO getDTO(ResultSet rs) throws SQLException {
