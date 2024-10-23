@@ -50,7 +50,7 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
     public ProdutoDuplicataDTO getDTO(ResultSet rs) throws SQLException {
         return new ProdutoDuplicataDTO(rs.getLong("prod_id"),
             rs.getString("descricao"),
-            rs.getString("unid"),
+            rs.getString("und"),
             rs.getDouble("quantidade"),
             rs.getDouble("valor_unit"),
             rs.getLong("documento_id"),
