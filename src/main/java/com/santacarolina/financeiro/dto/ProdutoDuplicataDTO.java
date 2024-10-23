@@ -70,7 +70,7 @@ public class ProdutoDuplicataDTO implements DataDAO {
     public String getClassificacao() { return classificacao; }
     public String getDescricao() { return descricao; }
     public String getUnidade() { return unidade; }
-    public int getQuantidade() { return quantidade; }
+    public double getQuantidade() { return quantidade; }
     public double getValorUnit() { return valorUnit; }
 
     @Override
