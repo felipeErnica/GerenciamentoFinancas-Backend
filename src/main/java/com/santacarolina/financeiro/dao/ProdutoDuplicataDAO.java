@@ -3,6 +3,8 @@ package com.santacarolina.financeiro.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,27 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
         this.commonDAO = new CommonDAO<>(this, conn);
     }
 
-    public List<ProdutoDuplicataDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<ProdutoDuplicataDTO> findAll() throws SQLException {
+        List<ProdutoDuplicataDTO> list = commonDAO.findList(SELECT_QUERY); 
+        List<ProdutoDuplicataDTO> listSameDoc = new ArrayList<>();
+        int i = 0;
+        long docId = 0;
+
+        while (i < list.size()) {
+            ProdutoDuplicataDTO dto = list.get(i);
+            docId = dto.getDocId();
+            while (dto.getDocId() == docId && i < list.size()) {
+                dto = list.get(i);
+                listSameDoc.add(dto); 
+                i++;
+            }
+            for (ProdutoDuplicataDTO dtoEqual : listSameDoc) dtoEqual.setQuantidade(dtoEqual.getQuantidade()/listSameDoc.size());
+            listSameDoc = new ArrayList<>();
+            i++;
+        }
+
+        return list;
+    }
 
     @Override
     public ProdutoDuplicataDTO getDTO(ResultSet rs) throws SQLException {

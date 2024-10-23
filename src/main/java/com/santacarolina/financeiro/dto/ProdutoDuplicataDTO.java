@@ -76,4 +76,6 @@ public class ProdutoDuplicataDTO implements DataDAO {
     @Override
     public void setId(long id) { this.prodId = id; }
 
+    public void setQuantidade(double quantidade) { this.quantidade = quantidade; }
+
 }
