@@ -63,6 +63,8 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
         return commonDAO.findList(query);
     }
 
+    public void save(ClassificacaoDTO dto) throws SQLException { commonDAO.save(dto, UPDATE_QUERY, INSERT_QUERY); }
+
     public void deleteBatch(List<ClassificacaoDTO> list) throws SQLException {
         commonDAO.deleteBatch(DELETE_QUERY, list);
     }

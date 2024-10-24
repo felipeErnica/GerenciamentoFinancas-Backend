@@ -37,7 +37,10 @@ public class PastaDAO implements DAO<PastaDTO> {
     @Autowired
     public PastaDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
-    public List<PastaDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<PastaDTO> findAll() throws SQLException { 
+        String query = SELECT_QUERY + " ORDER BY nome";
+        return commonDAO.findList(query); 
+    }
 
     public Optional<PastaDTO> findByNome(String nome) throws SQLException {
         String query = SELECT_QUERY + "WHERE nome = " + nome;

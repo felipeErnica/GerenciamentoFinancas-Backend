@@ -46,11 +46,8 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
     }
 
     public List<ProdutoDuplicataDTO> findAll() throws SQLException {
-        long start = System.nanoTime();
         List<ProdutoDuplicataDTO> list = commonDAO.findList(SELECT_QUERY); 
         transformList(list);
-        long finish = System.nanoTime();
-        System.out.println(finish - start);
         return list;
     }
 

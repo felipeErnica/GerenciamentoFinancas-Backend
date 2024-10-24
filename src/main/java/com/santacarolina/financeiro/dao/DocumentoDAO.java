@@ -70,6 +70,7 @@ public class DocumentoDAO implements DAO<DocumentoDTO> {
     }
 
     public void save(DocumentoDTO dto) throws SQLException { commonDAO.save(dto, UPDATE_QUERY, INSERT_QUERY); }
+    public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
 
     @Override
     public DocumentoDTO getDTO(ResultSet rs) throws SQLException {

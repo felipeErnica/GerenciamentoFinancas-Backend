@@ -50,7 +50,11 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
         this.commonDAO = new CommonDAO<>(this, conn);
     }
 
-    public List<ConciliacaoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<ConciliacaoDTO> findAll() throws SQLException {
+        String query = SELECT_QUERY + " ORDER BY data_transacao DESC";
+        return commonDAO.findList(query); 
+    }
+
     public void save(ConciliacaoDTO c) throws SQLException { commonDAO.save(c, UPDATE_QUERY, INSERT_QUERY); }
     public void saveAll(List<ConciliacaoDTO> list) throws SQLException { commonDAO.saveBatch(list, UPDATE_QUERY, INSERT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }

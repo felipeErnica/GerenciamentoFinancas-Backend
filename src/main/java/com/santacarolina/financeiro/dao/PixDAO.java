@@ -18,10 +18,12 @@ public class PixDAO implements DAO<PixDTO> {
 
     private static final String SELECT_QUERY = """
             SELECT c.id, c.contato_id, c.conta_id, c.tipo_pix, c.chave, 
+                contatos.nome as nome_contato,
                 d.agencia, d.numero_conta,
                 b.nome_banco 
             FROM chaves_pix c
                 LEFT JOIN dados_bancarios d ON d.id = c.conta_id
+                LEFT JOIN contatos ON contatos.id = c.contato_id 
                 LEFT JOIN bancos b ON b.id = d.banco_id
             """;
     private static final String UPDATE_QUERY = """
@@ -54,7 +56,11 @@ public class PixDAO implements DAO<PixDTO> {
         return commonDAO.findList(query);
     }
 
-    public List<PixDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<PixDTO> findAll() throws SQLException {
+        String query = SELECT_QUERY + " ORDER BY nome_contato, chave";
+            return commonDAO.findList(query); 
+    }
+
     public void save(PixDTO chavePix) throws SQLException { commonDAO.save(chavePix, UPDATE_QUERY, INSERT_QUERY); }
     public void delete(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
 
@@ -63,6 +69,7 @@ public class PixDAO implements DAO<PixDTO> {
         return new PixDTO(
                 rs.getLong("id"),
                 rs.getLong("contato_id"),
+                rs.getString("nome_contato"),
                 rs.getLong("conta_id"),
                 TipoPix.fromValue(rs.getInt("tipo_pix")),
                 rs.getString("chave"),

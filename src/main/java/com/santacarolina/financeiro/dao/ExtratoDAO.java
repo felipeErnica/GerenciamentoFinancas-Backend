@@ -1,17 +1,18 @@
 package com.santacarolina.financeiro.dao;
 
-import com.santacarolina.financeiro.dto.ExtratoDTO;
-import com.santacarolina.financeiro.interfaces.DAO;
-import com.santacarolina.financeiro.util.CommonDAO;
-import com.santacarolina.financeiro.util.DataBaseConn;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.santacarolina.financeiro.dto.ExtratoDTO;
+import com.santacarolina.financeiro.interfaces.DAO;
+import com.santacarolina.financeiro.util.CommonDAO;
+import com.santacarolina.financeiro.util.DataBaseConn;
 
 @Component
 public class ExtratoDAO implements DAO<ExtratoDTO> {
@@ -36,25 +37,27 @@ public class ExtratoDAO implements DAO<ExtratoDTO> {
             """;
     private static final String DELETE_QUERY = "DELETE FROM extratos WHERE id = ?;";
 
-    private CommonDAO<ExtratoDTO> runDAO;
+    private CommonDAO<ExtratoDTO> commonDAO;
 
     @Autowired
-    public ExtratoDAO(DataBaseConn conn) { this.runDAO = new CommonDAO<>(this, conn); }
+    public ExtratoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public List<ExtratoDTO> findByContaId(long contaId) throws SQLException {
         String query = SELECT_QUERY  + "WHERE conta_id = " + contaId  +
                 " ORDER BY data_transacao DESC";
-        return runDAO.findList(query);
+        return commonDAO.findList(query);
     }
 
     public List<ExtratoDTO> findByConciliacao(boolean isConciliado) throws SQLException {
         String query = SELECT_QUERY  + "WHERE is_conciliado = " + isConciliado +
             " ORDER BY e.data_transacao DESC;";
-        return runDAO.findList(query);
+        return commonDAO.findList(query);
     }
 
-    public void save(ExtratoDTO e) throws SQLException { runDAO.save(e, UPDATE_QUERY, INSERT_QUERY); }
-    public void saveAll(List<ExtratoDTO> list) throws SQLException { runDAO.saveBatch(list, UPDATE_QUERY, INSERT_QUERY); }
+    public void save(ExtratoDTO e) throws SQLException { commonDAO.save(e, UPDATE_QUERY, INSERT_QUERY); }
+    public void saveAll(List<ExtratoDTO> list) throws SQLException { commonDAO.saveBatch(list, UPDATE_QUERY, INSERT_QUERY); }
+    public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
+    public void deleteBatch(List<ExtratoDTO> list) throws SQLException { commonDAO.deleteBatch(DELETE_QUERY, list); }
 
     public ExtratoDTO getDTO(ResultSet rs) throws SQLException {
         String conta;

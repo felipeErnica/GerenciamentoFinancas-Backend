@@ -64,7 +64,8 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
     }
 
     public List<CategoriaDTO> findAll() throws SQLException {
-        return commonDAO.findList(SELECT_QUERY);
+        String query = SELECT_QUERY + " ORDER BY numero_categoria";
+        return commonDAO.findList(query);
     }
 
     public void save(CategoriaDTO dto) throws SQLException {

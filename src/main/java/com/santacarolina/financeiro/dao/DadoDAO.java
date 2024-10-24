@@ -60,7 +60,11 @@ public class DadoDAO implements DAO<DadoDTO> {
         return commonDAO.findOne(query);
     }
 
-    public List<DadoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<DadoDTO> findAll() throws SQLException {
+        String query = SELECT_QUERY + " ORDER BY nome_contato, numero_conta";
+        return commonDAO.findList(query);
+    }
+
     public DadoDTO save(DadoDTO d) throws SQLException { return commonDAO.save(d, UPDATE_QUERY, INSERT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
 

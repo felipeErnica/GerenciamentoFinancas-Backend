@@ -33,7 +33,10 @@ public class BancoDAO implements DAO<BancoDTO> {
     @Autowired
     public BancoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
-    public List<BancoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<BancoDTO> findAll() throws SQLException { 
+        String query = SELECT_QUERY + " ORDER BY nomeBanco;";
+        return commonDAO.findList(query); 
+    }
 
     public Optional<BancoDTO> findById(long id) throws SQLException {
         String query = SELECT_QUERY + "WHERE id = " + id;

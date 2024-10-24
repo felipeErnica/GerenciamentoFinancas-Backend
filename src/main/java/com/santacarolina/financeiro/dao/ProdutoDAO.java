@@ -58,6 +58,8 @@ public class ProdutoDAO implements DAO<ProdutoDTO> {
     }
 
     public void saveAll(List<ProdutoDTO> produtoList) throws SQLException { commonDAO.saveBatch(produtoList, UPDATE_QUERY, INSERT_QUERY); }
+    public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
+    public void deleteBatch(List<ProdutoDTO> list) throws SQLException { commonDAO.deleteBatch(DELETE_QUERY, list); }
 
     @Override
     public ProdutoDTO getDTO(ResultSet rs) throws SQLException {

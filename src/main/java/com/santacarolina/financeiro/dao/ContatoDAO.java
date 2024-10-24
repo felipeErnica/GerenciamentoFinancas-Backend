@@ -62,7 +62,11 @@ public class ContatoDAO implements DAO<ContatoDTO> {
         return commonDAO.findOne(query);
     }
 
-    public List<ContatoDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<ContatoDTO> findAll() throws SQLException {
+        String query = SELECT_QUERY + "ORDER BY nome";
+        return commonDAO.findList(query); 
+    }
+
     public void saveAll(List<ContatoDTO> contatos) throws SQLException { commonDAO.saveBatch(contatos, UPDATE_QUERY, INSERT_QUERY); }
     public ContatoDTO save(ContatoDTO contato) throws SQLException { return commonDAO.save(contato, UPDATE_QUERY, SELECT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }

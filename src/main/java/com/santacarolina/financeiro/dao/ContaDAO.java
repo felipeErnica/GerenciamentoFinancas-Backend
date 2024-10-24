@@ -49,7 +49,10 @@ public class ContaDAO implements DAO<ContaDTO> {
         return commonDAO.findOne(query);
     }
 
-    public List<ContaDTO> findAll() throws SQLException { return commonDAO.findList(SELECT_QUERY); }
+    public List<ContaDTO> findAll() throws SQLException {
+        String query = SELECT_QUERY + " ORDER BY nome_conta";
+        return commonDAO.findList(query); 
+    }
     public void save(ContaDTO c) throws SQLException { commonDAO.save(c, UPDATE_QUERY, INSERT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
 

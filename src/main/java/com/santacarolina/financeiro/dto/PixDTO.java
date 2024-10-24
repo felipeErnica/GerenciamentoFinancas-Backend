@@ -7,6 +7,7 @@ public class PixDTO implements DataDAO {
 
     private long id;
     private long contatoId;
+    private String nomeContato;
     private Long dadoId;
     private TipoPix tipoPix;
     private String chave;
@@ -14,10 +15,11 @@ public class PixDTO implements DataDAO {
     private String agencia;
     private String numeroConta;
 
-    public PixDTO(long id, long contatoId, Long dadoId, TipoPix tipoPix, String chave,
+    public PixDTO(long id, long contatoId, String nomeContato, Long dadoId, TipoPix tipoPix, String chave,
                   String nomeBanco, String agencia, String numeroConta) {
         this.id = id;
         this.contatoId = contatoId;
+        this.nomeContato = nomeContato;
         this.dadoId = dadoId;
         this.tipoPix = tipoPix;
         this.chave = chave;
@@ -35,6 +37,7 @@ public class PixDTO implements DataDAO {
     public String getNomeBanco() { return nomeBanco; }
     public String getAgencia() { return agencia; }
     public String getNumeroConta() { return numeroConta; }
+    public String getNomeContato() { return nomeContato; }
 
     @Override
     public void setId(long id) { this.id = id; }

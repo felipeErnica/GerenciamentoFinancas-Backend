@@ -77,6 +77,8 @@ public class DuplicataDAO implements DAO<DuplicataDTO> {
 
     public void save(DuplicataDTO d) throws SQLException { commonDAO.save(d, UPDATE_QUERY, INSERT_QUERY); }
     public void saveAll(List<DuplicataDTO> list) throws SQLException { commonDAO.saveBatch(list, UPDATE_QUERY, INSERT_QUERY); }
+    public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id);}
+    public void deleteBatch(List<DuplicataDTO> list) throws SQLException { commonDAO.deleteBatch(DELETE_QUERY, list); }
 
     @Override
     public DuplicataDTO getDTO(ResultSet rs) throws SQLException {
