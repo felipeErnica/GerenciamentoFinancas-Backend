@@ -18,16 +18,16 @@ public class ContaDAO implements DAO<ContaDTO> {
 
     private static final String INSERT_QUERY = """
             INSERT INTO public.contas_bancarias(
-            	banco_id, agencia, numero_conta, nome_conta)
-            	VALUES (?, ?, ?, ?, ?, ?);
+            	banco_id, agencia, numero_conta, nome_conta, abreviacao_conta)
+            	VALUES (?, ?, ?, ?, ?, ?, ?);
             """;
     private static final String SELECT_QUERY = """
-            SELECT id, banco_id, agencia, numero_conta, nome_conta
+            SELECT id, banco_id, agencia, numero_conta, nome_conta, abreviacao_conta
             	FROM contas_bancarias
             """;
     private static final String UPDATE_QUERY = """
             UPDATE contas_bancarias
-            	SET banco_id=?, agencia=?, numero_conta=?, nome_conta=?
+            	SET banco_id=?, agencia=?, numero_conta=?, nome_conta=?, abreviacao_conta=?
             	WHERE id = ?;
             """;
     private static final String DELETE_QUERY = "DELETE FROM contas_bancarias WHERE id = ?";
@@ -61,6 +61,7 @@ public class ContaDAO implements DAO<ContaDTO> {
         d.setNomeConta(rs.getString("nome_conta"));
         d.setNumeroConta(rs.getString("numero_conta"));
         d.setBancoId(rs.getLong("banco_id"));
+        d.setAbreviacaoConta(rs.getString("abreviacao_conta"));
         return d;
     }
 
@@ -70,9 +71,10 @@ public class ContaDAO implements DAO<ContaDTO> {
         ps.setString(2, d.getAgencia());
         ps.setString(3, d.getNumeroConta());
         ps.setString(4, d.getNomeConta());
+        ps.setString(5, d.getAbreviacaoConta());
     }
 
     @Override
-    public int getIdParameterIndex() { return 5; }
+    public int getIdParameterIndex() { return 6; }
 
 }

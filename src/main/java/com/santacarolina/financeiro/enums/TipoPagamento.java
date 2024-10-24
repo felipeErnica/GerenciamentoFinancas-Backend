@@ -13,6 +13,13 @@ public enum TipoPagamento {
     private int tipoPagamento;
 
     TipoPagamento(int tipoPagamento) { this.tipoPagamento = tipoPagamento; }
-    public int getTipoPagamento() { return tipoPagamento; }
+    public int getValue() { return tipoPagamento; }
+
+    public static TipoPagamento fromValue(int value) {
+        for (TipoPagamento tipoPagamento : TipoPagamento.values()) {
+            if (tipoPagamento.getValue() == value) return tipoPagamento;
+        }
+        throw new ArrayIndexOutOfBoundsException();
+    }
 
 }

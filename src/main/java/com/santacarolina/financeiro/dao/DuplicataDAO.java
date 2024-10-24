@@ -109,7 +109,7 @@ public class DuplicataDAO implements DAO<DuplicataDTO> {
         ps.setLong(1, d.getDocId());
         ps.setInt(2, d.getNumDup());
         ps.setDate(3, Date.valueOf(d.getDataVencimento()));
-        ps.setInt(4, d.getTipoPagamento().getTipoPagamento());
+        ps.setInt(4, d.getTipoPagamento().getValue());
         ps.setDouble(5, d.getValor());
         ps.setString(6, d.getBoletoCaminho());
         ps.setObject(7, d.getDadoId());
