@@ -68,7 +68,6 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
             rs.getObject("tipo_pagamento") != null ? TipoMovimento.fromValue(rs.getInt("tipo_pagamento")) : null,
             (Long) rs.getObject("duplicata_id"),
             rs.getDate("data_vencimento") != null ? rs.getDate("data_vencimento").toLocalDate() : null,
-            rs.getObject("tipo_pagamento") != null ? TipoPagamento.fromValue(rs.getInt("tipo_pagamento")) : null,
             rs.getDouble("valor_duplicata"),
             rs.getLong("pasta_id"),
             rs.getString("nome_pasta"),

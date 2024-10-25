@@ -12,7 +12,6 @@ public class ConciliacaoDTO implements DataDAO {
     private TipoMovimento tipoMovimento;
     private Long duplicataId;
     private LocalDate dataVencimento;
-    private TipoPagamento tipoPagamento;
     private double valorDuplicata;
     private long pastaId;
     private String nomePasta;
@@ -27,13 +26,12 @@ public class ConciliacaoDTO implements DataDAO {
     private double valorExtrato;
 
     public ConciliacaoDTO(long id, TipoMovimento tipoMovimento, Long duplicataId, LocalDate dataVencimento,
-            TipoPagamento tipoPagamento, double valorDuplicata, long pastaId, String nomePasta, long emissorId, String nomeEmissor, long contaId,
+             double valorDuplicata, long pastaId, String nomePasta, long emissorId, String nomeEmissor, long contaId,
             String contaBancaria, long extratoId, LocalDate dataExtrato, String descExtrato, String categoriaExtrato, double valorExtrato) {
         this.id = id;
         this.tipoMovimento = tipoMovimento;
         this.duplicataId = duplicataId;
         this.dataVencimento = dataVencimento;
-        this.tipoPagamento = tipoPagamento;
         this.valorDuplicata = valorDuplicata;
         this.pastaId = pastaId;
         this.nomePasta = nomePasta;
@@ -56,7 +54,6 @@ public class ConciliacaoDTO implements DataDAO {
     public long getExtratoId() { return extratoId; }
     public LocalDate getDataExtrato() { return dataExtrato; }
     public LocalDate getDataVencimento() { return dataVencimento; }
-    public TipoPagamento getTipoPagamento() { return tipoPagamento; }
     public double getValorDuplicata() { return valorDuplicata; }
     public long getPastaId() { return pastaId; }
     public String getNomePasta() { return nomePasta; }
