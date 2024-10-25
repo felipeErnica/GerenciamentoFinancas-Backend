@@ -65,7 +65,7 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
     public ConciliacaoDTO getDTO(ResultSet rs) throws SQLException {
         return new ConciliacaoDTO(
             rs.getLong("id"), 
-            TipoMovimento.fromValue(rs.getInt("tipo_pagamento")),
+            rs.getObject("tipo_pagamento") != null ? TipoMovimento.fromValue(rs.getInt("tipo_pagamento")) : null,
             (Long) rs.getLong("duplicata_id"),
             rs.getDate("data_vencimento").toLocalDate(),
             rs.getObject("tipo_pagamento") != null ? TipoPagamento.fromValue(rs.getInt("tipo_pagamento")) : null,
@@ -79,7 +79,7 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
             rs.getLong("extrato_id"),
             rs.getDate("data_transacao").toLocalDate(),
             rs.getString("descricao"),
-            rs.getString("categori_extrato"),
+            rs.getString("categoria_extrato"),
             rs.getDouble("valor_extrato"));
     }
 
