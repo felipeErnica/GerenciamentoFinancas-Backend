@@ -34,7 +34,7 @@ public class BancoDAO implements DAO<BancoDTO> {
     public BancoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public List<BancoDTO> findAll() throws SQLException { 
-        String query = SELECT_QUERY + " ORDER BY nomeBanco;";
+        String query = SELECT_QUERY + " ORDER BY nome_banco;";
         return commonDAO.findList(query); 
     }
 
