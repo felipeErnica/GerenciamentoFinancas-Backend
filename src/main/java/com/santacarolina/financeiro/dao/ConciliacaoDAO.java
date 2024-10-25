@@ -20,13 +20,15 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
     private static final String SELECT_QUERY = """
         SELECT conc.id, conc.tipo_movimento, conc.duplicata_id, conc.extrato_id,
             dup.data_vencimento, dup.tipo_pagamento, dup.valor as valor_duplicata,
-            pasta.nome as nome_pasta
+            pasta.nome as nome_pasta,
+            contatos.id as emissor_id, contatos.nome as nome_emissor,
             ex.data_transacao, ex.conta_id, ex.categori_extrato, ex.descricao, ex.valor as valor_extrato,
             conta.abreviacao_conta
         FROM conciliacoes
             LEFT JOIN duplicatas as dup ON dup.id = conc.duplicata_id
             LEFT JOIN extratos as ex ON ex.id = conc.extrato_id
             LEFT JOIN documentos as doc ON doc.id = dup.documento_id
+            LEFT JOIN contatos ON contatos.id = doc.emissor_id
             LEFT JOIN pastas_contabeis as pasta ON pasta.id = doc.pasta_id
             LEFT JOIN contas_bancarias as conta ON conta.id = ex.conta_id
     """;
@@ -70,6 +72,8 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
             rs.getDouble("valor_duplicata"),
             rs.getLong("pasta_id"),
             rs.getString("nome_pasta"),
+            rs.getLong("emissor_id"),
+            rs.getString("nome_emissor"),
             rs.getLong("conta_id"),
             rs.getString("abreviacao_conta"),
             rs.getLong("extrato_id"),

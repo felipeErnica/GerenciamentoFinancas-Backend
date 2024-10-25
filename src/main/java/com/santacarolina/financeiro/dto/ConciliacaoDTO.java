@@ -16,6 +16,8 @@ public class ConciliacaoDTO implements DataDAO {
     private double valorDuplicata;
     private long pastaId;
     private String nomePasta;
+    private long emissorId;
+    private String nomeEmissor;
     private long contaId;
     private String contaBancaria;
     private long extratoId;
@@ -25,7 +27,7 @@ public class ConciliacaoDTO implements DataDAO {
     private double valorExtrato;
 
     public ConciliacaoDTO(long id, TipoMovimento tipoMovimento, Long duplicataId, LocalDate dataVencimento,
-            TipoPagamento tipoPagamento, double valorDuplicata, long pastaId, String nomePasta, long contaId,
+            TipoPagamento tipoPagamento, double valorDuplicata, long pastaId, String nomePasta, long emissorId, String nomeEmissor, long contaId,
             String contaBancaria, long extratoId, LocalDate dataExtrato, String descExtrato, String categoriaExtrato, double valorExtrato) {
         this.id = id;
         this.tipoMovimento = tipoMovimento;
@@ -35,6 +37,8 @@ public class ConciliacaoDTO implements DataDAO {
         this.valorDuplicata = valorDuplicata;
         this.pastaId = pastaId;
         this.nomePasta = nomePasta;
+        this.emissorId = emissorId;
+        this.nomeEmissor = nomeEmissor;
         this.contaId = contaId;
         this.contaBancaria = contaBancaria;
         this.extratoId = extratoId;
@@ -61,6 +65,8 @@ public class ConciliacaoDTO implements DataDAO {
     public String getDescExtrato() { return descExtrato; }
     public String getCategoriaExtrato() { return categoriaExtrato; }
     public double getValorExtrato() { return valorExtrato; } 
+    public long getEmissorId() { return emissorId; }
+    public String getNomeEmissor() { return nomeEmissor; }
 
     @Override
     public void setId(long id) { this.id = id; }
