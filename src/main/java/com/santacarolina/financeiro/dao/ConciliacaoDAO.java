@@ -66,8 +66,8 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
         return new ConciliacaoDTO(
             rs.getLong("id"), 
             rs.getObject("tipo_pagamento") != null ? TipoMovimento.fromValue(rs.getInt("tipo_pagamento")) : null,
-            (Long) rs.getLong("duplicata_id"),
-            rs.getDate("data_vencimento").toLocalDate(),
+            (Long) rs.getObject("duplicata_id"),
+            rs.getDate("data_vencimento") != null ? rs.getDate("data_vencimento").toLocalDate() : null,
             rs.getObject("tipo_pagamento") != null ? TipoPagamento.fromValue(rs.getInt("tipo_pagamento")) : null,
             rs.getDouble("valor_duplicata"),
             rs.getLong("pasta_id"),
@@ -77,7 +77,7 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
             rs.getLong("conta_id"),
             rs.getString("abreviacao_conta"),
             rs.getLong("extrato_id"),
-            rs.getDate("data_transacao").toLocalDate(),
+            rs.getDate("data_transacao") != null ? rs.getDate("data_transacao").toLocalDate() : null,
             rs.getString("descricao"),
             rs.getString("categoria_extrato"),
             rs.getDouble("valor_extrato"));
