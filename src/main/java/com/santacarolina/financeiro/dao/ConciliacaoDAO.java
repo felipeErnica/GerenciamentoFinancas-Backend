@@ -22,7 +22,7 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
             dup.data_vencimento, dup.tipo_pagamento, dup.valor as valor_duplicata,
             pasta.nome as nome_pasta,
             contatos.id as emissor_id, contatos.nome as nome_emissor,
-            ex.data_transacao, ex.conta_id, ex.categori_extrato, ex.descricao, ex.valor as valor_extrato,
+            ex.data_transacao, ex.conta_id, ex.categoria_extrato, ex.descricao, ex.valor as valor_extrato,
             conta.abreviacao_conta
         FROM conciliacoes as conc
             LEFT JOIN duplicatas as dup ON dup.id = conc.duplicata_id
