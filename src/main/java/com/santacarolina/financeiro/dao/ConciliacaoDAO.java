@@ -20,7 +20,7 @@ public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {
     private static final String SELECT_QUERY = """
         SELECT conc.id, conc.tipo_movimento, conc.duplicata_id, conc.extrato_id,
             dup.data_vencimento, dup.tipo_pagamento, dup.valor as valor_duplicata,
-            pasta.nome as nome_pasta,
+            pasta.id as pasta_id, pasta.nome as nome_pasta,
             contatos.id as emissor_id, contatos.nome as nome_emissor,
             ex.data_transacao, ex.conta_id, ex.categoria_extrato, ex.descricao, ex.valor as valor_extrato,
             conta.abreviacao_conta
