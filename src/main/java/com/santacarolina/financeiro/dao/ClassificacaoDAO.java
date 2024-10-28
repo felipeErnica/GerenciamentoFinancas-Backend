@@ -44,7 +44,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     }
 
     public Optional<ClassificacaoDTO> findByNome(String nome) throws SQLException {
-        String query = SELECT_QUERY + " WHERE class.nome_classificacao = " + nome.replace("+", " ");
+        String query = SELECT_QUERY + " WHERE class.nome_classificacao = '" + nome.replace("+", " ") + "'";
         return commonDAO.findOne(query);
     }
 

@@ -3,7 +3,6 @@ package com.santacarolina.financeiro.dto;
 import java.time.LocalDate;
 
 import com.santacarolina.financeiro.enums.TipoMovimento;
-import com.santacarolina.financeiro.enums.TipoPagamento;
 import com.santacarolina.financeiro.interfaces.DataDAO;
 
 public class ConciliacaoDTO implements DataDAO {
