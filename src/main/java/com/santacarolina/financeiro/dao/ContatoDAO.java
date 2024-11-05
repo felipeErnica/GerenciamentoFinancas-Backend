@@ -58,7 +58,7 @@ public class ContatoDAO implements DAO<ContatoDTO> {
     }
 
     public Optional<ContatoDTO> getByNome(String nome) throws SQLException {
-        String query = SELECT_QUERY + "WHERE nome = " + nome;
+        String query = SELECT_QUERY + "WHERE nome = '" + nome.replace("+", " ") + "'";
         return commonDAO.findOne(query);
     }
 
