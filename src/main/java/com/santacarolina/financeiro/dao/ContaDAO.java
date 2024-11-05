@@ -39,7 +39,7 @@ public class ContaDAO implements DAO<ContaDTO> {
 
     public Optional<ContaDTO> findEqual(String agencia, String numeroConta, long bancoId) throws SQLException {
         String query = SELECT_QUERY + """
-                WHERE agencia = '%s' AND numero_conta = '%s' + banco_id = %s;
+                WHERE agencia = '%s' AND numero_conta = '%s' AND banco_id = %s;
                 """.formatted(agencia, numeroConta, bancoId);
         return commonDAO.findOne(query);
     }
