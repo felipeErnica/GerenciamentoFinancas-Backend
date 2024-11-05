@@ -72,7 +72,7 @@ public class DadoController {
             dadoDAO.save(d);
             PixDTO pix = d.getPixDTO();
             if (pix != null){
-                pix.setContaId(d.getId());
+                pix.setDadoId(d.getId());
                 pixDAO.save(d.getPixDTO());
             } 
             return ResponseEntity.ok(d);

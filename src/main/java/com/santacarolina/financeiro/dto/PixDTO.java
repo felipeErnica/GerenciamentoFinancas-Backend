@@ -41,6 +41,6 @@ public class PixDTO implements DataDAO {
 
     @Override
     public void setId(long id) { this.id = id; }
-    public void setContaId(long contaId) { this.contatoId = contaId; }
+    public void setDadoId(long dadoId) { this.dadoId = dadoId; }
 
 }
