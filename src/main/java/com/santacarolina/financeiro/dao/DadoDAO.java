@@ -34,7 +34,7 @@ public class DadoDAO implements DAO<DadoDTO> {
             """;
     private static final String INSERT_QUERY = """
             INSERT INTO (agencia, banco_id, numero_conta, contato_id)
-            VALUES (?,?,?,?,?)
+            VALUES (?,?,?,?)
             """;
     private static final String DELETE_QUERY = "DELETE FROM dados_bancarios WHERE id = ?";
 
