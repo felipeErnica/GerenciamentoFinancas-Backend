@@ -71,7 +71,7 @@ public class ContatoController {
     }
 
     @GetMapping("/nome={nome}")
-    public ResponseEntity<ContatoDTO> getByNome(@RequestParam String nome) {
+    public ResponseEntity<ContatoDTO> getByNome(@PathVariable String nome) {
         try {
             return dao.getByNome(nome)
                     .map(ResponseEntity::ok)
