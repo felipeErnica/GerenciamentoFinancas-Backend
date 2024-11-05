@@ -44,7 +44,7 @@ public class BancoDAO implements DAO<BancoDTO> {
     }
 
     public Optional<BancoDTO> findByNomeBanco(String nomeBanco) throws SQLException {
-        String query = SELECT_QUERY + "WHERE nome_banco = " + nomeBanco;
+        String query = SELECT_QUERY + "WHERE nome_banco = '" + nomeBanco + "'";
         return commonDAO.findOne(query);
     }
 

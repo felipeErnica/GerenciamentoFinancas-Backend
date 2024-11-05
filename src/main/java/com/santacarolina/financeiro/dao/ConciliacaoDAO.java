@@ -1,18 +1,18 @@
 package com.santacarolina.financeiro.dao;
 
-import com.santacarolina.financeiro.dto.ConciliacaoDTO;
-import com.santacarolina.financeiro.enums.TipoMovimento;
-import com.santacarolina.financeiro.enums.TipoPagamento;
-import com.santacarolina.financeiro.interfaces.DAO;
-import com.santacarolina.financeiro.util.CommonDAO;
-import com.santacarolina.financeiro.util.DataBaseConn;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.santacarolina.financeiro.dto.ConciliacaoDTO;
+import com.santacarolina.financeiro.enums.TipoMovimento;
+import com.santacarolina.financeiro.interfaces.DAO;
+import com.santacarolina.financeiro.util.CommonDAO;
+import com.santacarolina.financeiro.util.DataBaseConn;
 
 @Component
 public class ConciliacaoDAO implements DAO<ConciliacaoDTO> {

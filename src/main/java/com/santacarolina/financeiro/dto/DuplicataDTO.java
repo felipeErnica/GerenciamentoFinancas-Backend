@@ -19,12 +19,13 @@ public class DuplicataDTO implements DataDAO {
     private String boletoCaminho;
     private double valor;
     private boolean paga;
+    private long contaId;
     private String conta;
     private FluxoCaixa fluxoCaixa;
 
     public DuplicataDTO(Long docId, Long dadoId, long id, int numDup, TipoPagamento tipoPagamento,
                         LocalDate dataVencimento, String nomeContato, String boletoCaminho,
-                        double valor, boolean paga, String conta, Long pixId, FluxoCaixa fluxoCaixa) {
+                        double valor, boolean paga, long contaId, String conta, Long pixId, FluxoCaixa fluxoCaixa) {
         this.docId = docId;
         this.dadoId = dadoId;
         this.id = id;
@@ -35,6 +36,7 @@ public class DuplicataDTO implements DataDAO {
         this.boletoCaminho = boletoCaminho;
         this.valor = valor;
         this.paga = paga;
+        this.contaId = contaId;
         this.conta = conta;
         this.pixId = pixId;
         this.fluxoCaixa = fluxoCaixa;
@@ -51,6 +53,7 @@ public class DuplicataDTO implements DataDAO {
     public String getBoletoCaminho() { return boletoCaminho; }
     public double getValor() { return valor; }
     public boolean isPaga() { return paga; }
+    public long getContaId() { return contaId; }
     public String getConta() { return conta; }
     public Long getPixId() { return pixId; }
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }

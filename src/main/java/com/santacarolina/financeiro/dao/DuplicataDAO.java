@@ -33,8 +33,8 @@ public class DuplicataDAO implements DAO<DuplicataDTO> {
                     doc.fluxo_caixa,
                     dup.paga, dup.pix_id,
                     c.nome as nome_contato,
-                    p.conta_id,
-                    cb.agencia, cb.numero_conta,
+                    p.conta_id, 
+                    cb.abreviacao_conta,
                     b.apelido_banco, b.nome_banco
                 FROM duplicatas dup
                     LEFT JOIN documentos doc ON dup.documento_id = doc.id
@@ -82,14 +82,6 @@ public class DuplicataDAO implements DAO<DuplicataDTO> {
 
     @Override
     public DuplicataDTO getDTO(ResultSet rs) throws SQLException {
-        String conta;
-        if (rs.getLong("conta_id") != 0) {
-            String nomeBanco = rs.getString("apelido_banco") != null ? rs.getString("apelido_banco") : rs.getString("nome_banco");
-            conta = nomeBanco  +
-                    " AG: " + rs.getString("agencia") +
-                    " CC: " + rs.getString("numero_conta");
-        } else conta = null;
-
         return new DuplicataDTO(
                 rs.getLong("documento_id"),
                 (Long) rs.getObject("dado_id"),
@@ -101,7 +93,8 @@ public class DuplicataDAO implements DAO<DuplicataDTO> {
                 rs.getString("boleto_caminho"),
                 rs.getDouble("valor"),
                 rs.getBoolean("paga"),
-                conta,
+                rs.getLong("conta_id"),
+                rs.getString("abreviacao_conta"),
                 (Long) rs.getObject("pix_id"),
                 FluxoCaixa.fromValue(rs.getInt("fluxo_caixa")));
     }

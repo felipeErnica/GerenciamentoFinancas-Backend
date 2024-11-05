@@ -1,17 +1,17 @@
 package com.santacarolina.financeiro.util;
 
-import com.santacarolina.financeiro.dto.ContatoDTO;
-import com.santacarolina.financeiro.interfaces.DAO;
-import com.santacarolina.financeiro.interfaces.DataDAO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.santacarolina.financeiro.interfaces.DAO;
+import com.santacarolina.financeiro.interfaces.DataDAO;
 
 public class CommonDAO<T extends DataDAO> {
 
