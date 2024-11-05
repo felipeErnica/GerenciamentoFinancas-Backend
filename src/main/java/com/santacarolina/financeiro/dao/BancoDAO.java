@@ -48,6 +48,11 @@ public class BancoDAO implements DAO<BancoDTO> {
         return commonDAO.findOne(query);
     }
 
+    public Optional<BancoDTO> findByApelido(String apelido) throws SQLException {
+        String query = SELECT_QUERY + "WHERE apelido_banco = '" + apelido + "'";
+        return commonDAO.findOne(query);
+    }
+
     public void save(BancoDTO banco) throws SQLException { commonDAO.save(banco, UPDATE_QUERY, INSERT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
 

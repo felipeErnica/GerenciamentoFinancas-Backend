@@ -55,6 +55,17 @@ public class BancoController {
         }
     }
 
+    @GetMapping("/apelido={apelido}")
+    public ResponseEntity<BancoDTO> findByApelido(@PathVariable String apelido) {
+        try {
+            return bancoDAO.findByApelido(apelido)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody BancoDTO banco) {
         try {
