@@ -68,7 +68,7 @@ public class ContatoDAO implements DAO<ContatoDTO> {
     }
 
     public void saveAll(List<ContatoDTO> contatos) throws SQLException { commonDAO.saveBatch(contatos, UPDATE_QUERY, INSERT_QUERY); }
-    public ContatoDTO save(ContatoDTO contato) throws SQLException { return commonDAO.save(contato, UPDATE_QUERY, SELECT_QUERY); }
+    public ContatoDTO save(ContatoDTO contato) throws SQLException { return commonDAO.save(contato, UPDATE_QUERY, INSERT_QUERY); }
     public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
 
     @Override
