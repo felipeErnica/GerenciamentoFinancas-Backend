@@ -19,7 +19,7 @@ public class ContaDAO implements DAO<ContaDTO> {
     private static final String INSERT_QUERY = """
             INSERT INTO public.contas_bancarias(
             	banco_id, agencia, numero_conta, nome_conta, abreviacao_conta)
-            	VALUES (?, ?, ?, ?, ?, ?, ?);
+            	VALUES (?, ?, ?, ?, ?);
             """;
     private static final String SELECT_QUERY = """
             SELECT id, banco_id, agencia, numero_conta, nome_conta, abreviacao_conta
