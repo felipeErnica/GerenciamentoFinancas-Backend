@@ -3,6 +3,7 @@ package com.santacarolina.financeiro.controller;
 import com.santacarolina.financeiro.dao.DadoDAO;
 import com.santacarolina.financeiro.dao.PixDAO;
 import com.santacarolina.financeiro.dto.DadoDTO;
+import com.santacarolina.financeiro.dto.PixDTO;
 import com.santacarolina.financeiro.util.DataBaseConn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,11 @@ public class DadoController {
     public ResponseEntity<DadoDTO> save(@RequestBody DadoDTO d) {
         try {
             dadoDAO.save(d);
-            if (d.getPixDTO() != null) pixDAO.save(d.getPixDTO());
+            PixDTO pix = d.getPixDTO();
+            if (pix != null){
+                pix.setContaId(d.getId());
+                pixDAO.save(d.getPixDTO());
+            } 
             return ResponseEntity.ok(d);
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
