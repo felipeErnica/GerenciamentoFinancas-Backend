@@ -9,10 +9,10 @@ public class ClassificacaoDTO implements DataDAO {
     private long categoriaId;
     private String nomeCategoria;
     private FluxoCaixa fluxoCaixa;
-    private long numeroIdentificacao;
+    private String numeroIdentificacao;
     private String nomeClassificacao;
 
-    public ClassificacaoDTO(long id, long categoriaId, String nomeCategoria, FluxoCaixa fluxoCaixa, long numeroIdentificacao, 
+    public ClassificacaoDTO(long id, long categoriaId, String nomeCategoria, FluxoCaixa fluxoCaixa, String numeroIdentificacao, 
         String nomeClassificacao) {
         this.id = id;
         this.categoriaId = categoriaId;
@@ -25,7 +25,7 @@ public class ClassificacaoDTO implements DataDAO {
     @Override
     public long getId() { return id; }
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
-    public long getNumeroIdentificacao() { return numeroIdentificacao; }
+    public String getNumeroIdentificacao() { return numeroIdentificacao; }
     public String getNomeClassificacao() { return nomeClassificacao; }
     public long getCategoriaId() { return categoriaId; }
     public String getNomeCategoria() { return nomeCategoria; }

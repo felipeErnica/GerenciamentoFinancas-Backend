@@ -40,7 +40,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     public ClassificacaoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public List<ClassificacaoDTO> findAll() throws SQLException {
-        return commonDAO.findList(SELECT_QUERY + "ORDER BY class.fluxo_caixa, class.categoria_id"); 
+        return commonDAO.findList(SELECT_QUERY + "ORDER BY class.fluxo_caixa, class.numeroIdentificacao"); 
     }
 
     public Optional<ClassificacaoDTO> findByNome(String nome) throws SQLException {
@@ -64,10 +64,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     }
 
     public void save(ClassificacaoDTO dto) throws SQLException { commonDAO.save(dto, UPDATE_QUERY, INSERT_QUERY); }
-
-    public void deleteBatch(List<ClassificacaoDTO> list) throws SQLException {
-        commonDAO.deleteBatch(DELETE_QUERY, list);
-    }
+    public void deleteBatch(List<ClassificacaoDTO> list) throws SQLException { commonDAO.deleteBatch(DELETE_QUERY, list); }
 
     @Override
     public ClassificacaoDTO getDTO(ResultSet rs) throws SQLException {
@@ -76,7 +73,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
                 rs.getLong("categoria_id"),
                 rs.getString("nome_categoria"),
                 FluxoCaixa.fromValue(rs.getInt("fluxo_caixa")),
-                rs.getLong("numero_identificacao"),
+                rs.getString("numero_identificacao"),
                 rs.getString("nome_classificacao"));
     }
 
@@ -84,7 +81,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     public void prepareValuesDTO(PreparedStatement ps, ClassificacaoDTO c) throws SQLException {
         ps.setLong(1, c.getCategoriaId());
         ps.setInt(2, c.getFluxoCaixa().getValue());
-        ps.setLong(3, c.getNumeroIdentificacao());
+        ps.setString(3, c.getNumeroIdentificacao());
         ps.setString(4, c.getNomeClassificacao());
     }
 
