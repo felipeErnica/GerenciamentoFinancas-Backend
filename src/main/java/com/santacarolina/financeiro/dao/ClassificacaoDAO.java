@@ -40,7 +40,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     public ClassificacaoDAO(DataBaseConn conn) { this.commonDAO = new CommonDAO<>(this, conn); }
 
     public List<ClassificacaoDTO> findAll() throws SQLException {
-        return commonDAO.findList(SELECT_QUERY + "ORDER BY class.fluxo_caixa, class.numeroIdentificacao"); 
+        return commonDAO.findList(SELECT_QUERY + "ORDER BY class.fluxo_caixa, class.numero_identificacao"); 
     }
 
     public Optional<ClassificacaoDTO> findByNome(String nome) throws SQLException {
