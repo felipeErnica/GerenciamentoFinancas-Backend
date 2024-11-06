@@ -69,4 +69,14 @@ public class ClassificacaoController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    private ResponseEntity deleteById(@PathVariable long id) {
+        try {
+            dao.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

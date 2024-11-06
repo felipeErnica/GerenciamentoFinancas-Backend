@@ -64,6 +64,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
     }
 
     public void save(ClassificacaoDTO dto) throws SQLException { commonDAO.save(dto, UPDATE_QUERY, INSERT_QUERY); }
+    public void deleteById(long id) throws SQLException { commonDAO.deleteRecord(DELETE_QUERY, id); }
     public void deleteBatch(List<ClassificacaoDTO> list) throws SQLException { commonDAO.deleteBatch(DELETE_QUERY, list); }
 
     @Override
