@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dao.ExtratoDAO;
 import com.santacarolina.financeiro.dto.ExtratoDTO;
 
+
 @RestController
 @RequestMapping("/extratos")
 @SuppressWarnings("rawtypes")

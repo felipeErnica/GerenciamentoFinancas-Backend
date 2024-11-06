@@ -3,7 +3,10 @@ package com.santacarolina.financeiro.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.santacarolina.financeiro.dao.BancoDAO;
 import com.santacarolina.financeiro.dto.BancoDTO;
+import com.santacarolina.financeiro.entity.BancoEntity;
+import com.santacarolina.financeiro.repository.BancoRepository;
 
 @RestController
 @RequestMapping("/bancos")
 @SuppressWarnings("rawtypes")
 public class BancoController {
 
-    @Autowired
+    private final Logger logger = LogManager.getLogger();
     private BancoDAO bancoDAO;
+    private BancoRepository repository;
+
+    @Autowired
+    public BancoController(BancoDAO bancoDAO, BancoRepository repository) {
+        this.bancoDAO = bancoDAO;
+        this.repository = repository;
+    }
 
     @GetMapping
     public ResponseEntity<List<BancoDTO>> findAll() {
@@ -67,11 +79,12 @@ public class BancoController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody BancoDTO banco) {
+    public ResponseEntity save(@RequestBody BancoEntity banco) {
         try {
-            bancoDAO.save(banco);
+            repository.save(banco);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockingFailureException e) {
+            logger.error(e);
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -79,9 +92,10 @@ public class BancoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
-            bancoDAO.deleteById(id);
+            repository.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockingFailureException e) {
+            logger.error(e);
             return ResponseEntity.internalServerError().build();
         }
     }
