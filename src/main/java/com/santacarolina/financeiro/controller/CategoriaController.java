@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -78,7 +79,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity save(CategoriaDTO t) {
+    public ResponseEntity save(@RequestBody CategoriaDTO t) {
         try {
             dao.save(t);
             return ResponseEntity.ok().build();
@@ -87,8 +88,8 @@ public class CategoriaController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity deleteById(long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteById(@PathVariable long id) {
         try {
             dao.deleteById(id);
             List<ClassificacaoDTO> listClassificacao = classificacaoDAO.findByCategoria(id);
