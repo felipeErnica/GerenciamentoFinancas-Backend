@@ -28,7 +28,7 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
 
     private static final String INSERT_QUERY = """
         INSERT INTO categorias_contabeis(fluxo_caixa, numero_categoria, nome)
-        VALUES(?,?,?)
+            VALUES(?,?,?)
     """;
 
     private static final String UPDATE_QUERY = """
@@ -88,13 +88,12 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
 
     @Override
     public void prepareValuesDTO(PreparedStatement ps, CategoriaDTO t) throws SQLException {
-        ps.setLong(1, t.getId());
-        ps.setLong(2, t.getFluxoCaixa().getValue());
-        ps.setString(3,t.getNumeroCategoria());
-        ps.setString(4, t.getNome());
+        ps.setLong(1, t.getFluxoCaixa().getValue());
+        ps.setString(2,t.getNumeroCategoria());
+        ps.setString(3, t.getNome());
     }
 
     @Override
-    public int getIdParameterIndex() { return 5; }
+    public int getIdParameterIndex() { return 4; }
 
 }
