@@ -43,7 +43,7 @@ public class PastaDAO implements DAO<PastaDTO> {
     }
 
     public Optional<PastaDTO> findByNome(String nome) throws SQLException {
-        String query = SELECT_QUERY + "WHERE nome = " + nome;
+        String query = SELECT_QUERY + "WHERE nome = '" + nome + "'";
         return commonDAO.findOne(query);
     }
 

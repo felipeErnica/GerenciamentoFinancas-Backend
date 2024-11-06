@@ -29,7 +29,7 @@ public class PastaController {
     @GetMapping("/nome={nome}")
     public ResponseEntity<PastaDTO> findByNome(@PathVariable String nome) {
         try {
-            return dao.findByNome(nome)
+            return dao.findByNome(nome.replace("+", " "))
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (SQLException e) {
