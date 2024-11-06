@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/classificacao")
+@SuppressWarnings("rawtypes")
 public class ClassificacaoController {
 
     @Autowired
@@ -53,6 +54,16 @@ public class ClassificacaoController {
             return dao.findByNome(nome)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping
+    private ResponseEntity save(@RequestBody ClassificacaoDTO dto) {
+        try {
+            dao.save(dto);
+            return ResponseEntity.ok().build();
         } catch (SQLException e) {
             return ResponseEntity.internalServerError().build();
         }
