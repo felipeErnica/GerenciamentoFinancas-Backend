@@ -25,7 +25,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
             """;
     private static final String UPDATE_QUERY = """
             UPDATE classificacaoes_contabeis
-            SET categoria_id = ?, fluxo_caixa = ?, numero_identificacao = ?, nome_classificacao = ?
+                SET categoria_id = ?, fluxo_caixa = ?, numero_identificacao = ?, nome_classificacao = ?
             WHERE id = ?;
             """;
     private static final String INSERT_QUERY = """
@@ -48,8 +48,8 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
         return commonDAO.findOne(query);
     }
 
-    public Optional<ClassificacaoDTO> getByNumero(long numeroIdentificacao) throws SQLException {
-        String query = SELECT_QUERY + " WHERE class.numero_identificacao = " + numeroIdentificacao;
+    public Optional<ClassificacaoDTO> getByNumero(String numeroIdentificacao) throws SQLException {
+        String query = SELECT_QUERY + " WHERE class.numero_identificacao = '" + numeroIdentificacao + "'";
         return commonDAO.findOne(query);
     }
 

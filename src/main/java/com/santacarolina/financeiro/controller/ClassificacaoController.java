@@ -37,7 +37,7 @@ public class ClassificacaoController {
     }
 
     @GetMapping("/numeroIdentificacao={numeroIdentificacao}")
-    private ResponseEntity<ClassificacaoDTO> getByNumero (@PathVariable long numeroIdentificacao) {
+    private ResponseEntity<ClassificacaoDTO> getByNumero (@PathVariable String numeroIdentificacao) {
         try {
             return dao.getByNumero(numeroIdentificacao)
                     .map(ResponseEntity::ok)
