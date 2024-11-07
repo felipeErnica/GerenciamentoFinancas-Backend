@@ -1,21 +1,36 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.dao.ClassificacaoDAO;
-import com.santacarolina.financeiro.dto.ClassificacaoDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.sql.SQLException;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.santacarolina.financeiro.dao.ClassificacaoDAO;
+import com.santacarolina.financeiro.dto.ClassificacaoDTO;
+import com.santacarolina.financeiro.entity.ClassificacaoEntity;
+import com.santacarolina.financeiro.repository.ClassificacaoRepository;
+
+import jakarta.persistence.OptimisticLockException;
 
 @RestController
 @RequestMapping("/classificacao")
 @SuppressWarnings("rawtypes")
 public class ClassificacaoController {
 
-    @Autowired
     private ClassificacaoDAO dao;
+    private ClassificacaoRepository repository;
+
+    public ClassificacaoController(ClassificacaoDAO dao, ClassificacaoRepository repository) {
+        this.dao = dao;
+        this.repository = repository;
+    }
 
     @GetMapping
     private ResponseEntity<List<ClassificacaoDTO>> findAll() {
@@ -60,11 +75,11 @@ public class ClassificacaoController {
     }
 
     @PostMapping
-    private ResponseEntity save(@RequestBody ClassificacaoDTO dto) {
+    private ResponseEntity save(@RequestBody ClassificacaoEntity dto) {
         try {
-            dao.save(dto);
+            repository.save(dto);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -72,9 +87,9 @@ public class ClassificacaoController {
     @DeleteMapping("/{id}")
     private ResponseEntity deleteById(@PathVariable long id) {
         try {
-            dao.deleteById(id);
+            repository.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

@@ -1,13 +1,16 @@
 package com.santacarolina.financeiro.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +29,9 @@ public class ExtratoEntity {
     private String descricao;
     private double valor;
     private boolean conciliado;
+
+    @OneToMany(mappedBy = "extrato", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ConciliacaoEntity> conciliacaoEntity;
 
     public long getId() { return id; }
     public ContaEntity getContaId() { return contaId; }

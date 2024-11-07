@@ -3,7 +3,6 @@ package com.santacarolina.financeiro.controller;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.santacarolina.financeiro.dao.CategoriaDAO;
-import com.santacarolina.financeiro.dao.ClassificacaoDAO;
 import com.santacarolina.financeiro.dto.CategoriaDTO;
-import com.santacarolina.financeiro.dto.ClassificacaoDTO;
-import com.santacarolina.financeiro.util.DataBaseConn;
+import com.santacarolina.financeiro.entity.CategoriaEntity;
+import com.santacarolina.financeiro.repository.CategoriaRepository;
+
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * CategoriaController
@@ -28,12 +28,11 @@ import com.santacarolina.financeiro.util.DataBaseConn;
 public class CategoriaController {
 
     private CategoriaDAO dao;
-    private ClassificacaoDAO classificacaoDAO;
+    private CategoriaRepository repository;
 
-    @Autowired
-    public CategoriaController(DataBaseConn conn) {
-        dao = new CategoriaDAO(conn);
-        classificacaoDAO = new ClassificacaoDAO(conn);
+    public CategoriaController(CategoriaDAO dao, CategoriaRepository repository) {
+        this.dao = dao;
+        this.repository = repository;
     }
 
     @GetMapping("/{id}")
@@ -79,11 +78,11 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody CategoriaDTO t) {
+    public ResponseEntity save(@RequestBody CategoriaEntity t) {
         try {
-            dao.save(t);
+            repository.save(t);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -91,11 +90,9 @@ public class CategoriaController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
-            dao.deleteById(id);
-            List<ClassificacaoDTO> listClassificacao = classificacaoDAO.findByCategoria(id);
-            classificacaoDAO.deleteBatch(listClassificacao);
+            repository.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

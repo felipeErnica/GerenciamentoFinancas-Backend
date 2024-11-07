@@ -1,6 +1,7 @@
 package com.santacarolina.financeiro.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.santacarolina.financeiro.enums.FluxoCaixa;
 import com.santacarolina.financeiro.enums.TipoPagamento;
@@ -8,11 +9,13 @@ import com.santacarolina.financeiro.enums.TipoPagamento;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,6 +50,9 @@ public class DuplicataEntity {
     private String boletoCaminho;
     private double valor;
     private boolean paga;
+    
+    @OneToMany(mappedBy = "duplicata", fetch = FetchType.LAZY, orphanRemoval =  true)
+    private List<ConciliacaoEntity> conciliacaoList;
 
     public DocumentoEntity getDocumento() { return documento; }
     public DadoEntity getDado() { return dado; }

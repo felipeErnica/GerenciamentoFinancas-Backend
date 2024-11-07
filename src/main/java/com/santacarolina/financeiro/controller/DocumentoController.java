@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,25 +16,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.santacarolina.financeiro.dao.DocumentoDAO;
-import com.santacarolina.financeiro.dao.DuplicataDAO;
-import com.santacarolina.financeiro.dao.ProdutoDAO;
 import com.santacarolina.financeiro.dto.DocumentoDTO;
+import com.santacarolina.financeiro.entity.DocumentoEntity;
 import com.santacarolina.financeiro.enums.TipoDocumento;
+import com.santacarolina.financeiro.repository.DocumentoRepository;
 import com.santacarolina.financeiro.util.DataBaseConn;
+
+import jakarta.persistence.OptimisticLockException;
 
 @RestController
 @RequestMapping("/documentos")
+@SuppressWarnings("rawtypes")
 public class DocumentoController {
 
     private DocumentoDAO dao;
-    private ProdutoDAO produtoDAO;
-    private DuplicataDAO duplicataDAO;
+    private DocumentoRepository repository;
 
     @Autowired
-    public DocumentoController(DataBaseConn conn) {
+    public DocumentoController(DataBaseConn conn, DocumentoRepository repository) {
         this.dao = new DocumentoDAO(conn);
-        this.produtoDAO = new ProdutoDAO(conn);
-        this.duplicataDAO = new DuplicataDAO(conn);
+        this.repository = repository;
     }
 
     @GetMapping
@@ -84,16 +86,21 @@ public class DocumentoController {
     }
 
     @PostMapping
-    public ResponseEntity<DocumentoDTO> save(@RequestBody DocumentoDTO dto) {
+    public ResponseEntity save(@RequestBody DocumentoEntity dto) {
         try {
-            dao.save(dto);
-            System.out.println(dto);
-            dto.getDuplicataList().forEach(d -> d.setDocId(dto.getId()));
-            dto.getProdutoList().forEach(p -> p.setDocId(dto.getId()));
-            duplicataDAO.saveAll(dto.getDuplicataList());
-            produtoDAO.saveAll(dto.getProdutoList());
-            return ResponseEntity.ok(dto);
-        } catch (SQLException e) {
+            repository.save(dto);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/{id}") 
+    private ResponseEntity deleteById(@PathVariable long id) {
+        try {
+            repository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

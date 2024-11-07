@@ -14,15 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.santacarolina.financeiro.dao.ExtratoDAO;
 import com.santacarolina.financeiro.dto.ExtratoDTO;
+import com.santacarolina.financeiro.entity.ExtratoEntity;
+import com.santacarolina.financeiro.repository.ExtratoRepository;
 
+import jakarta.persistence.OptimisticLockException;
 
 @RestController
 @RequestMapping("/extratos")
 @SuppressWarnings("rawtypes")
 public class ExtratoController {
 
-    @Autowired
     private ExtratoDAO dao;
+    private ExtratoRepository repository;
+
+    @Autowired
+    public ExtratoController(ExtratoDAO dao, ExtratoRepository repository) {
+        this.dao = dao;
+        this.repository = repository;
+    }
 
     @GetMapping("/contaId={contaId}")
     public ResponseEntity<List<ExtratoDTO>> findByConta(@PathVariable long contaId) {
@@ -43,21 +52,21 @@ public class ExtratoController {
     }
 
     @PostMapping
-    public ResponseEntity<ExtratoDTO> save(@RequestBody ExtratoDTO d) {
+    public ResponseEntity save(@RequestBody ExtratoEntity d) {
         try {
-            dao.save(d);
+            repository.save(d);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @PostMapping("/batch")
-    public ResponseEntity saveAll(@RequestBody List<ExtratoDTO> list)  {
+    public ResponseEntity saveAll(@RequestBody List<ExtratoEntity> list)  {
         try {
-            dao.saveAll(list);
+            repository.saveAll(list);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

@@ -2,6 +2,11 @@ package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.DuplicataDAO;
 import com.santacarolina.financeiro.dto.DuplicataDTO;
+import com.santacarolina.financeiro.entity.DuplicataEntity;
+import com.santacarolina.financeiro.repository.DuplicataRepository;
+
+import jakarta.persistence.OptimisticLockException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +19,14 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class DuplicataController {
 
-    @Autowired
     private DuplicataDAO dao;
+    private DuplicataRepository repository;
+
+    @Autowired
+    public DuplicataController(DuplicataDAO dao, DuplicataRepository repository) {
+        this.dao = dao;
+        this.repository = repository;
+    }
 
     @GetMapping
     public ResponseEntity<List<DuplicataDTO>> findAll() {
@@ -65,21 +76,31 @@ public class DuplicataController {
     }
 
     @PostMapping
-    public ResponseEntity<DuplicataDTO> save(@RequestBody DuplicataDTO d) {
+    public ResponseEntity save(@RequestBody DuplicataEntity d) {
         try {
-            dao.save(d);
+            repository.save(d);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @PostMapping("/batch")
-    public ResponseEntity saveAll(@RequestBody List<DuplicataDTO> list) {
+    public ResponseEntity saveAll(@RequestBody List<DuplicataEntity> list) {
         try {
-            dao.saveAll(list);
+            repository.saveAll(list);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity deleteById(@PathVariable long id) {
+        try {
+            repository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

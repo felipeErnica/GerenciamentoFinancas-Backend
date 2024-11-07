@@ -1,0 +1,36 @@
+package com.santacarolina.financeiro.entity;
+
+import com.santacarolina.financeiro.enums.TipoMovimento;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+public class ConciliacaoEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "duplicata_id")
+    private DuplicataEntity duplicata;
+
+    @ManyToOne
+    @JoinColumn(name = "extrato_id")
+    private ExtratoEntity extrato;
+
+    @Enumerated(EnumType.ORDINAL)
+    private TipoMovimento tipoMovimento;
+
+    public long getId() { return id; }
+    public DuplicataEntity getDuplicata() { return duplicata; }
+    public ExtratoEntity getExtrato() { return extrato; }
+    public TipoMovimento getTipoMovimento() { return tipoMovimento; }
+
+}
+

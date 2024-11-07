@@ -2,6 +2,11 @@ package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.PastaDAO;
 import com.santacarolina.financeiro.dto.PastaDTO;
+import com.santacarolina.financeiro.entity.PastaEntity;
+import com.santacarolina.financeiro.repository.PastaRepository;
+
+import jakarta.persistence.OptimisticLockException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +19,14 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class PastaController {
 
-    @Autowired
     private PastaDAO dao;
+    private PastaRepository repository;
+
+    @Autowired
+    public PastaController(PastaDAO dao, PastaRepository repository) {
+        this.dao = dao;
+        this.repository = repository;
+    }
 
     @GetMapping
     public ResponseEntity<List<PastaDTO>> findAll(){
@@ -49,21 +60,21 @@ public class PastaController {
     }
 
     @PostMapping
-    public ResponseEntity save (@RequestBody PastaDTO pasta){
+    public ResponseEntity save (@RequestBody PastaEntity pasta){
         try {
-            dao.save(pasta);
+            repository.save(pasta);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletePasta (@PathVariable long id){
+    public ResponseEntity deleteById (@PathVariable long id){
         try {
-            dao.deleteById(id);
+            repository.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

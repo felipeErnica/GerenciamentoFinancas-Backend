@@ -1,7 +1,8 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.dao.ConciliacaoDAO;
-import com.santacarolina.financeiro.dto.ConciliacaoDTO;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,16 +12,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
-import java.util.List;
+import com.santacarolina.financeiro.dao.ConciliacaoDAO;
+import com.santacarolina.financeiro.dto.ConciliacaoDTO;
+import com.santacarolina.financeiro.entity.ConciliacaoEntity;
+import com.santacarolina.financeiro.repository.ConciliacaoRepository;
+
+import jakarta.persistence.OptimisticLockException;
 
 @RestController
 @RequestMapping("/conciliacoes")
 @SuppressWarnings("rawtypes")
 public class ConciliacaoController {
 
-    @Autowired
     private ConciliacaoDAO dao;
+    private ConciliacaoRepository repository;
+
+    @Autowired
+    public ConciliacaoController(ConciliacaoDAO dao, ConciliacaoRepository repository) {
+        this.dao = dao;
+        this.repository = repository;
+    }
 
     @GetMapping
     public ResponseEntity<List<ConciliacaoDTO>> findAll() {
@@ -32,21 +43,21 @@ public class ConciliacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<ConciliacaoDTO> save(@RequestBody ConciliacaoDTO c) {
+    public ResponseEntity<ConciliacaoDTO> save(@RequestBody ConciliacaoEntity c) {
         try {
-            dao.save(c);
+            repository.save(c);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @PostMapping("/batch")
-    public ResponseEntity saveAll(@RequestBody List<ConciliacaoDTO> list) {
+    public ResponseEntity saveAll(@RequestBody List<ConciliacaoEntity> list) {
         try {
-            dao.saveAll(list);
+            repository.saveAll(list);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -54,9 +65,9 @@ public class ConciliacaoController {
     @DeleteMapping
     public ResponseEntity deleteById(long id) {
         try {
-            dao.deleteById(id);
+            repository.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
