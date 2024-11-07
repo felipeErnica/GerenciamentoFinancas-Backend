@@ -4,11 +4,15 @@ import com.santacarolina.financeiro.dao.DadoDAO;
 import com.santacarolina.financeiro.dao.PixDAO;
 import com.santacarolina.financeiro.dto.DadoDTO;
 import com.santacarolina.financeiro.dto.PixDTO;
+import com.santacarolina.financeiro.entity.DadoEntity;
+import com.santacarolina.financeiro.repository.DadoRepository;
 import com.santacarolina.financeiro.util.DataBaseConn;
+
+import jakarta.persistence.OptimisticLockException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,11 +23,13 @@ public class DadoController {
 
     private DadoDAO dadoDAO;
     private PixDAO pixDAO;
+    private DadoRepository repository;
 
     @Autowired
-    public DadoController(DataBaseConn conn) {
+    public DadoController(DataBaseConn conn, DadoRepository repository) {
         this.dadoDAO = new DadoDAO(conn);
         this.pixDAO = new PixDAO(conn);
+        this.repository = repository;
     }
 
     @GetMapping
@@ -67,16 +73,11 @@ public class DadoController {
     }
 
     @PostMapping
-    public ResponseEntity<DadoDTO> save(@RequestBody DadoDTO d) {
+    public ResponseEntity save(@RequestBody DadoEntity d) {
         try {
-            dadoDAO.save(d);
-            PixDTO pix = d.getPixDTO();
-            if (pix != null){
-                pix.setDadoId(d.getId());
-                pixDAO.save(d.getPixDTO());
-            } 
-            return ResponseEntity.ok(d);
-        } catch (SQLException e) {
+            repository.save(d);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -84,9 +85,9 @@ public class DadoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById (@PathVariable long id) {
         try {
-            dadoDAO.deleteById(id);
+            repository.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
