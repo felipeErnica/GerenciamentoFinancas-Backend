@@ -21,7 +21,8 @@ public class ProdutoDTO implements DataDAO {
     private String classificacao;
 
     public ProdutoDTO(long id, long docId, long classificacaoId, String descricao, String und, double quantidade,
-                      double valorUnit, LocalDate dataEmissao, long pastaId, String nomePasta, long emissorId, String nomeContato, String classificacao) {
+            double valorUnit, LocalDate dataEmissao, long pastaId, String nomePasta, long emissorId, String nomeContato,
+            String classificacao) {
         this.id = id;
         this.docId = docId;
         this.classificacaoId = classificacaoId;
@@ -38,22 +39,65 @@ public class ProdutoDTO implements DataDAO {
     }
 
     @Override
-    public long getId() { return id; }
-    public long getDocId() { return docId; }
-    public long getClassificacaoId() { return classificacaoId; }
-    public String getDescricao() { return descricao; }
-    public String getUnd() { return und; }
-    public double getQuantidade() { return quantidade; }
-    public double getValorUnit() { return valorUnit; }
-    public LocalDate getDataEmissao() { return dataEmissao; }
-    public String getNomePasta() { return nomePasta; }
-    public String getNomeContato() { return nomeContato; }
-    public String getClassificacao() { return classificacao; }
-    public long getPastaId() { return pastaId; }
-    public long getEmissorId() { return emissorId; }
+    public long getId() {
+        return id;
+    }
+
+    public long getDocId() {
+        return docId;
+    }
+
+    public long getClassificacaoId() {
+        return classificacaoId;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getUnd() {
+        return und;
+    }
+
+    public double getQuantidade() {
+        return quantidade;
+    }
+
+    public double getValorUnit() {
+        return valorUnit;
+    }
+
+    public LocalDate getDataEmissao() {
+        return dataEmissao;
+    }
+
+    public String getNomePasta() {
+        return nomePasta;
+    }
+
+    public String getNomeContato() {
+        return nomeContato;
+    }
+
+    public String getClassificacao() {
+        return classificacao;
+    }
+
+    public long getPastaId() {
+        return pastaId;
+    }
+
+    public long getEmissorId() {
+        return emissorId;
+    }
 
     @Override
-    public void setId(long id) { this.id = id; }
-    public void setDocId(long docId) { this.docId = docId; }
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setDocId(long docId) {
+        this.docId = docId;
+    }
 
 }

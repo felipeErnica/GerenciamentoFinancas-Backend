@@ -29,5 +29,7 @@ public class BancoEntity {
     public long getId() { return id; }
     public String getNomeBanco() { return nomeBanco; }
     public String getApelidoBanco() { return apelidoBanco; }
+    public List<ContaEntity> getContaList() { return contaList; }
+    public List<DadoEntity> getDadoList() { return dadoList; }
 
 }

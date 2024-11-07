@@ -24,8 +24,8 @@ public class DocumentoDTO implements DataDAO {
     private List<ProdutoDTO> produtoList;
 
     public DocumentoDTO(long id, Long numDoc, TipoDocumento tipoDoc,
-                        Long emissorId, String caminho, Long pastaId, double valor, LocalDate dataEmissao, FluxoCaixa fluxoCaixa,
-                        String nomePasta, String nomeContato) {
+            Long emissorId, String caminho, Long pastaId, double valor, LocalDate dataEmissao, FluxoCaixa fluxoCaixa,
+            String nomePasta, String nomeContato) {
         this.id = id;
         this.numDoc = numDoc;
         this.tipoDoc = tipoDoc;
@@ -40,20 +40,57 @@ public class DocumentoDTO implements DataDAO {
     }
 
     @Override
-    public long getId() { return id; }
-    public Long getNumDoc() { return numDoc; }
-    public TipoDocumento getTipoDoc() { return tipoDoc; }
-    public Long getEmissorId() { return emissorId; }
-    public String getCaminho() { return caminho; }
-    public long getPastaId() { return pastaId; }
-    public double getValor() { return valor; }
-    public LocalDate getDataEmissao() { return dataEmissao; }
-    public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
-    public String getNomePasta() { return nomePasta; }
-    public String getNomeContato() { return nomeContato; }
-    public List<DuplicataDTO> getDuplicataList() { return duplicataList; }
-    public List<ProdutoDTO> getProdutoList() { return produtoList; }
+    public long getId() {
+        return id;
+    }
 
+    public Long getNumDoc() {
+        return numDoc;
+    }
+
+    public TipoDocumento getTipoDoc() {
+        return tipoDoc;
+    }
+
+    public Long getEmissorId() {
+        return emissorId;
+    }
+
+    public String getCaminho() {
+        return caminho;
+    }
+
+    public long getPastaId() {
+        return pastaId;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public LocalDate getDataEmissao() {
+        return dataEmissao;
+    }
+
+    public FluxoCaixa getFluxoCaixa() {
+        return fluxoCaixa;
+    }
+
+    public String getNomePasta() {
+        return nomePasta;
+    }
+
+    public String getNomeContato() {
+        return nomeContato;
+    }
+
+    public List<DuplicataDTO> getDuplicataList() {
+        return duplicataList;
+    }
+
+    public List<ProdutoDTO> getProdutoList() {
+        return produtoList;
+    }
 
     @Override
     public String toString() {
@@ -76,6 +113,8 @@ public class DocumentoDTO implements DataDAO {
     }
 
     @Override
-    public void setId(long id) { this.id = id; }
+    public void setId(long id) {
+        this.id = id;
+    }
 
 }
