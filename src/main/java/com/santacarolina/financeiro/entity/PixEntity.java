@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,7 +24,9 @@ public class PixEntity {
     //private long contatoId;
     //private String nomeContato;
 
-    //private DadoEntity dado;
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "conta_id")
+    private DadoEntity dado;
 
     @Enumerated(EnumType.ORDINAL)
     private TipoPix tipoPix;

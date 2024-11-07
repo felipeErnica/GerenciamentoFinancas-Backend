@@ -2,6 +2,11 @@ package com.santacarolina.financeiro.controller;
 
 import com.santacarolina.financeiro.dao.PixDAO;
 import com.santacarolina.financeiro.dto.PixDTO;
+import com.santacarolina.financeiro.entity.PixEntity;
+import com.santacarolina.financeiro.repository.PixRepository;
+
+import jakarta.persistence.OptimisticLockException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +19,14 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class PixController {
 
-    @Autowired
     private PixDAO dao;
+    private PixRepository repository;
+
+    @Autowired
+    public PixController(PixDAO dao, PixRepository repository) {
+        this.dao = dao;
+        this.repository = repository;
+    }
 
     @GetMapping
     public ResponseEntity<List<PixDTO>> findAll() {
@@ -69,11 +80,11 @@ public class PixController {
     }
 
     @PostMapping
-    public ResponseEntity save (@RequestBody PixDTO chavePix) {
+    public ResponseEntity save (@RequestBody PixEntity chavePix) {
         try {
-            dao.save(chavePix);
+            repository.save(chavePix);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -81,9 +92,9 @@ public class PixController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById (@PathVariable long id) {
         try {
-            dao.delete(id);
+            repository.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (SQLException e) {
+        } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
