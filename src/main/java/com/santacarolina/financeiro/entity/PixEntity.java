@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -32,19 +31,9 @@ public class PixEntity {
     private TipoPix tipoPix;
     private String chave;
 
-    @ManyToOne
-    @JoinColumn(name = "banco_id")
-    private BancoEntity banco;
-
-    private String agencia;
-    private String numeroConta;
-
     public long getId() { return id; }
     public TipoPix getTipoPix() { return tipoPix; }
     public String getChave() { return chave; }
-    public BancoEntity getBanco() { return banco; }
-    public String getAgencia() { return agencia; }
-    public String getNumeroConta() { return numeroConta; }
 
 }
     

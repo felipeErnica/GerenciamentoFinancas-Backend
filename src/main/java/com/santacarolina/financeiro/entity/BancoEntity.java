@@ -26,9 +26,6 @@ public class BancoEntity {
     @OneToMany(mappedBy = "banco", orphanRemoval = true)
     private List<DadoEntity> dadoList;
 
-    @OneToMany(mappedBy = "banco", orphanRemoval = true)
-    private List<PixEntity> pixList;
-
     public long getId() { return id; }
     public String getNomeBanco() { return nomeBanco; }
     public String getApelidoBanco() { return apelidoBanco; }
