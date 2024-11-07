@@ -57,6 +57,17 @@ public class PixController {
         }
     }
 
+    @GetMapping("/dadoId={dadoId}")
+    public ResponseEntity<PixDTO> findByDado(@PathVariable long dadoId) {
+        try {
+            return dao.findByDado(dadoId)
+                .map(dto -> ResponseEntity.ok(dto))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity save (@RequestBody PixDTO chavePix) {
         try {

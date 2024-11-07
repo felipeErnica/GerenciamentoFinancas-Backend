@@ -1,25 +1,24 @@
 package com.santacarolina.financeiro.dao;
 
-import com.santacarolina.financeiro.dto.DadoDTO;
-import com.santacarolina.financeiro.enums.TipoPix;
-import com.santacarolina.financeiro.interfaces.DAO;
-import com.santacarolina.financeiro.util.CommonDAO;
-import com.santacarolina.financeiro.util.DataBaseConn;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.santacarolina.financeiro.dto.DadoDTO;
+import com.santacarolina.financeiro.interfaces.DAO;
+import com.santacarolina.financeiro.util.CommonDAO;
+import com.santacarolina.financeiro.util.DataBaseConn;
+
 @Component
 public class DadoDAO implements DAO<DadoDTO> {
 
     private static final String SELECT_QUERY = """
             SELECT d.id, d.agencia, d.banco_id, d.numero_conta, d.contato_id, 
-                p.id as pix_id, p.chave as chave, p.tipo_pix as tipo_pix,
                 c.nome as nome_contato,
                 b.nome_banco
             FROM dados_bancarios d
@@ -76,9 +75,6 @@ public class DadoDAO implements DAO<DadoDTO> {
                 rs.getLong("banco_id"),
                 rs.getString("numero_conta"),
                 rs.getLong("contato_id"),
-                rs.getLong("pix_id"),
-                rs.getString("chave"),
-                TipoPix.fromValue(rs.getInt("tipo_pix")),
                 rs.getString("nome_contato"),
                 rs.getString("nome_banco")
         );

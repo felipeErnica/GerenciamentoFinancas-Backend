@@ -51,6 +51,11 @@ public class PixDAO implements DAO<PixDTO> {
         return commonDAO.findOne(query);
     }
 
+    public Optional<PixDTO> findByDado(long dadoId) throws SQLException {
+        String query = SELECT_QUERY + "WHERE conta_id = " + dadoId;
+        return commonDAO.findOne(query);
+    }
+
     public List<PixDTO> findByContato(long contatoId) throws SQLException {
         String query = SELECT_QUERY + "WHERE c.contato_id = " + contatoId;
         return commonDAO.findList(query);
