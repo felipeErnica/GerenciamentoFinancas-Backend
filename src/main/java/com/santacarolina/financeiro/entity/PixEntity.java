@@ -24,7 +24,7 @@ public class PixEntity {
     //private long contatoId;
     //private String nomeContato;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne
     @JoinColumn(name = "conta_id")
     private DadoEntity dado;
 
