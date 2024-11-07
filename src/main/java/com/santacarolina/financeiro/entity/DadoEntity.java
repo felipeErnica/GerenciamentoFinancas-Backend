@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +20,9 @@ public class DadoEntity {
     @ManyToOne
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
+
+    @OneToOne(orphanRemoval = true, mappedBy = "dado")
+    private PixEntity pix;
 
     private String agencia;
     private String numeroConta;
