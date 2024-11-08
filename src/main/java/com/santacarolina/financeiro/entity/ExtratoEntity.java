@@ -28,7 +28,7 @@ public class ExtratoEntity {
     private String categoriaExtrato;
     private String descricao;
     private double valor;
-    private boolean conciliado;
+    private boolean isConciliado;
 
     @OneToMany(mappedBy = "extrato", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ConciliacaoEntity> conciliacaoEntity;
@@ -39,7 +39,7 @@ public class ExtratoEntity {
     public String getCategoriaExtrato() { return categoriaExtrato; }
     public String getDescricao() { return descricao; }
     public double getValor() { return valor; }
-    public boolean isConciliado() { return conciliado; }
+    public boolean isConciliado() { return isConciliado; }
 
 }
 
