@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.santacarolina.financeiro.enums.FluxoCaixa;
 import com.santacarolina.financeiro.enums.TipoDocumento;
-import com.santacarolina.financeiro.interfaces.DataDAO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
