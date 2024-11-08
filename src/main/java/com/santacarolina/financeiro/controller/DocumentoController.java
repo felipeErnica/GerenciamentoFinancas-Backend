@@ -1,7 +1,6 @@
 package com.santacarolina.financeiro.controller;
 
 import java.sql.SQLException;
-import java.text.Collator;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,8 +23,6 @@ import com.santacarolina.financeiro.enums.TipoDocumento;
 import com.santacarolina.financeiro.repository.DocumentoRepository;
 import com.santacarolina.financeiro.util.DataBaseConn;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.OptimisticLockException;
 
 @RestController
