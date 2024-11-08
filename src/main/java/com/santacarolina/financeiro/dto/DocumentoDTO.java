@@ -13,7 +13,7 @@ public class DocumentoDTO implements DataDAO {
     private Long numDoc;
     private TipoDocumento tipoDoc;
     private Long emissorId;
-    private String caminho;
+    private String caminhoDocumento;
     private Long pastaId;
     private double valor;
     private LocalDate dataEmissao;
@@ -30,7 +30,7 @@ public class DocumentoDTO implements DataDAO {
         this.numDoc = numDoc;
         this.tipoDoc = tipoDoc;
         this.emissorId = emissorId;
-        this.caminho = caminho;
+        this.caminhoDocumento = caminho;
         this.pastaId = pastaId;
         this.valor = valor;
         this.dataEmissao = dataEmissao;
@@ -56,8 +56,8 @@ public class DocumentoDTO implements DataDAO {
         return emissorId;
     }
 
-    public String getCaminho() {
-        return caminho;
+    public String getCaminhoDocumento() {
+        return caminhoDocumento;
     }
 
     public long getPastaId() {
@@ -99,7 +99,7 @@ public class DocumentoDTO implements DataDAO {
         sb.append(", numDoc=").append(numDoc);
         sb.append(", tipoDoc=").append(tipoDoc);
         sb.append(", emissorId=").append(emissorId);
-        sb.append(", caminho='").append(caminho).append('\'');
+        sb.append(", caminho='").append(caminhoDocumento).append('\'');
         sb.append(", pastaId=").append(pastaId);
         sb.append(", valor=").append(valor);
         sb.append(", dataEmissao=").append(dataEmissao);

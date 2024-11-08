@@ -97,7 +97,7 @@ public class DocumentoDAO implements DAO<DocumentoDTO> {
         ps.setLong(4, d.getPastaId());
         ps.setDate(5, Date.valueOf(d.getDataEmissao()));
         ps.setDouble(6, d.getValor());
-        ps.setString(7, d.getCaminho());
+        ps.setString(7, d.getCaminhoDocumento());
         ps.setInt(8, d.getFluxoCaixa().getValue());
     }
 
