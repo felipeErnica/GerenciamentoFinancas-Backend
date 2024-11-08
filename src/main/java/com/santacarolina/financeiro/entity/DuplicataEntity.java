@@ -42,9 +42,6 @@ public class DuplicataEntity {
     @Enumerated(EnumType.ORDINAL)
     private TipoPagamento tipoPagamento;
 
-    @Enumerated(EnumType.ORDINAL)
-    private FluxoCaixa fluxoCaixa;
-
     private LocalDate  dataVencimento;
     private String nomeContato;
     private String boletoCaminho;
@@ -60,7 +57,6 @@ public class DuplicataEntity {
     public long getId() { return id; }
     public int getNumDup() { return numDup; }
     public TipoPagamento getTipoPagamento() { return tipoPagamento; }
-    public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
     public LocalDate getDataVencimento() { return dataVencimento; }
     public String getNomeContato() { return nomeContato; }
     public String getBoletoCaminho() { return boletoCaminho; }
