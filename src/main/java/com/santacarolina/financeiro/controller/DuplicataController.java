@@ -105,4 +105,14 @@ public class DuplicataController {
         }
     }
 
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll(@RequestBody List<DuplicataEntity> list) {
+        try {
+            repository.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

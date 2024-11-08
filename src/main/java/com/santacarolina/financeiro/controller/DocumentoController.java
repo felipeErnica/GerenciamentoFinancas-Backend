@@ -1,8 +1,10 @@
 package com.santacarolina.financeiro.controller;
 
 import java.sql.SQLException;
+import java.text.Collator;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ import com.santacarolina.financeiro.enums.TipoDocumento;
 import com.santacarolina.financeiro.repository.DocumentoRepository;
 import com.santacarolina.financeiro.util.DataBaseConn;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.OptimisticLockException;
 
 @RestController
@@ -99,6 +103,30 @@ public class DocumentoController {
     private ResponseEntity deleteById(@PathVariable long id) {
         try {
             repository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity delete(@RequestBody DocumentoEntity entity) {
+        try {
+            repository.delete(entity);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll(@RequestBody List<DocumentoEntity> list) {
+        try {
+            List<Long> idList = list.stream()
+                .map(entity -> entity.getId())
+                .collect(Collectors.toList());
+            repository.deleteAllByIdInBatch(idList);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();

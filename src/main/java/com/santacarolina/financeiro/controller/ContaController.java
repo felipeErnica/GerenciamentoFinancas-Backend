@@ -94,4 +94,15 @@ public class ContaController {
         }
     }
 
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll(@RequestBody List<ContaEntity> list) {
+        try {
+            repository.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            logger.error(e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

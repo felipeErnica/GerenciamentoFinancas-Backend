@@ -72,7 +72,7 @@ public class ProdutoController {
         }
     }
 
-    @DeleteMapping("/batch")
+    @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<ProdutoEntity> list) {
         try {
             repository.deleteAll(list);
