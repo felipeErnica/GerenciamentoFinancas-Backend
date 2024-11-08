@@ -32,7 +32,7 @@ public class DuplicataEntity {
 
     @ManyToOne
     @JoinColumn(name = "pix_id")
-    private PixEntity pixId;
+    private PixEntity pix;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

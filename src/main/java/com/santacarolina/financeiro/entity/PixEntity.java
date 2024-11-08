@@ -38,7 +38,7 @@ public class PixEntity {
     private String chave;
 
     @OneToMany(mappedBy = "pix", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<PixEntity> duplicataList;
+    private List<DuplicataEntity> duplicataList;
 
     public long getId() { return id; }
     public TipoPix getTipoPix() { return tipoPix; }
