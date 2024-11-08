@@ -56,7 +56,7 @@ public class DuplicataEntity {
 
     public DocumentoEntity getDocumento() { return documento; }
     public DadoEntity getDado() { return dado; }
-    public PixEntity getPixId() { return pixId; }
+    public PixEntity getPixId() { return pix; }
     public long getId() { return id; }
     public int getNumDup() { return numDup; }
     public TipoPagamento getTipoPagamento() { return tipoPagamento; }
