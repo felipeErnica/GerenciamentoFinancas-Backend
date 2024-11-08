@@ -109,7 +109,7 @@ public class DocumentoController {
     @PostMapping("/delete")
     public ResponseEntity delete(@RequestBody DocumentoEntity entity) {
         try {
-            repository.deleteById(entity.getId());
+            repository.delete(entity);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();
