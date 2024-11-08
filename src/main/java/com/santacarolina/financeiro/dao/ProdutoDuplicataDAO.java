@@ -24,7 +24,7 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
 
     private static final String SELECT_QUERY = """
         SELECT prod.descricao, prod.und, prod.quantidade, prod.valor_unit, prod.documento_id, prod.id as prod_id, prod.classificacao_id,
-            doc.doc_tipo, doc.doc_numero, doc.pasta_id, doc.emissor_id,
+            doc.tipo_doc, doc.num_doc, doc.pasta_id, doc.emissor_id,
             dup.id as dup_id, dup.data_vencimento,
             pasta.nome as nome_pasta,
             emissor.nome as nome_emissor,
@@ -78,8 +78,8 @@ public class ProdutoDuplicataDAO implements DAO<ProdutoDuplicataDTO> {
             rs.getDouble("quantidade"),
             rs.getDouble("valor_unit"),
             rs.getLong("documento_id"),
-            TipoDocumento.fromValues(rs.getInt("doc_tipo")),
-            (Long) rs.getLong("doc_numero"),
+            TipoDocumento.fromValues(rs.getInt("tipo_doc")),
+            (Long) rs.getLong("num_doc"),
             rs.getLong("dup_id"),
             rs.getDate("data_vencimento") != null ? rs.getDate("data_vencimento").toLocalDate() : null,
             rs.getLong("pasta_id"),
