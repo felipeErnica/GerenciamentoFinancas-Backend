@@ -21,7 +21,7 @@ import java.util.Optional;
 public class DocumentoDAO implements DAO<DocumentoDTO> {
 
     private static final String SELECT_QUERY = """
-            SELECT d.id, d.doc_tipo, d.doc_numero, d.emissor_id, d.pasta_id, d.data_emissao, d.valor, d.caminho_documento, d.fluxo_caixa,
+            SELECT d.id, d.tipo_doc, d.num_doc, d.emissor_id, d.pasta_id, d.data_emissao, d.valor, d.caminho_documento, d.fluxo_caixa,
                 c.nome as nome_contato,
                 p.nome as nome_pasta
             FROM documentos d
@@ -30,11 +30,11 @@ public class DocumentoDAO implements DAO<DocumentoDTO> {
             """;
     private static final String UPDATE_QUERY = """
             UPDATE public.documentos
-            	SET doc_tipo=?, doc_numero=?, emissor_id=?, pasta_id=?, data_emissao=?, valor=?, caminho_documento=?, fluxo_caixa=?
+            	SET tipo_doc=?, num_doc=?, emissor_id=?, pasta_id=?, data_emissao=?, valor=?, caminho_documento=?, fluxo_caixa=?
             	WHERE id = ?;
             """;
     private static final String INSERT_QUERY = """
-            INSERT INTO public.documentos(doc_tipo, doc_numero, emissor_id, pasta_id, data_emissao, valor, caminho_documento, fluxo_caixa)
+            INSERT INTO public.documentos(tipo_doc, num_doc, emissor_id, pasta_id, data_emissao, valor, caminho_documento, fluxo_caixa)
             	VALUES (?, ?, ?, ?, ?, ?, ?, ?);
             """;
     private static final String DELETE_QUERY = "DELETE FROM dcocumentos WHERE id = ?";
@@ -57,7 +57,7 @@ public class DocumentoDAO implements DAO<DocumentoDTO> {
     public Optional<DocumentoDTO> findEqual(long contatoId, TipoDocumento tipoDoc, LocalDate dataEmissao, long pastaId, double valor) throws SQLException {
         String query = SELECT_QUERY +
                 "WHERE d.emissor_id = " + contatoId + " AND " +
-                "d.doc_tipo = " + tipoDoc.getValue() + " AND " +
+                "d.tipo_doc = " + tipoDoc.getValue() + " AND " +
                 "d.data_emissao = '" + dataEmissao + "' AND " +
                 "d.pasta_id = " + pastaId + " AND " +
                 "d.valor = " + valor;
@@ -65,7 +65,7 @@ public class DocumentoDAO implements DAO<DocumentoDTO> {
     }
 
     public Optional<DocumentoDTO> findNotaEqual(long contatoId, long numDoc) throws SQLException {
-        String query = SELECT_QUERY + "WHERE d.emissor_id = " + contatoId + " AND d.doc_numero = " + numDoc;
+        String query = SELECT_QUERY + "WHERE d.emissor_id = " + contatoId + " AND d.num_doc = " + numDoc;
         return commonDAO.findOne(query);
     }
 
@@ -76,8 +76,8 @@ public class DocumentoDAO implements DAO<DocumentoDTO> {
     public DocumentoDTO getDTO(ResultSet rs) throws SQLException {
         return new DocumentoDTO(
                 rs.getLong("id"),
-                (Long) rs.getObject("doc_numero"),
-                TipoDocumento.fromValues(rs.getInt("doc_tipo")),
+                (Long) rs.getObject("num_doc"),
+                TipoDocumento.fromValues(rs.getInt("tipo_doc")),
                 rs.getLong("emissor_id"),
                 rs.getString("caminho_documento"),
                 rs.getLong("pasta_id"),

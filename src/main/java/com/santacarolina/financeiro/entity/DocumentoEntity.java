@@ -44,7 +44,7 @@ public class DocumentoEntity {
     @JoinColumn(name = "pasta_id")
     private PastaEntity pasta;
 
-    private String caminho;
+    private String caminhoDocumento;
     private double valor;
     private LocalDate dataEmissao;
 
@@ -59,7 +59,7 @@ public class DocumentoEntity {
     public TipoDocumento getTipoDoc() { return tipoDoc; }
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
     public ContatoEntity getContato() { return contato; }
-    public String getCaminho() { return caminho; }
+    public String getCaminhoDocumento() { return caminhoDocumento; }
     public PastaEntity getPasta() { return pasta; }
     public double getValor() { return valor; }
     public LocalDate getDataEmissao() { return dataEmissao; }
