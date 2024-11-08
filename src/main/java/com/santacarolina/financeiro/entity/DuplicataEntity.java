@@ -43,7 +43,6 @@ public class DuplicataEntity {
     private TipoPagamento tipoPagamento;
 
     private LocalDate  dataVencimento;
-    private String nomeContato;
     private String boletoCaminho;
     private double valor;
     private boolean paga;
@@ -58,7 +57,6 @@ public class DuplicataEntity {
     public int getNumDup() { return numDup; }
     public TipoPagamento getTipoPagamento() { return tipoPagamento; }
     public LocalDate getDataVencimento() { return dataVencimento; }
-    public String getNomeContato() { return nomeContato; }
     public String getBoletoCaminho() { return boletoCaminho; }
     public double getValor() { return valor; }
     public boolean isPaga() { return paga; }
