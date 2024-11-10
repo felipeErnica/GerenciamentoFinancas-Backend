@@ -3,7 +3,6 @@ package com.santacarolina.financeiro.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.santacarolina.financeiro.enums.FluxoCaixa;
 import com.santacarolina.financeiro.enums.TipoPagamento;
 
 import jakarta.persistence.Entity;
