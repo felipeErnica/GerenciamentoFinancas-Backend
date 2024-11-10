@@ -74,7 +74,7 @@ public class ExtratoController {
     @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<ExtratoEntity> list)  {
         try {
-            repository.deleteAllInBatch(list);
+            repository.deleteAll(list);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();

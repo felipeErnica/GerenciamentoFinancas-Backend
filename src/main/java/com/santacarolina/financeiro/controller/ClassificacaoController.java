@@ -84,6 +84,16 @@ public class ClassificacaoController {
         }
     }
 
+    @PostMapping("/delet-batch")
+    private ResponseEntity deleteAll(@RequestBody List<ClassificacaoEntity> list) {
+        try {
+            repository.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     private ResponseEntity deleteById(@PathVariable long id) {
         try {

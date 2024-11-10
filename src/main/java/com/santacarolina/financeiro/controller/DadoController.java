@@ -86,6 +86,16 @@ public class DadoController {
         }
     }
 
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll(@RequestBody List<DadoEntity> list) {
+        try {
+            repository.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById (@PathVariable long id) {
         try {

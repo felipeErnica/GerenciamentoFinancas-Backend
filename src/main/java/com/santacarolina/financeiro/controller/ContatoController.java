@@ -122,6 +122,16 @@ public class ContatoController {
         }
     }
 
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll(@RequestBody List<ContatoEntity> list) {
+        try {
+            repository.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteContato(@PathVariable long id) {
         try {
