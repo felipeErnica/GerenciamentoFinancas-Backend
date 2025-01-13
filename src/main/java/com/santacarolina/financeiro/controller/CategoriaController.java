@@ -36,12 +36,12 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriaDTO> findById(@PathVariable long id) {
+    public ResponseEntity<CategoriaEntity> findById(@PathVariable long id) {
         try {
-            return dao.findById(id)
+            return repository.findById(id)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
