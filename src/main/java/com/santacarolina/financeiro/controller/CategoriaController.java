@@ -1,6 +1,5 @@
 package com.santacarolina.financeiro.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,10 +64,10 @@ public class CategoriaController {
     @GetMapping("/numero={numero}")
     public ResponseEntity<CategoriaDTO> findByNumero(@PathVariable String numero) {
         try {
-            return dao.findByNumero(numero)
+            return service.findByNumero(numero)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

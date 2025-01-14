@@ -29,7 +29,13 @@ public class CategoriaService {
             .toList();
     }
 
-    public Optional<CategoriaDTO> findByNome(String nome) {
-        return repository.findByNome(nome);
+    public Optional<CategoriaDTO> findByNome(String nome) throws IllegalArgumentException {
+        return repository.findByNome(nome)
+            .map(entity -> new CategoriaDTO(entity));
+    }
+
+    public Optional<CategoriaDTO> findByNumero(String numero) throws IllegalArgumentException {
+        return repository.findByNumeroCategoria(numero)
+            .map(entity -> new CategoriaDTO(entity));
     }
 }
