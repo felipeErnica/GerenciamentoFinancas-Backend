@@ -54,10 +54,10 @@ public class CategoriaController {
     @GetMapping("/nome={nome}")
     public ResponseEntity<CategoriaDTO> findByNome(@PathVariable String nome) {
         try {
-            return dao.findByNome(nome)
+            return service.findByNome(nome)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

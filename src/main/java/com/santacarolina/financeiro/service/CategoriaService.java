@@ -28,4 +28,8 @@ public class CategoriaService {
             .map(entity -> new CategoriaDTO(entity))
             .toList();
     }
+
+    public Optional<CategoriaDTO> findByNome(String nome) {
+        return repository.findByNome(nome);
+    }
 }
