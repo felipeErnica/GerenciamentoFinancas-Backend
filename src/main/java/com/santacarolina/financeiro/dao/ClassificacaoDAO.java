@@ -48,7 +48,7 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
         return commonDAO.findOne(query);
     }
 
-    public Optional<ClassificacaoDTO> getByNumero(String numeroIdentificacao) throws SQLException {
+    public Optional<ClassificacaoDTO> findByNumero(String numeroIdentificacao) throws SQLException {
         String query = SELECT_QUERY + " WHERE class.numero_identificacao = '" + numeroIdentificacao + "'";
         return commonDAO.findOne(query);
     }

@@ -33,10 +33,10 @@ public class ClassificacaoController {
     }
 
     @GetMapping
-    private ResponseEntity<List<ClassificacaoDTO>> findAll() {
+    private ResponseEntity<List<ClassificacaoEntity>> findAll() {
         try {
-            return ResponseEntity.ok(dao.findAll());
-        } catch (SQLException e) {
+            return ResponseEntity.ok(repository.findAll());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -53,9 +53,9 @@ public class ClassificacaoController {
     }
 
     @GetMapping("/numeroIdentificacao={numeroIdentificacao}")
-    private ResponseEntity<ClassificacaoDTO> getByNumero (@PathVariable String numeroIdentificacao) {
+    private ResponseEntity<ClassificacaoDTO> findByNumero (@PathVariable String numeroIdentificacao) {
         try {
-            return dao.getByNumero(numeroIdentificacao)
+            return dao.findByNumero(numeroIdentificacao)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (SQLException e) {

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.santacarolina.financeiro.dto.CategoriaDTO;
-import com.santacarolina.financeiro.enums.FluxoCaixa;
 import com.santacarolina.financeiro.interfaces.DAO;
 import com.santacarolina.financeiro.util.CommonDAO;
 import com.santacarolina.financeiro.util.DataBaseConn;

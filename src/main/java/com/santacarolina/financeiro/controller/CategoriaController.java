@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.santacarolina.financeiro.dao.CategoriaDAO;
 import com.santacarolina.financeiro.dto.CategoriaDTO;
 import com.santacarolina.financeiro.entity.CategoriaEntity;
-import com.santacarolina.financeiro.repository.CategoriaRepository;
 import com.santacarolina.financeiro.service.CategoriaService;
 
 import jakarta.persistence.OptimisticLockException;
