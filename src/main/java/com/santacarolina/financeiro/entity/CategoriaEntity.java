@@ -28,7 +28,7 @@ public class CategoriaEntity {
     private String numeroCategoria;
     private String nome;
 
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List<ClassificacaoEntity> classicacaoList;
 
     public long getId() { return id; }
