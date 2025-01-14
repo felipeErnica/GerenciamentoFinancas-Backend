@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class CategoriaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Enumerated(EnumType.ORDINAL)
