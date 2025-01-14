@@ -75,11 +75,7 @@ public class CategoriaController {
     
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() {
-        try {
-            return ResponseEntity.ok(dao.findAll());
-        } catch (SQLException e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
