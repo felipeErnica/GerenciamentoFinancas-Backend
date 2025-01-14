@@ -3,6 +3,7 @@ package com.santacarolina.financeiro.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.santacarolina.financeiro.dao.CategoriaDAO;
 import com.santacarolina.financeiro.dto.CategoriaDTO;
 import com.santacarolina.financeiro.entity.CategoriaEntity;
 import com.santacarolina.financeiro.repository.CategoriaRepository;
+import com.santacarolina.financeiro.service.CategoriaService;
 
 import jakarta.persistence.OptimisticLockException;
 
@@ -29,17 +31,20 @@ public class CategoriaController {
 
     private CategoriaDAO dao;
     private CategoriaRepository repository;
+    private CategoriaService service;
 
-    public CategoriaController(CategoriaDAO dao, CategoriaRepository repository) {
+    @Autowired
+    public CategoriaController(CategoriaDAO dao, CategoriaRepository repository, CategoriaService service) {
         this.dao = dao;
         this.repository = repository;
+        this.service = service;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriaEntity> findById(@PathVariable long id) {
+    public ResponseEntity<CategoriaDTO> findById(@PathVariable long id) {
         try {
-            return repository.findById(id)
-                .map(d -> ResponseEntity.ok(d))
+            return service.findById(id)
+                .map(dto -> ResponseEntity.ok(dto))
                 .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();

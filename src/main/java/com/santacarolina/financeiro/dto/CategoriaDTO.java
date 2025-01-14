@@ -1,5 +1,6 @@
 package com.santacarolina.financeiro.dto;
 
+import com.santacarolina.financeiro.entity.CategoriaEntity;
 import com.santacarolina.financeiro.enums.FluxoCaixa;
 import com.santacarolina.financeiro.interfaces.DataDAO;
 
@@ -13,11 +14,11 @@ public class CategoriaDTO implements DataDAO {
     private String numeroCategoria;
     private String nome;
 
-    public CategoriaDTO(long id, FluxoCaixa fluxoCaixa, String numeroCategoria, String nome) {
-        this.id = id;
-        this.fluxoCaixa = fluxoCaixa;
-        this.numeroCategoria = numeroCategoria;
-        this.nome = nome;
+    public CategoriaDTO(CategoriaEntity entity) {
+        this.id = entity.getId();
+        this.fluxoCaixa = entity.getFluxoCaixa();
+        this.numeroCategoria = entity.getNumeroCategoria();
+        this.nome = entity.getNome();
     }
 
     public long getId() { return id; }
