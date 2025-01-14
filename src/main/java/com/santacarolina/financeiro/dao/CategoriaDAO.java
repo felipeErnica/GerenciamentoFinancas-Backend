@@ -77,14 +77,7 @@ public class CategoriaDAO implements DAO<CategoriaDTO> {
     }
 
     @Override
-    public CategoriaDTO getDTO(ResultSet rs) throws SQLException {
-        return new CategoriaDTO(
-            rs.getLong("id"),
-            FluxoCaixa.fromValue(rs.getInt("fluxo_caixa")),
-            rs.getString("numero_categoria"),
-            rs.getString("nome")
-        );
-    }
+    public CategoriaDTO getDTO(ResultSet rs) throws SQLException { return null; }
 
     @Override
     public void prepareValuesDTO(PreparedStatement ps, CategoriaDTO t) throws SQLException {
