@@ -82,7 +82,7 @@ public class CategoriaController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
-            repository.deleteById(id);
+            service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();

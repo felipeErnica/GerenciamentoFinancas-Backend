@@ -46,4 +46,8 @@ public class CategoriaService {
     public void save(CategoriaEntity t) throws OptimisticLockException {
         repository.save(t);
     }
+
+    public void deleteById(long id) throws OptimisticLockException {
+        repository.deleteById(id);
+    }
 }
