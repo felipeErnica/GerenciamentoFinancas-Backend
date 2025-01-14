@@ -17,7 +17,6 @@ import com.santacarolina.financeiro.util.DataBaseConn;
 /**
  * CategoriaDAO
  */
-@Component
 public class CategoriaDAO implements DAO<CategoriaDTO> {
 
     private static final String SELECT_QUERY = """

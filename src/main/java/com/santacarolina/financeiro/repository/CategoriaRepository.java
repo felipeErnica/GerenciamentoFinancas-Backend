@@ -10,6 +10,7 @@ import com.santacarolina.financeiro.entity.CategoriaEntity;
 /**
  * CategoriaRepository
  */
+@Repository
 public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long> {
     Optional<CategoriaEntity> findByNome(String nome);
     Optional<CategoriaEntity> findByNumeroCategoria(String numeroCategoria);
