@@ -2,17 +2,16 @@ package com.santacarolina.financeiro.entity;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import com.santacarolina.financeiro.enums.FluxoCaixa;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -23,13 +22,13 @@ public class CategoriaEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private FluxoCaixa fluxoCaixa;
     
     private String numeroCategoria;
     private String nome;
 
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
     private List<ClassificacaoEntity> classicacaoList;
 
     public long getId() { return id; }
