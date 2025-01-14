@@ -1,18 +1,18 @@
 package com.santacarolina.financeiro.dao;
 
-import com.santacarolina.financeiro.dto.ClassificacaoDTO;
-import com.santacarolina.financeiro.enums.FluxoCaixa;
-import com.santacarolina.financeiro.interfaces.DAO;
-import com.santacarolina.financeiro.util.CommonDAO;
-import com.santacarolina.financeiro.util.DataBaseConn;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.santacarolina.financeiro.dto.ClassificacaoDTO;
+import com.santacarolina.financeiro.interfaces.DAO;
+import com.santacarolina.financeiro.util.CommonDAO;
+import com.santacarolina.financeiro.util.DataBaseConn;
 
 @Component
 public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
@@ -69,19 +69,12 @@ public class ClassificacaoDAO implements DAO<ClassificacaoDTO> {
 
     @Override
     public ClassificacaoDTO getDTO(ResultSet rs) throws SQLException {
-        return new ClassificacaoDTO(
-                rs.getLong("id"),
-                rs.getLong("categoria_id"),
-                rs.getString("nome_categoria"),
-                FluxoCaixa.fromValue(rs.getInt("fluxo_caixa")),
-                rs.getString("numero_identificacao"),
-                rs.getString("nome_classificacao"));
+        return null;
     }
 
     @Override
     public void prepareValuesDTO(PreparedStatement ps, ClassificacaoDTO c) throws SQLException {
         ps.setLong(1, c.getCategoriaId());
-        ps.setInt(2, c.getFluxoCaixa().getValue());
         ps.setString(3, c.getNumeroIdentificacao());
         ps.setString(4, c.getNomeClassificacao());
     }

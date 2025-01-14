@@ -3,6 +3,8 @@ package com.santacarolina.financeiro.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.aspectj.internal.lang.annotation.ajcITD;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import com.santacarolina.financeiro.dao.ClassificacaoDAO;
 import com.santacarolina.financeiro.dto.ClassificacaoDTO;
 import com.santacarolina.financeiro.entity.ClassificacaoEntity;
 import com.santacarolina.financeiro.repository.ClassificacaoRepository;
+import com.santacarolina.financeiro.service.ClassificacaoService;
 
 import jakarta.persistence.OptimisticLockException;
 
@@ -26,16 +29,19 @@ public class ClassificacaoController {
 
     private ClassificacaoDAO dao;
     private ClassificacaoRepository repository;
+    private ClassificacaoService service;
 
-    public ClassificacaoController(ClassificacaoDAO dao, ClassificacaoRepository repository) {
+    @Autowired
+    public ClassificacaoController(ClassificacaoDAO dao, ClassificacaoRepository repository, ClassificacaoService service) {
         this.dao = dao;
         this.repository = repository;
+        this.service = service;
     }
 
     @GetMapping
-    private ResponseEntity<List<ClassificacaoEntity>> findAll() {
+    private ResponseEntity<List<ClassificacaoDTO>> findAll() {
         try {
-            return ResponseEntity.ok(repository.findAll());
+            return ResponseEntity.ok(service.findAll());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
