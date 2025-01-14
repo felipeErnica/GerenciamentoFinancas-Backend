@@ -28,16 +28,8 @@ import jakarta.persistence.OptimisticLockException;
 @SuppressWarnings("rawtypes")
 public class CategoriaController {
 
-    private CategoriaDAO dao;
-    private CategoriaRepository repository;
-    private CategoriaService service;
-
     @Autowired
-    public CategoriaController(CategoriaDAO dao, CategoriaRepository repository, CategoriaService service) {
-        this.dao = dao;
-        this.repository = repository;
-        this.service = service;
-    }
+    private CategoriaService service;
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDTO> findById(@PathVariable long id) {
@@ -80,7 +72,7 @@ public class CategoriaController {
     @PostMapping
     public ResponseEntity save(@RequestBody CategoriaEntity t) {
         try {
-            repository.save(t);
+            service.save(t);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
             return ResponseEntity.internalServerError().build();

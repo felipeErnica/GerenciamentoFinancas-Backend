@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.CategoriaDTO;
+import com.santacarolina.financeiro.entity.CategoriaEntity;
 import com.santacarolina.financeiro.repository.CategoriaRepository;
+
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * CategoriaService
@@ -30,6 +33,7 @@ public class CategoriaService {
     }
 
     public Optional<CategoriaDTO> findByNome(String nome) throws IllegalArgumentException {
+        nome = nome.replace("+", " ");
         return repository.findByNome(nome)
             .map(entity -> new CategoriaDTO(entity));
     }
@@ -37,5 +41,9 @@ public class CategoriaService {
     public Optional<CategoriaDTO> findByNumero(String numero) throws IllegalArgumentException {
         return repository.findByNumeroCategoria(numero)
             .map(entity -> new CategoriaDTO(entity));
+    }
+
+    public void save(CategoriaEntity t) throws OptimisticLockException {
+        repository.save(t);
     }
 }
