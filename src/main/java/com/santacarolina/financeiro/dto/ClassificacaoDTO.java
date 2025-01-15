@@ -6,13 +6,13 @@ import com.santacarolina.financeiro.interfaces.DataDAO;
 public class ClassificacaoDTO implements DataDAO {
 
     private long id;
-    private long categoriaId;
+    private Long categoriaId;
     private String numeroIdentificacao;
     private String nomeClassificacao;
 
     public ClassificacaoDTO(ClassificacaoEntity entity) {
         this.id = entity.getId();
-        this.categoriaId = entity.getCategoria().getId();
+        this.categoriaId = entity.getCategoria() != null ? entity.getCategoria().getId() : null;
         this.numeroIdentificacao = entity.getNumeroIdentificacao();
         this.nomeClassificacao = entity.getNomeClassificacao();
     }
