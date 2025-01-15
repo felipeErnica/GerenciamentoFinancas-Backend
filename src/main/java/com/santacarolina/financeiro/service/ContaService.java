@@ -27,7 +27,8 @@ public class ContaService {
     }
 
     public Optional<ContaDTO> findEqual(String agencia, String numeroConta, long bancoId) throws IllegalArgumentException {
-        return repository.findEqual(agencia, numeroConta, bancoId);
+        return repository.findEqual(agencia, numeroConta, bancoId)
+            .map(entity -> new ContaDTO(entity));
     }
 
     public Optional<ContaDTO> findById(long id) {
