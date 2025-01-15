@@ -3,6 +3,7 @@ package com.santacarolina.financeiro.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,18 +24,19 @@ public class ExtratoEntity {
 
     @ManyToOne
     @JoinColumn(name = "conta_id")
-    private ContaEntity contaId;
+    private ContaEntity conta;
+
     private LocalDate dataTransacao;
     private String categoriaExtrato;
     private String descricao;
     private double valor;
     private boolean isConciliado;
 
-    @OneToMany(mappedBy = "extrato", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "extrato", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ConciliacaoEntity> conciliacaoEntity;
 
     public long getId() { return id; }
-    public ContaEntity getContaId() { return contaId; }
+    public ContaEntity getConta() { return conta; }
     public LocalDate getDataTransacao() { return dataTransacao; }
     public String getCategoriaExtrato() { return categoriaExtrato; }
     public String getDescricao() { return descricao; }

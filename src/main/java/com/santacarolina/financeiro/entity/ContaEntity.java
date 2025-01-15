@@ -35,6 +35,9 @@ public class ContaEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "conta", cascade = CascadeType.ALL)
     private List<PastaEntity> pastaList;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "conta", cascade = CascadeType.ALL)
+    private List<ExtratoEntity> extratoList;
+
     public long getId() { return id; }
     public String getNomeConta() { return nomeConta; }
     public String getAgencia() { return agencia; }
@@ -42,5 +45,6 @@ public class ContaEntity {
     public BancoEntity getBanco() { return banco; }
     public String getAbreviacaoConta() { return abreviacaoConta; }
     public List<PastaEntity> getPastaList() { return pastaList; }
+    public List<ExtratoEntity> getExtratoList() { return extratoList; }
 
 }
