@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.santacarolina.financeiro.enums.FluxoCaixa;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -27,7 +28,7 @@ public class CategoriaEntity {
     private String numeroCategoria;
     private String nome;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade =  CascadeType.ALL)
     private List<ClassificacaoEntity> classicacaoList;
 
     public long getId() { return id; }

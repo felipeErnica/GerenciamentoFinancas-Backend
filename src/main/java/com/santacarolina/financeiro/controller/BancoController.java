@@ -1,6 +1,5 @@
 package com.santacarolina.financeiro.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.santacarolina.financeiro.dao.BancoDAO;
 import com.santacarolina.financeiro.dto.BancoDTO;
 import com.santacarolina.financeiro.entity.BancoEntity;
-import com.santacarolina.financeiro.repository.BancoRepository;
+import com.santacarolina.financeiro.service.BancoService;
 
 @RestController
 @RequestMapping("/bancos")
@@ -27,20 +25,15 @@ import com.santacarolina.financeiro.repository.BancoRepository;
 public class BancoController {
 
     private final Logger logger = LogManager.getLogger();
-    private BancoDAO bancoDAO;
-    private BancoRepository repository;
 
     @Autowired
-    public BancoController(BancoDAO bancoDAO, BancoRepository repository) {
-        this.bancoDAO = bancoDAO;
-        this.repository = repository;
-    }
+    private BancoService service;
 
     @GetMapping
     public ResponseEntity<List<BancoDTO>> findAll() {
         try {
-            return ResponseEntity.ok(bancoDAO.findAll());
-        } catch (SQLException e) {
+            return ResponseEntity.ok(service.findAll());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -48,10 +41,10 @@ public class BancoController {
     @GetMapping("/{id}")
     public ResponseEntity<BancoDTO> findById(@PathVariable long id) {
         try {
-            return bancoDAO.findById(id)
+            return service.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -59,10 +52,10 @@ public class BancoController {
     @GetMapping("/nomeBanco={nomeBanco}")
     public ResponseEntity<BancoDTO> findByNomeBanco(@PathVariable String nomeBanco) {
         try {
-            return bancoDAO.findByNomeBanco(nomeBanco)
+            return service.findByNomeBanco(nomeBanco)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -70,10 +63,10 @@ public class BancoController {
     @GetMapping("/apelido={apelido}")
     public ResponseEntity<BancoDTO> findByApelido(@PathVariable String apelido) {
         try {
-            return bancoDAO.findByApelido(apelido)
+            return service.findByApelido(apelido)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -81,9 +74,9 @@ public class BancoController {
     @PostMapping
     public ResponseEntity save(@RequestBody BancoEntity banco) {
         try {
-            repository.save(banco);
+            service.save(banco);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockingFailureException e) {
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             logger.error(e);
             return ResponseEntity.internalServerError().build();
         }
@@ -92,7 +85,7 @@ public class BancoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
-            repository.deleteById(id);
+            service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException e) {
             logger.error(e);

@@ -3,7 +3,9 @@ package com.santacarolina.financeiro.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,10 +22,10 @@ public class BancoEntity {
     private String nomeBanco;
     private String apelidoBanco;
 
-    @OneToMany(mappedBy = "banco", orphanRemoval = true)
+    @OneToMany(mappedBy = "banco", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ContaEntity> contaList;
 
-    @OneToMany(mappedBy = "banco", orphanRemoval = true)
+    @OneToMany(mappedBy = "banco", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DadoEntity> dadoList;
 
     public long getId() { return id; }
