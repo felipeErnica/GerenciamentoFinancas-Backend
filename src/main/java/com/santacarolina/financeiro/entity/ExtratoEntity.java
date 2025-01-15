@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class ExtratoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @ManyToOne
