@@ -18,7 +18,7 @@ public interface ContaRepository extends JpaRepository<ContaEntity, Long> {
     @Query("""
         SELECT c 
         FROM ContaEntity c
-        WHERE c.agencia = :agencia AND c.numeroConta = :numeroConta AND c.banco.id = :bancoId; 
+        WHERE c.agencia = :agencia AND c.numeroConta = :numeroConta AND c.banco.id = :bancoId
         """)
     Optional<ContaEntity> findEqual(@Param("agencia") String agencia, 
             @Param("numeroConta") String numeroConta, 
