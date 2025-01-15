@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -27,10 +28,11 @@ public class ContaEntity {
     private String numeroConta;
     private String abreviacaoConta;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "conta", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "conta", cascade = CascadeType.ALL)
     private List<PastaEntity> pastaList;
 
     public long getId() { return id; }

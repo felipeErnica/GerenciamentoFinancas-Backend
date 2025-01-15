@@ -1,8 +1,8 @@
 package com.santacarolina.financeiro.dto;
 
-import com.santacarolina.financeiro.interfaces.DataDAO;
+import com.santacarolina.financeiro.entity.ContaEntity;
 
-public class ContaDTO implements DataDAO {
+public class ContaDTO {
 
     private long id;
     private String nomeConta;
@@ -11,19 +11,20 @@ public class ContaDTO implements DataDAO {
     private String numeroConta;
     private String abreviacaoConta;
 
-    @Override
+    public ContaDTO(ContaEntity entity) {
+        this.id = entity.getId();
+        this.nomeConta = entity.getNomeConta();
+        this.agencia = entity.getAgencia();
+        this.bancoId = entity.getBanco() != null ? entity.getBanco().getId() : 0;
+        this.numeroConta = entity.getNumeroConta();
+        this.abreviacaoConta = entity.getAbreviacaoConta();
+    }
+
     public long getId() { return id; }
     public String getNomeConta() { return nomeConta; }
     public String getAgencia() { return agencia; }
     public long getBancoId() { return bancoId; }
     public String getNumeroConta() { return numeroConta; }
     public String getAbreviacaoConta() { return abreviacaoConta; }
-
-    public void setId(long id) { this.id = id; }
-    public void setNomeConta(String nomeConta) { this.nomeConta = nomeConta; }
-    public void setAgencia(String agencia) { this.agencia = agencia; }
-    public void setBancoId(long bancoId) { this.bancoId = bancoId; }
-    public void setNumeroConta(String numeroConta) { this.numeroConta = numeroConta; }
-    public void setAbreviacaoConta(String abreviacaoConta) { this.abreviacaoConta = abreviacaoConta; }
 
 }

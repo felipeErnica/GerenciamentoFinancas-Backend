@@ -1,11 +1,11 @@
 package com.santacarolina.financeiro.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.santacarolina.financeiro.dao.ContaDAO;
 import com.santacarolina.financeiro.dto.ContaDTO;
 import com.santacarolina.financeiro.entity.ContaEntity;
-import com.santacarolina.financeiro.repository.ContaRepository;
+import com.santacarolina.financeiro.service.ContaService;
 
 import jakarta.persistence.OptimisticLockException;
 
@@ -30,20 +29,14 @@ public class ContaController {
 
     private Logger logger = LogManager.getLogger();
 
-    private ContaDAO dao;
-    private ContaRepository repository;
-
     @Autowired
-    public ContaController(ContaDAO dao, ContaRepository repository) {
-        this.dao = dao;
-        this.repository = repository;
-    }
+    private ContaService service;
 
     @GetMapping
     public ResponseEntity<List<ContaDTO>> findAll() {
         try {
-            return ResponseEntity.ok(dao.findAll());
-        } catch (SQLException e) {
+            return ResponseEntity.ok(service.findAll());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -53,10 +46,10 @@ public class ContaController {
                                                     @RequestParam String numeroConta,
                                                     @RequestParam long bancoId) {
         try {
-            return dao.findEqual(agencia, numeroConta, bancoId)
+            return service.findEqual(agencia, numeroConta, bancoId)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -64,10 +57,10 @@ public class ContaController {
     @GetMapping("/{id}")
     public ResponseEntity<ContaDTO> findById(@PathVariable long id) {
         try {
-            return dao.findById(id)
+            return service.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -75,9 +68,9 @@ public class ContaController {
     @PostMapping
     public ResponseEntity save(@RequestBody ContaEntity c) {
         try {
-            repository.save(c);
+            service.save(c);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             logger.error(e);
             return ResponseEntity.internalServerError().build();
         }
@@ -86,7 +79,7 @@ public class ContaController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById (@PathVariable long id) {
         try {
-            repository.deleteById(id);
+            service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
             logger.error(e);
@@ -97,9 +90,9 @@ public class ContaController {
     @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<ContaEntity> list) {
         try {
-            repository.deleteAll(list);
+            service.deleteAll(list);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (IllegalArgumentException e) {
             logger.error(e);
             return ResponseEntity.internalServerError().build();
         }
