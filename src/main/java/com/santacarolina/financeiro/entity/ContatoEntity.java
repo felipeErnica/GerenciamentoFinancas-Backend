@@ -2,6 +2,7 @@ package com.santacarolina.financeiro.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,13 +26,13 @@ public class ContatoEntity {
     private String cnpj;
     private String ie;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contato", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contato", cascade = CascadeType.ALL)
     private List<DadoEntity> dadoList;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contato", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contato",cascade = CascadeType.ALL)
     private List<PixEntity> pixList;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contato", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contato", cascade = CascadeType.ALL)
     private List<DocumentoEntity> documentoList;
 
     public long getId() { return id; }
