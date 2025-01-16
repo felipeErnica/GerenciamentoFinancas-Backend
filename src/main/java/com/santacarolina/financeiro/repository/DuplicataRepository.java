@@ -18,9 +18,9 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     @Query("""
         SELECT d
         FROM DuplicataEntity d
-        LEFT JOIN FETCH d.documento
-        LEFT JOIN FETCH d.pix
-        LEFT JOIN FETCH d.dado
+        LEFT JOIN FETCH d.documento.id
+        LEFT JOIN FETCH d.pix.id
+        LEFT JOIN FETCH d.dado.id
         """)
     List<DuplicataEntity> findAll();
 
