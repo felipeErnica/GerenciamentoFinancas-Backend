@@ -3,7 +3,9 @@ package com.santacarolina.financeiro.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,7 +65,17 @@ public class ExtratoController {
         }
     }
 
-    @PostMapping("/delete-batch")
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteById(@PathVariable long id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockingFailureException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<ExtratoEntity> list)  {
         try {
             service.deleteAllInBatch(list);

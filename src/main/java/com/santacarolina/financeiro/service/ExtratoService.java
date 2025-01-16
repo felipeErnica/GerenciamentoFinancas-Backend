@@ -43,4 +43,8 @@ public class ExtratoService {
         repository.deleteAllInBatch(list);
     }
 
+    public void deleteById(long id) {
+        repository.deleteById(id);
+    }
+
 }
