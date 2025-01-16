@@ -26,7 +26,7 @@ public class ExtratoService {
     }
 
     public List<ExtratoDTO> findByConciliacao(boolean isConciliado) throws IllegalArgumentException {
-        return repository.findByIsConciliado(isConciliado).stream()
+        return repository.findByConciliado(isConciliado).stream()
             .map(entity -> new ExtratoDTO(entity))
             .toList();
     }

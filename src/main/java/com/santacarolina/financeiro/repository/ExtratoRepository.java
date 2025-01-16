@@ -21,5 +21,5 @@ public interface ExtratoRepository extends JpaRepository<ExtratoEntity, Long> {
     """)
     List<ExtratoEntity> findByContaId(long contaId);
 
-    List<ExtratoEntity> findByIsConciliado(boolean isConciliado);
+    List<ExtratoEntity> findByConciliado(boolean isConciliado);
 }
