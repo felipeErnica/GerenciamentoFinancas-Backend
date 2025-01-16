@@ -32,11 +32,15 @@ public class DuplicataService {
     }
 
     public List<DuplicataDTO> findPagas() throws IllegalArgumentException {
-        return repository.findByPaga(true);
+        return repository.findByPaga(true).stream()
+            .map(entity -> new DuplicataDTO(entity))
+            .toList();
     }
 
     public List<DuplicataDTO> findNaoPagas() throws IllegalArgumentException {
-        return repository.findByPaga(false);
+        return repository.findByPaga(false).stream()
+            .map(entity -> new DuplicataDTO(entity))
+            .toList();
     }
 
     public List<DuplicataDTO> findByDoc(long documentoId) throws IllegalArgumentException {
