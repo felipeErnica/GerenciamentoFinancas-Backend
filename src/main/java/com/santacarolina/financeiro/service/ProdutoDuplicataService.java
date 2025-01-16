@@ -57,8 +57,8 @@ public class ProdutoDuplicataService {
         List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
         for (DocumentoEntity documento : documentoEntities) {
             long documentoId = documento.getId();
-            List<ProdutoEntity> listProdutos = filteredProd.get(documentoId);
-            List<DuplicataEntity> listDuplicatas = filteredDups.get(documentoId);
+            List<ProdutoEntity> listProdutos = filteredProd.getOrDefault(documentoId, Collections.emptyList());
+            List<DuplicataEntity> listDuplicatas = filteredDups.getOrDefault(documentoId, Collections.emptyList());
             int numDup = listDuplicatas.size();
             listProdutos.forEach(prod -> prod.setQuantidade(prod.getQuantidade()/numDup));
             addElements(listProdutos, listDuplicatas, produtoDuplicataList);
