@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.santacarolina.financeiro.enums.TipoPix;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,7 +23,7 @@ import jakarta.persistence.Table;
 public class PixEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +38,7 @@ public class PixEntity {
     private TipoPix tipoPix;
     private String chave;
 
-    @OneToMany(mappedBy = "pix", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "pix", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<DuplicataEntity> duplicataList;
 
     public long getId() { return id; }
