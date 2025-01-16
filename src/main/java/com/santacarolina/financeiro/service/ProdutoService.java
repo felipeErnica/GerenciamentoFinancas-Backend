@@ -42,4 +42,8 @@ public class ProdutoService {
     public void deleteAll(List<ProdutoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
         repository.deleteAll(list);
     }
+
+    public void save(ProdutoEntity entity) throws IllegalArgumentException, OptimisticLockingFailureException {
+        repository.save(entity);
+    }
 }

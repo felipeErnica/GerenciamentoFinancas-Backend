@@ -39,8 +39,19 @@ public class ProdutoController {
         }
     }
 
+
+    @PostMapping
+    public ResponseEntity save(@RequestBody ProdutoEntity entity) {
+        try {
+            service.save(entity);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping("/batch")
-    public ResponseEntity save(@RequestBody List<ProdutoEntity> list) {
+    public ResponseEntity saveAll(@RequestBody List<ProdutoEntity> list) {
         try {
             service.saveAll(list);
             return ResponseEntity.ok().build();
