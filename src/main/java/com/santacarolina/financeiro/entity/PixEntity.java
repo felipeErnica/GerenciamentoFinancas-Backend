@@ -25,7 +25,7 @@ public class PixEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
