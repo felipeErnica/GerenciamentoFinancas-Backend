@@ -2,12 +2,11 @@ package com.santacarolina.financeiro.dto;
 
 import com.santacarolina.financeiro.entity.CategoriaEntity;
 import com.santacarolina.financeiro.enums.FluxoCaixa;
-import com.santacarolina.financeiro.interfaces.DataDAO;
 
 /**
  * CategoriaDTO
  */
-public class CategoriaDTO implements DataDAO {
+public class CategoriaDTO {
 
     private long id;
     private FluxoCaixa fluxoCaixa;
@@ -25,11 +24,5 @@ public class CategoriaDTO implements DataDAO {
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
     public String getNome() { return nome; }
     public String getNumeroCategoria() { return numeroCategoria; }
-
-    @Override
-    public void setId(long id) { this.id = id; }
-
-    public void setFluxoCaixa(FluxoCaixa fluxoCaixa) { this.fluxoCaixa = fluxoCaixa; }
-    public void setNome(String nome) { this.nome = nome; }
 
 }

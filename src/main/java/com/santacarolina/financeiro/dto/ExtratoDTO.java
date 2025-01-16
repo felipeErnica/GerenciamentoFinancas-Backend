@@ -1,11 +1,10 @@
 package com.santacarolina.financeiro.dto;
 
 import com.santacarolina.financeiro.entity.ExtratoEntity;
-import com.santacarolina.financeiro.interfaces.DataDAO;
 
 import java.time.LocalDate;
 
-public class ExtratoDTO implements DataDAO {
+public class ExtratoDTO {
 
     private long id;
     private Long contaId;
@@ -25,7 +24,6 @@ public class ExtratoDTO implements DataDAO {
         this.isConciliado = entity.isConciliado();
     }
 
-    @Override
     public long getId() { return id; }
     public Long getContaId() { return contaId; }
     public LocalDate getDataTransacao() { return dataTransacao; }
@@ -33,8 +31,5 @@ public class ExtratoDTO implements DataDAO {
     public String getDescricao() { return descricao; }
     public double getValor() { return valor; }
     public boolean isConciliado() { return isConciliado; }
-
-    @Override
-    public void setId(long id) { this.id = id; }
 
 }

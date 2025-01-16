@@ -1,9 +1,8 @@
 package com.santacarolina.financeiro.dto;
 
 import com.santacarolina.financeiro.entity.BancoEntity;
-import com.santacarolina.financeiro.interfaces.DataDAO;
 
-public class BancoDTO implements DataDAO {
+public class BancoDTO {
 
     private long id;
     private String nomeBanco;
@@ -15,12 +14,8 @@ public class BancoDTO implements DataDAO {
         this.apelidoBanco = entity.getApelidoBanco();
     }
 
-    @Override
     public long getId() { return id; }
     public String getNomeBanco() { return nomeBanco; }
     public String getApelidoBanco() { return apelidoBanco; }
-
-    @Override
-    public void setId(long id) { this.id = id; }
 
 }

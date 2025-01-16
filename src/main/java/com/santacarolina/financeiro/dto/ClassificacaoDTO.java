@@ -1,9 +1,8 @@
 package com.santacarolina.financeiro.dto;
 
 import com.santacarolina.financeiro.entity.ClassificacaoEntity;
-import com.santacarolina.financeiro.interfaces.DataDAO;
 
-public class ClassificacaoDTO implements DataDAO {
+public class ClassificacaoDTO {
 
     private long id;
     private long categoriaId;
@@ -17,13 +16,9 @@ public class ClassificacaoDTO implements DataDAO {
         this.nomeClassificacao = entity.getNomeClassificacao();
     }
 
-    @Override
     public long getId() { return id; }
     public String getNumeroIdentificacao() { return numeroIdentificacao; }
     public String getNomeClassificacao() { return nomeClassificacao; }
     public long getCategoriaId() { return categoriaId; }
-
-    @Override
-    public void setId(long id) { this.id = id; }
 
 }
