@@ -38,49 +38,46 @@ public class ProdutoDuplicataService {
         this.documentoRepository = documentoRepository;
     }
 
-    private void addDuplicata(List<ProdutoDuplicataDTO> produtoDuplicataList, 
-        List<DuplicataEntity> filteredDups, 
-        ProdutoEntity produto) {
-        
-        for (DuplicataEntity duplicata : filteredDups) {
-            ProdutoDuplicataDTO produtoDuplicataDTO = new ProdutoDuplicataDTO(produto, duplicata);
-            produtoDuplicataList.add(produtoDuplicataDTO);
+    private void addElements(List<ProdutoEntity> listProdutos, 
+            List<DuplicataEntity> listDuplicatas,
+            List<ProdutoDuplicataDTO> produtoDuplicataList) {
+
+        for (ProdutoEntity produto : listProdutos) {
+            for (DuplicataEntity duplicata : listDuplicatas) {
+                ProdutoDuplicataDTO produtoDuplicataDTO = new ProdutoDuplicataDTO(produto, duplicata);
+                produtoDuplicataList.add(produtoDuplicataDTO);
+            }
         }
     }
 
-    private void filterLists(
-        List<DuplicataEntity> duplicataEntities, 
-        List<ProdutoEntity> produtoEntities,
-        List<ProdutoDuplicataDTO> produtoDuplicataList,
-        long documentoId) {
+    private List<ProdutoDuplicataDTO> buildList(Map<Long, List<ProdutoEntity>> filteredProd,
+            Map<Long, List<DuplicataEntity>> filteredDups, 
+            List<DocumentoEntity> documentoEntities) {
 
-        List<ProdutoEntity> filteredProd = produtoEntities.stream()
-            .filter(prod -> prod.getDocumento().getId() == documentoId)
-            .toList();
-        List<DuplicataEntity> filteredDups = duplicataEntities.stream()
-            .filter(dup -> dup.getDocumento().getId() == documentoId)
-            .toList();
-
-        int numDup = filteredDups.size();
-        filteredProd.forEach(prod -> prod.setValorUnit(prod.getValorUnit()/numDup));
-
-        for (ProdutoEntity produto : filteredProd) {
-            addDuplicata(produtoDuplicataList, filteredDups, produto);
+        List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
+        for (DocumentoEntity documento : documentoEntities) {
+            long documentoId = documento.getId();
+            List<ProdutoEntity> listProdutos = filteredProd.get(documentoId);
+            List<DuplicataEntity> listDuplicatas = filteredDups.get(documentoId);
+            int numDup = listDuplicatas.size();
+            listProdutos.forEach(prod -> prod.setQuantidade(prod.getQuantidade()/numDup));
+            addElements(listProdutos, listDuplicatas, produtoDuplicataList);
         }
+
+        return produtoDuplicataList;
     }
 
     public List<ProdutoDuplicataDTO> findProdutosDuplicatas() {
         List<ProdutoEntity> produtoEntities = produtoRepository.findAll();
         List<DuplicataEntity> duplicataEntities = duplicataRepository.findAll();
         List<DocumentoEntity> documentoEntities = documentoRepository.findAll();
-        List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
+        
+        Map<Long, List<ProdutoEntity>> filteredProd = produtoEntities.stream()
+            .collect(Collectors.groupingBy(prod -> prod.getDocumento().getId()));
+        Map<Long, List<DuplicataEntity>> filteredDups = duplicataEntities.stream()
+            .collect(Collectors.groupingBy(dup -> dup.getDocumento().getId()));
 
-        for (DocumentoEntity documento : documentoEntities) {
-            long documentoId = documento.getId();
-            filterLists(duplicataEntities, produtoEntities, produtoDuplicataList, documentoId);
-        }
-
-        return produtoDuplicataList;
+        return buildList(filteredProd, filteredDups, documentoEntities);
 
     }
 

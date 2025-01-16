@@ -37,7 +37,7 @@ public class ProdutoEntity {
     public String getUnd() { return und; }
     public double getQuantidade() { return quantidade; }
     public double getValorUnit() { return valorUnit; }
-    public void setValorUnit(double valorUnit) { this.valorUnit = valorUnit; }
+    public void setQuantidade(double quantidade) { this.quantidade = quantidade; }
 
 }
 
