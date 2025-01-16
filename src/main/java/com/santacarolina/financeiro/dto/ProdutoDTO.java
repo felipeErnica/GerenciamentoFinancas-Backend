@@ -14,8 +14,8 @@ public class ProdutoDTO {
 
     public ProdutoDTO(ProdutoEntity entity) {
         this.id = entity.getId();
-        this.docId = entity.getDocumento().getId();
-        this.classificacaoId = entity.getClassificacao().getId();
+        this.docId = entity.getDocumento() != null ? entity.getDocumento().getId() : 0;
+        this.classificacaoId = entity.getClassificacao() != null ? entity.getClassificacao().getId() : 0;
         this.descricao = entity.getDescricao();
         this.und = entity.getUnd();
         this.quantidade = entity.getQuantidade();
