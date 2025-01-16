@@ -2,6 +2,7 @@ package com.santacarolina.financeiro.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,7 @@ public class ProdutoDuplicataService {
     private void addElements(
         ProdutoEntity produto,
         List<DuplicataEntity> duplicataEntities, 
-        List<ProdutoDuplicataDTO> produtoDuplicataList,
-        long index) {
+        List<ProdutoDuplicataDTO> produtoDuplicataList) {
 
         List<DuplicataEntity> filterDuplicatas = duplicataEntities.stream()
             .filter(dup -> dup.getDocumento().getId() == produto.getDocumento().getId())
@@ -45,11 +45,11 @@ public class ProdutoDuplicataService {
     }
 
     private List<ProdutoDuplicataDTO> getProdutoDuplicataList(List<ProdutoEntity> produtoEntities, List<DuplicataEntity> duplicataEntities) {
-        List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
-        for (ProdutoEntity produto : produtoEntities) {
-            addElements(produto, duplicataEntities, produtoDuplicataList, produtoEntities.size());
-        }
-        return produtoDuplicataList;
+        return produtoEntities.stream()
+            .flatMap(produto -> duplicataEntities.stream()
+                .filter(dup -> dup.getDocumento().getId() == produto.getDocumento().getId())
+                .map(dup -> new ProdutoDuplicataDTO(produto, dup)))
+            .collect(Collectors.toList());
     }
 
     public List<ProdutoDuplicataDTO> findProdutosDuplicatas() {
