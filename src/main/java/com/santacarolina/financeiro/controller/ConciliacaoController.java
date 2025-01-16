@@ -1,6 +1,5 @@
 package com.santacarolina.financeiro.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.santacarolina.financeiro.dao.ConciliacaoDAO;
 import com.santacarolina.financeiro.dto.ConciliacaoDTO;
 import com.santacarolina.financeiro.entity.ConciliacaoEntity;
 import com.santacarolina.financeiro.service.ConciliacaoService;
