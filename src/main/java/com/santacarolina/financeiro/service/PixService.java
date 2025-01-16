@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.PixDTO;
 import com.santacarolina.financeiro.entity.PixEntity;
@@ -13,6 +14,7 @@ import com.santacarolina.financeiro.repository.PixRepository;
 /**
  * PixService
  */
+@Service
 public class PixService {
 
     @Autowired
