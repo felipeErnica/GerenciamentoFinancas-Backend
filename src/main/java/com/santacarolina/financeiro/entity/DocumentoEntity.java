@@ -6,6 +6,7 @@ import java.util.List;
 import com.santacarolina.financeiro.enums.FluxoCaixa;
 import com.santacarolina.financeiro.enums.TipoDocumento;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,7 +27,7 @@ import jakarta.persistence.Table;
 public class DocumentoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private Long numDoc;
     
@@ -36,11 +37,11 @@ public class DocumentoEntity {
     @Enumerated(EnumType.ORDINAL)
     private FluxoCaixa fluxoCaixa;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "emissor_id")
     private ContatoEntity contato;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pasta_id")
     private PastaEntity pasta;
 
@@ -48,10 +49,10 @@ public class DocumentoEntity {
     private double valor;
     private LocalDate dataEmissao;
 
-    @OneToMany(mappedBy = "documento", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
     private List<DuplicataEntity> duplicataList;
 
-    @OneToMany(mappedBy = "documento", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
     private List<ProdutoEntity> produtoList;
 
     public long getId() { return id; }
