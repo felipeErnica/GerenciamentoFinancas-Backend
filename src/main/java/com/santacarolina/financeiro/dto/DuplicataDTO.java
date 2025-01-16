@@ -1,83 +1,45 @@
 package com.santacarolina.financeiro.dto;
 
-import com.santacarolina.financeiro.enums.FluxoCaixa;
-import com.santacarolina.financeiro.enums.TipoPagamento;
-import com.santacarolina.financeiro.interfaces.DataDAO;
-
 import java.time.LocalDate;
 
-public class DuplicataDTO implements DataDAO {
+import com.santacarolina.financeiro.entity.DuplicataEntity;
+import com.santacarolina.financeiro.enums.TipoPagamento;
 
+public class DuplicataDTO {
+
+    private long id;
     private Long docId;
     private Long dadoId;
     private Long pixId;
-    private long id;
     private int numDup;
     private TipoPagamento tipoPagamento;
     private LocalDate  dataVencimento;
-    private String nomeContato;
     private String boletoCaminho;
     private double valor;
     private boolean paga;
-    private long contaId;
-    private String conta;
-    private FluxoCaixa fluxoCaixa;
 
-    public DuplicataDTO(Long docId, Long dadoId, long id, int numDup, TipoPagamento tipoPagamento,
-                        LocalDate dataVencimento, String nomeContato, String boletoCaminho,
-                        double valor, boolean paga, long contaId, String conta, Long pixId, FluxoCaixa fluxoCaixa) {
-        this.docId = docId;
-        this.dadoId = dadoId;
-        this.id = id;
-        this.numDup = numDup;
-        this.tipoPagamento = tipoPagamento;
-        this.dataVencimento = dataVencimento;
-        this.nomeContato = nomeContato;
-        this.boletoCaminho = boletoCaminho;
-        this.valor = valor;
-        this.paga = paga;
-        this.contaId = contaId;
-        this.conta = conta;
-        this.pixId = pixId;
-        this.fluxoCaixa = fluxoCaixa;
+    public DuplicataDTO(DuplicataEntity entity) {
+        this.docId = entity.getDocumento() != null ? entity.getDocumento().getId() : null;
+        this.dadoId = entity.getDado() != null ? entity.getDado().getId() : null;
+        this.id = entity.getId();
+        this.numDup = entity.getNumDup();
+        this.tipoPagamento = entity.getTipoPagamento();
+        this.dataVencimento = entity.getDataVencimento();
+        this.boletoCaminho = entity.getBoletoCaminho();
+        this.valor = entity.getValor();
+        this.paga = entity.isPaga();
+        this.pixId = entity.getPix() != null ? entity.getPix().getId() : null;
     }
 
-    @Override
     public long getId() { return id; }
     public Long getDocId() { return docId; }
     public Long getDadoId() { return dadoId; }
     public int getNumDup() { return numDup; }
     public TipoPagamento getTipoPagamento() { return tipoPagamento; }
     public LocalDate getDataVencimento() { return dataVencimento; }
-    public String getNomeContato() { return nomeContato; }
     public String getBoletoCaminho() { return boletoCaminho; }
     public double getValor() { return valor; }
     public boolean isPaga() { return paga; }
-    public long getContaId() { return contaId; }
-    public String getConta() { return conta; }
     public Long getPixId() { return pixId; }
-    public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
 
-    @Override
-    public void setId(long id) { this.id = id; }
-    public void setDocId(Long docId) { this.docId = docId; }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("DuplicataDTO{");
-        sb.append("docId=").append(docId);
-        sb.append(", dadoId=").append(dadoId);
-        sb.append(", pixId=").append(pixId);
-        sb.append(", id=").append(id);
-        sb.append(", numDup=").append(numDup);
-        sb.append(", tipoPagamento=").append(tipoPagamento);
-        sb.append(", dataVencimento='").append(dataVencimento).append('\'');
-        sb.append(", nomeContato='").append(nomeContato).append('\'');
-        sb.append(", boletoCaminho='").append(boletoCaminho).append('\'');
-        sb.append(", valor=").append(valor);
-        sb.append(", paga=").append(paga);
-        sb.append(", conta='").append(conta).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }

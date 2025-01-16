@@ -1,49 +1,42 @@
 package com.santacarolina.financeiro.controller;
 
-import com.santacarolina.financeiro.dao.DuplicataDAO;
-import com.santacarolina.financeiro.dto.DuplicataDTO;
-import com.santacarolina.financeiro.entity.DuplicataEntity;
-import com.santacarolina.financeiro.repository.DuplicataRepository;
-
-import jakarta.persistence.OptimisticLockException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
-import java.util.List;
+import com.santacarolina.financeiro.dto.DuplicataDTO;
+import com.santacarolina.financeiro.entity.DuplicataEntity;
+import com.santacarolina.financeiro.service.DuplicataService;
 
 @RestController
 @RequestMapping("/duplicatas")
 @SuppressWarnings("rawtypes")
 public class DuplicataController {
 
-    private DuplicataDAO dao;
-    private DuplicataRepository repository;
-
     @Autowired
-    public DuplicataController(DuplicataDAO dao, DuplicataRepository repository) {
-        this.dao = dao;
-        this.repository = repository;
-    }
+    private DuplicataService service;
 
     @GetMapping
     public ResponseEntity<List<DuplicataDTO>> findAll() {
-        try {
-            return ResponseEntity.ok(dao.findAll());
-        } catch (SQLException e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DuplicataDTO> findById(@PathVariable long id) {
         try {
-            return dao.findById(id)
+            return service.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -51,8 +44,8 @@ public class DuplicataController {
     @GetMapping("/pagas")
     public ResponseEntity<List<DuplicataDTO>> findPagas() {
         try {
-            return ResponseEntity.ok(dao.findPagas());
-        } catch (SQLException e) {
+            return ResponseEntity.ok(service.findPagas());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -60,8 +53,8 @@ public class DuplicataController {
     @GetMapping("/naoPagas")
     public ResponseEntity<List<DuplicataDTO>> findNaoPagas() {
         try {
-            return ResponseEntity.ok(dao.findNaoPagas());
-        } catch (SQLException e) {
+            return ResponseEntity.ok(service.findNaoPagas());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -69,8 +62,8 @@ public class DuplicataController {
     @GetMapping("/documento={documentoId}")
     public ResponseEntity<List<DuplicataDTO>> findByDoc (@PathVariable long documentoId) {
         try {
-            return ResponseEntity.ok(dao.findByDoc(documentoId));
-        } catch (SQLException e) {
+            return ResponseEntity.ok(service.findByDoc(documentoId));
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -78,9 +71,9 @@ public class DuplicataController {
     @PostMapping
     public ResponseEntity save(@RequestBody DuplicataEntity d) {
         try {
-            repository.save(d);
+            service.save(d);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -88,9 +81,9 @@ public class DuplicataController {
     @PostMapping("/batch")
     public ResponseEntity saveAll(@RequestBody List<DuplicataEntity> list) {
         try {
-            repository.saveAll(list);
+            service.saveAll(list);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -98,9 +91,9 @@ public class DuplicataController {
     @DeleteMapping("/{id}")
     private ResponseEntity deleteById(@PathVariable long id) {
         try {
-            repository.deleteById(id);
+            service.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -108,9 +101,9 @@ public class DuplicataController {
     @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<DuplicataEntity> list) {
         try {
-            repository.deleteAll(list);
+            service.deleteAll(list);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

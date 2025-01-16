@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.santacarolina.financeiro.enums.TipoPagamento;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,20 +22,8 @@ import jakarta.persistence.Table;
 @Table(name = "duplicatas")
 public class DuplicataEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "documento_id")
-    private DocumentoEntity documento;
-
-    @ManyToOne
-    @JoinColumn(name = "dado_id")
-    private DadoEntity dado;
-
-    @ManyToOne
-    @JoinColumn(name = "pix_id")
-    private PixEntity pix;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private int numDup;
     
@@ -45,13 +34,25 @@ public class DuplicataEntity {
     private String boletoCaminho;
     private double valor;
     private boolean paga;
-    
-    @OneToMany(mappedBy = "duplicata", fetch = FetchType.LAZY, orphanRemoval =  true)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "documento_id")
+    private DocumentoEntity documento;
+
+    @ManyToOne(fetch = FetchType.EAGER)  
+    @JoinColumn(name = "dado_id")
+    private DadoEntity dado;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pix_id")
+    private PixEntity pix;
+
+    @OneToMany(mappedBy = "duplicata", cascade = CascadeType.ALL)
     private List<ConciliacaoEntity> conciliacaoList;
 
     public DocumentoEntity getDocumento() { return documento; }
     public DadoEntity getDado() { return dado; }
-    public PixEntity getPixId() { return pix; }
+    public PixEntity getPix() { return pix; }
     public long getId() { return id; }
     public int getNumDup() { return numDup; }
     public TipoPagamento getTipoPagamento() { return tipoPagamento; }
