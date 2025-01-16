@@ -44,5 +44,8 @@ public class PixEntity {
     public long getId() { return id; }
     public TipoPix getTipoPix() { return tipoPix; }
     public String getChave() { return chave; }
+    public ContatoEntity getContato() { return contato; }
+    public DadoEntity getDado() { return dado; }
+    public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
 
 }

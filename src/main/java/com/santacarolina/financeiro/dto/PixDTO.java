@@ -1,46 +1,28 @@
 package com.santacarolina.financeiro.dto;
 
+import com.santacarolina.financeiro.entity.PixEntity;
 import com.santacarolina.financeiro.enums.TipoPix;
-import com.santacarolina.financeiro.interfaces.DataDAO;
 
-public class PixDTO implements DataDAO {
+public class PixDTO {
 
     private long id;
     private long contatoId;
-    private String nomeContato;
     private Long dadoId;
     private TipoPix tipoPix;
     private String chave;
-    private String nomeBanco;
-    private String agencia;
-    private String numeroConta;
 
-    public PixDTO(long id, long contatoId, String nomeContato, Long dadoId, TipoPix tipoPix, String chave,
-                  String nomeBanco, String agencia, String numeroConta) {
-        this.id = id;
-        this.contatoId = contatoId;
-        this.nomeContato = nomeContato;
-        this.dadoId = dadoId;
-        this.tipoPix = tipoPix;
-        this.chave = chave;
-        this.nomeBanco = nomeBanco;
-        this.agencia = agencia;
-        this.numeroConta = numeroConta;
+    public PixDTO(PixEntity entity) {
+        this.id = entity.getId();
+        this.contatoId = entity.getContato() != null ? entity.getContato().getId() : 0;
+        this.dadoId = entity.getDado() != null ? entity.getDado().getId() : null;
+        this.tipoPix = entity.getTipoPix();
+        this.chave = entity.getChave();
     }
 
-    @Override
     public long getId() { return id; }
     public long getContatoId() { return contatoId; }
     public Long getDadoId() { return dadoId; }
     public TipoPix getTipoPix() { return tipoPix; }
     public String getChave() { return chave; }
-    public String getNomeBanco() { return nomeBanco; }
-    public String getAgencia() { return agencia; }
-    public String getNumeroConta() { return numeroConta; }
-    public String getNomeContato() { return nomeContato; }
-
-    @Override
-    public void setId(long id) { this.id = id; }
-    public void setDadoId(long dadoId) { this.dadoId = dadoId; }
 
 }
