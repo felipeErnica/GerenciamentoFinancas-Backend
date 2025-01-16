@@ -81,4 +81,8 @@ public class ProdutoDuplicataService {
 
     }
 
+    public List<ProdutoDuplicataDTO> findTest() {
+        return produtoRepository.findProdutosDuplicatas();
+    }
+
 }

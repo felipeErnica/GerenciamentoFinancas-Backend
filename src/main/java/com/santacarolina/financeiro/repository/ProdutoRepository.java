@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.santacarolina.financeiro.dto.ProdutoDuplicataDTO;
 import com.santacarolina.financeiro.entity.ProdutoEntity;
 
 /**
@@ -20,4 +21,11 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
         WHERE p.documento.id = :documentoId
         """)
     List<ProdutoEntity> findByDoc(long documentoId);
+
+    @Query("""
+        SELECT new com.santacarolina.financeiro.dto.ProdutoDuplicataDTO(p,d)
+        FROM ProdutoEntity p
+        JOIN DuplicataEntity d ON p.documento.id = d.documento.id
+        """)
+    List<ProdutoDuplicataDTO> findProdutosDuplicatas();
 }
