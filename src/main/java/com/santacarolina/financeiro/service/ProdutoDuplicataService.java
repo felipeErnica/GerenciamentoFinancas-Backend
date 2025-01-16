@@ -46,8 +46,8 @@ public class ProdutoDuplicataService {
             produtoDuplicataList.add(dto);
         }
 
-        System.out.println(index);
-        addElements(produtoEntities, duplicataEntities, produtoDuplicataList, index++);
+        index++;
+        addElements(produtoEntities, duplicataEntities, produtoDuplicataList, index);
     }
 
     private List<ProdutoDuplicataDTO> getProdutoDuplicataList(List<ProdutoEntity> produtoEntities, List<DuplicataEntity> duplicataEntities) {
