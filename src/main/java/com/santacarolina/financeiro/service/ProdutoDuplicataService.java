@@ -54,6 +54,7 @@ public class ProdutoDuplicataService {
     private List<ProdutoDuplicataDTO> getProdutoDuplicataList(List<ProdutoEntity> produtoEntities, List<DuplicataEntity> duplicataEntities) {
         List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
         addElements(produtoEntities, duplicataEntities, produtoDuplicataList, 0);
+        System.out.println("Tamanho Lista: " + produtoEntities.size());
         return produtoDuplicataList;
     }
 
