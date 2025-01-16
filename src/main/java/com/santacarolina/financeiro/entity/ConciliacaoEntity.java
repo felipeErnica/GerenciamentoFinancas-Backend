@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class ConciliacaoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

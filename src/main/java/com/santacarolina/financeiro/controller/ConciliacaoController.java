@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,39 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dao.ConciliacaoDAO;
 import com.santacarolina.financeiro.dto.ConciliacaoDTO;
 import com.santacarolina.financeiro.entity.ConciliacaoEntity;
-import com.santacarolina.financeiro.repository.ConciliacaoRepository;
-
-import jakarta.persistence.OptimisticLockException;
+import com.santacarolina.financeiro.service.ConciliacaoService;
 
 @RestController
 @RequestMapping("/conciliacoes")
 @SuppressWarnings("rawtypes")
 public class ConciliacaoController {
 
-    private ConciliacaoDAO dao;
-    private ConciliacaoRepository repository;
-
     @Autowired
-    public ConciliacaoController(ConciliacaoDAO dao, ConciliacaoRepository repository) {
-        this.dao = dao;
-        this.repository = repository;
-    }
+    private ConciliacaoService service;
 
     @GetMapping
     public ResponseEntity<List<ConciliacaoDTO>> findAll() {
-        try {
-            return ResponseEntity.ok(dao.findAll());
-        } catch (SQLException e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
     public ResponseEntity<ConciliacaoDTO> save(@RequestBody ConciliacaoEntity c) {
         try {
-            repository.save(c);
+            service.save(c);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -55,9 +44,9 @@ public class ConciliacaoController {
     @PostMapping("/batch")
     public ResponseEntity saveAll(@RequestBody List<ConciliacaoEntity> list) {
         try {
-            repository.saveAll(list);
+            service.saveAll(list);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -65,9 +54,9 @@ public class ConciliacaoController {
     @DeleteMapping
     public ResponseEntity deleteById(long id) {
         try {
-            repository.deleteById(id);
+            service.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
