@@ -3,6 +3,7 @@ package com.santacarolina.financeiro.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,21 +23,21 @@ public class DadoEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
-    @OneToOne(orphanRemoval = true, mappedBy = "dado")
+    @OneToOne(mappedBy = "dado", cascade = CascadeType.ALL)
     private PixEntity pix;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
     private String agencia;
     private String numeroConta;
 
-    @OneToMany(mappedBy = "dado", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "dado", cascade = CascadeType.ALL)
     private List<DuplicataEntity> duplicataList;
 
     public long getId() { return id; }

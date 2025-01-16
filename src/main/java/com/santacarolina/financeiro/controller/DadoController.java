@@ -1,9 +1,9 @@
 package com.santacarolina.financeiro.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,44 +14,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.santacarolina.financeiro.dao.DadoDAO;
 import com.santacarolina.financeiro.dto.DadoDTO;
 import com.santacarolina.financeiro.entity.DadoEntity;
-import com.santacarolina.financeiro.repository.DadoRepository;
-import com.santacarolina.financeiro.util.DataBaseConn;
-
-import jakarta.persistence.OptimisticLockException;
+import com.santacarolina.financeiro.service.DadoService;
 
 @RestController
 @RequestMapping("/contas")
 @SuppressWarnings("rawtypes")
 public class DadoController {
 
-    private DadoDAO dadoDAO;
-    private DadoRepository repository;
-
     @Autowired
-    public DadoController(DataBaseConn conn, DadoRepository repository) {
-        this.dadoDAO = new DadoDAO(conn);
-        this.repository = repository;
-    }
+    private DadoService service;
 
     @GetMapping
     public ResponseEntity<List<DadoDTO>> findAll() {
-        try {
-            return ResponseEntity.ok(dadoDAO.findAll());
-        } catch (SQLException e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DadoDTO> findById(@PathVariable long id) {
         try {
-            return dadoDAO.findById(id)
+            return service.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -59,8 +45,8 @@ public class DadoController {
     @GetMapping("/contato={contatoId}")
     public ResponseEntity<List<DadoDTO>> findByContato(@PathVariable long contatoId) {
         try {
-            return ResponseEntity.ok(dadoDAO.getPixByContato(contatoId));
-        } catch (SQLException e) {
+            return ResponseEntity.ok(service.findByContato(contatoId));
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -68,10 +54,10 @@ public class DadoController {
     @GetMapping("/info")
     public ResponseEntity<DadoDTO> getEqual(@RequestParam String agencia, String numeroConta, long bancoId) {
         try {
-            return dadoDAO.getEqual(agencia, numeroConta, bancoId)
+            return service.findEqual(agencia, numeroConta, bancoId)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -79,9 +65,9 @@ public class DadoController {
     @PostMapping
     public ResponseEntity save(@RequestBody DadoEntity d) {
         try {
-            repository.save(d);
+            service.save(d);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -89,9 +75,9 @@ public class DadoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById (@PathVariable long id) {
         try {
-            repository.deleteById(id);
+            service.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (OptimisticLockException e) {
+        } catch (OptimisticLockingFailureException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
