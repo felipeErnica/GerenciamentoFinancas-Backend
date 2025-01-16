@@ -22,7 +22,7 @@ public class ExtratoEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conta_id")
     private ContaEntity conta;
 

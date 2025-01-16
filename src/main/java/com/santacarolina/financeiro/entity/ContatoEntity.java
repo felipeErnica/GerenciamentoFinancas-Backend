@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class ContatoEntity {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String nome;
     private String cpf;

@@ -5,6 +5,7 @@ import com.santacarolina.financeiro.enums.TipoMovimento;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,11 +21,11 @@ public class ConciliacaoEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "duplicata_id")
     private DuplicataEntity duplicata;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "extrato_id")
     private ExtratoEntity extrato;
 

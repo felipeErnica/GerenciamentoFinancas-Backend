@@ -21,21 +21,21 @@ import jakarta.persistence.Table;
 public class ContaEntity {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String nomeConta;
     private String agencia;
     private String numeroConta;
     private String abreviacaoConta;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "conta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
     private List<PastaEntity> pastaList;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "conta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
     private List<ExtratoEntity> extratoList;
 
     public long getId() { return id; }

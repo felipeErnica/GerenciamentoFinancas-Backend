@@ -24,18 +24,31 @@ public class PastaEntity {
     private String nome;
     private String caminhoPasta;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conta_id")
     private ContaEntity conta;
 
     @OneToMany(mappedBy = "pasta", cascade = CascadeType.ALL)
     private List<DocumentoEntity> documentoList;
 
-    public long getId() { return id; }
-    public String getNome() { return nome; }
-    public String getCaminhoPasta() { return caminhoPasta; }
-    public ContaEntity getConta() { return conta; }
-    public List<DocumentoEntity> getDocumentoList() { return documentoList; }
+    public long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCaminhoPasta() {
+        return caminhoPasta;
+    }
+
+    public ContaEntity getConta() {
+        return conta;
+    }
+
+    public List<DocumentoEntity> getDocumentoList() {
+        return documentoList;
+    }
 
 }
-

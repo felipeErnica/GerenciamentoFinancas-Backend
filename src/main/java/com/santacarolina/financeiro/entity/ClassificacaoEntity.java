@@ -25,7 +25,7 @@ public class ClassificacaoEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
     private CategoriaEntity categoria;
     
@@ -35,7 +35,7 @@ public class ClassificacaoEntity {
     private String numeroIdentificacao;
     private String nomeClassificacao;
 
-    @OneToMany(mappedBy = "classificacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "classificacao", cascade = CascadeType.ALL)
     private List<ProdutoEntity> produtoList;
 
     public long getId() { return id; }
