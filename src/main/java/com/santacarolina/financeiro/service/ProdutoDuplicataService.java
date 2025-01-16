@@ -1,16 +1,19 @@
 package com.santacarolina.financeiro.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.ProdutoDuplicataDTO;
-import com.santacarolina.financeiro.entity.DocumentoEntity;
 import com.santacarolina.financeiro.entity.DuplicataEntity;
 import com.santacarolina.financeiro.entity.ProdutoEntity;
-import com.santacarolina.financeiro.repository.DocumentoRepository;
+import com.santacarolina.financeiro.repository.DuplicataRepository;
+import com.santacarolina.financeiro.repository.ProdutoRepository;
 
 /**
  * ProdutoDuplicataService
@@ -18,32 +21,43 @@ import com.santacarolina.financeiro.repository.DocumentoRepository;
 @Service
 public class ProdutoDuplicataService {
 
-    @Autowired
-    private DocumentoRepository documentoRepository;
+    private ProdutoRepository produtoRepository;
+    private DuplicataRepository duplicataRepository;
 
-    private void mergeDuplicatas(ProdutoEntity produto, List<DuplicataEntity> duplicatas, List<ProdutoDuplicataDTO> produtoDuplicataList) {
-        for (DuplicataEntity duplicata : duplicatas) {
-            ProdutoDuplicataDTO dto = new ProdutoDuplicataDTO(produto, duplicata);
-            produtoDuplicataList.add(dto);
-        }
+    @Autowired
+    public ProdutoDuplicataService(ProdutoRepository produtoRepository, DuplicataRepository duplicataRepository) {
+        this.produtoRepository = produtoRepository;
+        this.duplicataRepository = duplicataRepository;
     }
 
-    private void getProdutoDuplicataList(DocumentoEntity documento, List<ProdutoDuplicataDTO> produtoDuplicataList) {
-        List<ProdutoEntity> produtos = documento.getProdutoList();
-        List<DuplicataEntity> duplicatas = documento.getDuplicataList();
-        for (ProdutoEntity produto : produtos) {
-            produto.setValorUnit(produto.getValorUnit()/duplicatas.size());
-            mergeDuplicatas(produto, duplicatas, produtoDuplicataList);
+    private List<ProdutoDuplicataDTO> buildListProdutoDuplicatas(List<ProdutoEntity> produtoEntities,
+            Map<Long, List<DuplicataEntity>> duplicatas) {
+        
+        List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
+        for (ProdutoEntity produto : produtoEntities) {
+            long documentoId = produto.getDocumento().getId();
+            List<DuplicataEntity> duplicataEntities = duplicatas.getOrDefault(documentoId, Collections.emptyList());
+            int listSize = duplicataEntities.size();
+            produto.setValorUnit(produto.getValorUnit()/listSize);
+            for (DuplicataEntity duplicata : duplicataEntities) {
+                ProdutoDuplicataDTO produtoDuplicataDTO = new ProdutoDuplicataDTO(produto, duplicata);
+                produtoDuplicataList.add(produtoDuplicataDTO);
+            }
         }
+        return produtoDuplicataList;
+    }
+
+    private Map<Long, List<DuplicataEntity>> mergeDuplicatas(List<DuplicataEntity> duplicataEntities) {
+        return duplicataEntities.stream()
+            .collect(Collectors.groupingBy(dup -> dup.getDocumento().getId()));
     }
 
     public List<ProdutoDuplicataDTO> findProdutosDuplicatas() {
-        List<DocumentoEntity> listDocumentos = documentoRepository.findAll();
-        List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
-        for (DocumentoEntity documento : listDocumentos) {
-            getProdutoDuplicataList(documento, produtoDuplicataList);
-        }
-        return produtoDuplicataList;
+        List<ProdutoEntity> produtoEntities = produtoRepository.findAll();
+        List<DuplicataEntity> duplicataEntities = duplicataRepository.findAll();
+        
+        Map<Long, List<DuplicataEntity>> duplicatas = mergeDuplicatas(duplicataEntities);
+        return buildListProdutoDuplicatas(produtoEntities, duplicatas);
     }
 
 }
