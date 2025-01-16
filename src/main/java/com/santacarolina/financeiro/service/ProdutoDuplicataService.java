@@ -47,6 +47,7 @@ public class ProdutoDuplicataService {
         }
 
         index++;
+        System.out.println(index);
         addElements(produtoEntities, duplicataEntities, produtoDuplicataList, index);
     }
 
