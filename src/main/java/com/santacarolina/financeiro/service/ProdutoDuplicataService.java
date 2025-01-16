@@ -33,7 +33,7 @@ public class ProdutoDuplicataService {
         List<ProdutoDuplicataDTO> produtoDuplicataList,
         int index) {
 
-        if (index == produtoEntities.size()) return;
+        if (index < 0) return;
         ProdutoEntity produto = produtoEntities.get(index);
         
         List<DuplicataEntity> filterDuplicatas = duplicataEntities.stream()
@@ -46,7 +46,7 @@ public class ProdutoDuplicataService {
             produtoDuplicataList.add(dto);
         }
 
-        index++;
+        index--;
         System.out.println(index);
         addElements(produtoEntities, duplicataEntities, produtoDuplicataList, index);
     }
@@ -54,7 +54,7 @@ public class ProdutoDuplicataService {
     private List<ProdutoDuplicataDTO> getProdutoDuplicataList(List<ProdutoEntity> produtoEntities, List<DuplicataEntity> duplicataEntities) {
         List<ProdutoDuplicataDTO> produtoDuplicataList = new ArrayList<>();
         System.out.println("Tamanho Lista: " + produtoEntities.size());
-        addElements(produtoEntities, duplicataEntities, produtoDuplicataList, 0);
+        addElements(produtoEntities, duplicataEntities, produtoDuplicataList, produtoEntities.size());
         return produtoDuplicataList;
     }
 
