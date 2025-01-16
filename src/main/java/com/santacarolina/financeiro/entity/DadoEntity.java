@@ -27,7 +27,7 @@ public class DadoEntity {
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
-    @OneToOne(mappedBy = "dado", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "dado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PixEntity pix;
 
     @ManyToOne(fetch = FetchType.LAZY)

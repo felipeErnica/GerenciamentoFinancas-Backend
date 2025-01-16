@@ -29,7 +29,7 @@ public class PixEntity {
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conta_id")
     private DadoEntity dado;
 
