@@ -14,6 +14,16 @@ import com.santacarolina.financeiro.entity.DuplicataEntity;
 @Repository
 public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long> {
     
+    @Override
+    @Query("""
+        SELECT d
+        FROM DuplicataEntity d
+        LEFT JOIN d.documento
+        LEFT JOIN d.pix
+        LEFT JOIN d.dado
+        """)
+    List<DuplicataEntity> findAll();
+
     List<DuplicataEntity> findByPaga(boolean paga);
 
     @Query("""
