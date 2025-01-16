@@ -28,7 +28,7 @@ public class ContaEntity {
     private String numeroConta;
     private String abreviacaoConta;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 

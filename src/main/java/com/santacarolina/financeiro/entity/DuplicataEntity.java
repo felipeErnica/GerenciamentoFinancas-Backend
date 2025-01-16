@@ -9,7 +9,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,15 +34,15 @@ public class DuplicataEntity {
     private double valor;
     private boolean paga;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "documento_id")
     private DocumentoEntity documento;
 
-    @ManyToOne(fetch = FetchType.EAGER)  
+    @ManyToOne  
     @JoinColumn(name = "dado_id")
     private DadoEntity dado;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "pix_id")
     private PixEntity pix;
 

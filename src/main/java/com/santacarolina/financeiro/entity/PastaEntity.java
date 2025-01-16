@@ -24,7 +24,7 @@ public class PastaEntity {
     private String nome;
     private String caminhoPasta;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "conta_id")
     private ContaEntity conta;
 

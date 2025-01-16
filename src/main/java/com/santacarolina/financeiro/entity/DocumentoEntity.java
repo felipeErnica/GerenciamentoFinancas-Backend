@@ -10,7 +10,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,11 +36,11 @@ public class DocumentoEntity {
     @Enumerated(EnumType.ORDINAL)
     private FluxoCaixa fluxoCaixa;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "emissor_id")
     private ContatoEntity contato;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "pasta_id")
     private PastaEntity pasta;
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,14 +22,14 @@ public class DadoEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
     @OneToOne(mappedBy = "dado", cascade = CascadeType.ALL)
     private PixEntity pix;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
