@@ -33,7 +33,7 @@ public class ProdutoDuplicataService {
         List<ProdutoDuplicataDTO> produtoDuplicataList,
         int index) {
 
-        if (index > produtoEntities.size()) return;
+        if (index == produtoEntities.size()) return;
         ProdutoEntity produto = produtoEntities.get(index);
         
         List<DuplicataEntity> filterDuplicatas = duplicataEntities.stream()
