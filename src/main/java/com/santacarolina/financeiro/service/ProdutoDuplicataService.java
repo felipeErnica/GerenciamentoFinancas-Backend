@@ -28,7 +28,7 @@ public class ProdutoDuplicataService {
         
         Map<Long, List<DuplicataDTO>> duplicataMap = produtoDuplicataList.stream()
             .map(prodDup -> prodDup.getDuplicata())
-            .collect(Collectors.groupingBy(dup -> dup.getDocId()));
+            .collect(Collectors.groupingBy(dup -> dup.getDocumento().getId()));
 
         Map<Long, List<ProdutoDTO>> produtoMap = produtoDuplicataList.stream()
             .map(prodDup -> prodDup.getProduto())
