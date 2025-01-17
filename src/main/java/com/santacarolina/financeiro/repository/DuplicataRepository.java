@@ -53,7 +53,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        WHERE d.documento.id = :documentoId
+        WHERE dup.documento.id = :documentoId
         ORDER BY dup.dataVencimento
         """)
     List<DuplicataEntity> findByDoc(long documentoId);
