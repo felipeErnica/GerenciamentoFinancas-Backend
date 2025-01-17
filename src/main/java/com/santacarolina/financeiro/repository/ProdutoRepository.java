@@ -24,7 +24,7 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
         LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
         LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
-        ORDER BY documento.dataEmissao
+        ORDER BY documento.dataEmissao DESC
         """)
     List<ProdutoEntity> findAll();
 
@@ -50,6 +50,7 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
         LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
         LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
+        ORDER BY duplicata.dataVencimento DESC
         """)
     List<ProdutoDuplicataDTO> findProdutosDuplicatas();
 }
