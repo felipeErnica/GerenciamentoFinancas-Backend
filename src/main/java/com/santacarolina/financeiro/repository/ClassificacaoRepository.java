@@ -17,7 +17,9 @@ public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEnti
 
     @Override
     @Query(value = """
-        SELECT class.*, cat.*
+        SELECT 
+            class.id as class_id, class.categoria_id, class.fluxo_caixa, class.nome_classificacao, class.numero_identificacao, 
+            cat.id as cat_id, cat.nome, cat.numero_categoria
         FROM classificacoes_contabeis class
         LEFT JOIN categorias_contabeis cat ON cat.id = class.categoria_id
         ORDER BY class.numero_identificacao;
