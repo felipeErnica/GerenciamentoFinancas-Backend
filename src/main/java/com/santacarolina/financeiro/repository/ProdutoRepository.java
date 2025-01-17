@@ -41,9 +41,15 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
     List<ProdutoEntity> findByDoc(long documentoId);
 
     @Query("""
-        SELECT new com.santacarolina.financeiro.dto.ProdutoDuplicataDTO(produto,duplicata)
+        SELECT new com.santacarolina.financeiro.dto.ProdutoDuplicataDTO(produto,duplicata), 
+            documento, classificacao, categoria, contato, pasta
         FROM ProdutoEntity produto
         JOIN DuplicataEntity duplicata ON produto.documento.id = duplicata.documento.id
+        LEFT JOIN DocumentoEntity documento ON documento.id = produto.documento.id
+        LEFT JOIN ClassificacaoEntity classificacao ON classificacao.id = produto.classificacao.id
+        LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
+        LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
+        LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
         """)
     List<ProdutoDuplicataDTO> findProdutosDuplicatas();
 }
