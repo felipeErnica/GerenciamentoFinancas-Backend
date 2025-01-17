@@ -23,7 +23,7 @@ public interface DadoRepository extends JpaRepository<DadoEntity, Long> {
     List<DadoEntity> findAll();
 
     @Query("""
-        SELECT d
+        SELECT d, b, c
         FROM DadoEntity d
         LEFT JOIN BancoEntity b ON b.id = d.banco.id
         LEFT JOIN ContatoEntity c ON c.id = d.contato.id
@@ -32,7 +32,7 @@ public interface DadoRepository extends JpaRepository<DadoEntity, Long> {
     List<DadoEntity> findByContato(long contatoId);
 
     @Query("""
-        SELECT d
+        SELECT d, b, c
         FROM DadoEntity d
         LEFT JOIN BancoEntity b ON b.id = d.banco.id
         LEFT JOIN ContatoEntity c ON c.id = d.contato.id
@@ -42,11 +42,11 @@ public interface DadoRepository extends JpaRepository<DadoEntity, Long> {
 
     @Override
     @Query("""
-        SELECT d
+        SELECT d, b, c
         FROM DadoEntity d
         LEFT JOIN BancoEntity b ON b.id = d.banco.id
         LEFT JOIN ContatoEntity c ON c.id = d.contato.id
-        WHERE d.agencia = :agencia AND d.numeroConta = :numeroConta AND d.banco.id = :bancoId
+        WHERE d.id = :id
         """)
     Optional<DadoEntity> findById(Long id);
 
