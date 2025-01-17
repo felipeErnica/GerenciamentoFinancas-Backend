@@ -15,17 +15,35 @@ import com.santacarolina.financeiro.entity.ProdutoEntity;
 @Repository
 public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
 
+    @Override
     @Query("""
-        SELECT p
-        FROM ProdutoEntity p
-        WHERE p.documento.id = :documentoId
+        SELECT produto, documento, classificacao, categoria, contato, pasta
+        FROM ProdutoEntity produto
+        LEFT JOIN DocumentoEntity documento ON documento.id = produto.documento.id
+        LEFT JOIN ClassificacaoEntity classificacao ON classificacao.id = produto.classificacao.id
+        LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
+        LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
+        LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
+        ORDER BY documento.dataEmissao
+        """)
+    List<ProdutoEntity> findAll();
+
+    @Query("""
+        SELECT produto, documento, classificacao, categoria, contato, pasta
+        FROM ProdutoEntity produto
+        LEFT JOIN DocumentoEntity documento ON documento.id = produto.documento.id
+        LEFT JOIN ClassificacaoEntity classificacao ON classificacao.id = produto.classificacao.id
+        LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
+        LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
+        LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
+        WHERE produto.documento.id = :documentoId
         """)
     List<ProdutoEntity> findByDoc(long documentoId);
 
     @Query("""
-        SELECT new com.santacarolina.financeiro.dto.ProdutoDuplicataDTO(p,d)
-        FROM ProdutoEntity p
-        JOIN DuplicataEntity d ON p.documento.id = d.documento.id
+        SELECT new com.santacarolina.financeiro.dto.ProdutoDuplicataDTO(produto,duplicata)
+        FROM ProdutoEntity produto
+        JOIN DuplicataEntity duplicata ON produto.documento.id = duplicata.documento.id
         """)
     List<ProdutoDuplicataDTO> findProdutosDuplicatas();
 }

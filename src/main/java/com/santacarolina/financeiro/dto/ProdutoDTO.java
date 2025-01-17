@@ -5,8 +5,8 @@ import com.santacarolina.financeiro.entity.ProdutoEntity;
 public class ProdutoDTO {
 
     private long id;
-    private long docId;
-    private long classificacaoId;
+    private DocumentoDTO documento;
+    private ClassificacaoDTO classificacao;
     private String descricao;
     private String und;
     private double quantidade;
@@ -14,8 +14,8 @@ public class ProdutoDTO {
 
     public ProdutoDTO(ProdutoEntity entity) {
         this.id = entity.getId();
-        this.docId = entity.getDocumento() != null ? entity.getDocumento().getId() : 0;
-        this.classificacaoId = entity.getClassificacao() != null ? entity.getClassificacao().getId() : 0;
+        this.documento = entity.getDocumento() != null ? new DocumentoDTO(entity.getDocumento()) : null;
+        this.classificacao = entity.getClassificacao() != null ? new ClassificacaoDTO(entity.getClassificacao()) : null;
         this.descricao = entity.getDescricao();
         this.und = entity.getUnd();
         this.quantidade = entity.getQuantidade();
@@ -23,8 +23,8 @@ public class ProdutoDTO {
     }
 
     public long getId() { return id; }
-    public long getDocId() { return docId; }
-    public long getClassificacaoId() { return classificacaoId; }
+    public DocumentoDTO getDocumento() { return documento; }
+    public ClassificacaoDTO getClassificacao() { return classificacao; }
     public String getDescricao() { return descricao; }
     public String getUnd() { return und; }
     public double getQuantidade() { return quantidade; }
