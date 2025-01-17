@@ -7,29 +7,29 @@ import java.time.LocalDate;
 public class ExtratoDTO {
 
     private long id;
-    private Long contaId;
+    private ContaDTO conta;
     private LocalDate dataTransacao;
     private String categoriaExtrato;
     private String descricao;
     private double valor;
-    private boolean isConciliado;
+    private boolean conciliado;
 
     public ExtratoDTO(ExtratoEntity entity) {
         this.id = entity.getId();
-        this.contaId = entity.getConta() != null ? entity.getConta().getId() : 0;
+        this.conta = entity.getConta() != null ? new ContaDTO(entity.getConta()) : null;
         this.dataTransacao = entity.getDataTransacao();
         this.categoriaExtrato = entity.getCategoriaExtrato();
         this.descricao = entity.getDescricao();
         this.valor = entity.getValor();
-        this.isConciliado = entity.isConciliado();
+        this.conciliado = entity.isConciliado();
     }
 
     public long getId() { return id; }
-    public Long getContaId() { return contaId; }
+    public ContaDTO getConta() { return conta; }
     public LocalDate getDataTransacao() { return dataTransacao; }
     public String getCategoriaExtrato() { return categoriaExtrato; }
     public String getDescricao() { return descricao; }
     public double getValor() { return valor; }
-    public boolean isConciliado() { return isConciliado; }
+    public boolean isConciliado() { return conciliado; }
 
 }
