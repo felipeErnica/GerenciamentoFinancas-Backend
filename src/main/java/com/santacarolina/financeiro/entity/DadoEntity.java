@@ -27,12 +27,12 @@ public class DadoEntity {
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
-    @OneToOne(mappedBy = "dado", fetch = FetchType.LAZY)
-    private PixEntity pix;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
+
+    @OneToOne(mappedBy = "dado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private PixEntity pix;
 
     private String agencia;
     private String numeroConta;
@@ -45,6 +45,7 @@ public class DadoEntity {
     public String getAgencia() { return agencia; }
     public String getNumeroConta() { return numeroConta; }
     public ContatoEntity getContato() { return contato; }
+    public PixEntity getPix() { return pix; }
     public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
 
 }
