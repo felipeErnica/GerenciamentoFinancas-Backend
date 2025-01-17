@@ -16,14 +16,11 @@ import com.santacarolina.financeiro.entity.ClassificacaoEntity;
 public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEntity, Long> {
 
     @Override
-    @Query(value = """
-        SELECT 
-            class.id, class.categoria_id, class.fluxo_caixa, class.nome_classificacao, class.numero_identificacao, 
-            cat.id as cat_id, cat.nome, cat.numero_categoria
-        FROM classificacoes_contabeis class
-        LEFT JOIN categorias_contabeis cat ON cat.id = class.categoria_id
-        ORDER BY class.numero_identificacao;
-        """, nativeQuery = true)
+    @Query("""
+        SELECT class, cat
+        FROM ClassificacaoEntity class
+        LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
+        """)
     List<ClassificacaoEntity> findAll();
     
     //Optional<ClassificacaoEntity> findById(long id);
