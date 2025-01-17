@@ -7,15 +7,15 @@ public class ContaDTO {
     private long id;
     private String nomeConta;
     private String agencia;
-    private long bancoId;
     private String numeroConta;
+    private BancoDTO banco;
     private String abreviacaoConta;
 
     public ContaDTO(ContaEntity entity) {
         this.id = entity.getId();
         this.nomeConta = entity.getNomeConta();
         this.agencia = entity.getAgencia();
-        this.bancoId = entity.getBanco() != null ? entity.getBanco().getId() : 0;
+        this.banco = entity.getBanco() != null ? new BancoDTO(entity.getBanco()) : null;
         this.numeroConta = entity.getNumeroConta();
         this.abreviacaoConta = entity.getAbreviacaoConta();
     }
@@ -23,7 +23,7 @@ public class ContaDTO {
     public long getId() { return id; }
     public String getNomeConta() { return nomeConta; }
     public String getAgencia() { return agencia; }
-    public long getBancoId() { return bancoId; }
+    public BancoDTO getBanco() { return banco; }
     public String getNumeroConta() { return numeroConta; }
     public String getAbreviacaoConta() { return abreviacaoConta; }
 

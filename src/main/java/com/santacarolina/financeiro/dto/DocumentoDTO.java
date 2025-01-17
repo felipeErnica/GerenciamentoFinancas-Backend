@@ -11,9 +11,9 @@ public class DocumentoDTO {
     private long id;
     private Long numDoc;
     private TipoDocumento tipoDoc;
-    private Long emissorId;
+    private ContatoDTO emissor;
     private String caminhoDocumento;
-    private Long pastaId;
+    private PastaDTO pasta;
     private double valor;
     private LocalDate dataEmissao;
     private FluxoCaixa fluxoCaixa;
@@ -22,9 +22,9 @@ public class DocumentoDTO {
         this.id = entity.getId();
         this.numDoc = entity.getNumDoc();
         this.tipoDoc = entity.getTipoDoc();
-        this.emissorId = entity.getContato() != null ? entity.getContato().getId() : 0;
         this.caminhoDocumento = entity.getCaminhoDocumento();
-        this.pastaId = entity.getPasta() != null ? entity.getPasta().getId() : 0;
+        this.emissor = entity.getContato() != null ? new ContatoDTO(entity.getContato()) : null;
+        this.pasta = entity.getPasta() != null ? new PastaDTO(entity.getPasta()) : null;
         this.valor = entity.getValor();
         this.dataEmissao = entity.getDataEmissao();
         this.fluxoCaixa = entity.getFluxoCaixa();
@@ -33,9 +33,9 @@ public class DocumentoDTO {
     public long getId() { return id; }
     public Long getNumDoc() { return numDoc; }
     public TipoDocumento getTipoDoc() { return tipoDoc; }
-    public Long getEmissorId() { return emissorId; }
     public String getCaminhoDocumento() { return caminhoDocumento; }
-    public long getPastaId() { return pastaId; }
+    public ContatoDTO getEmissor() { return emissor; }
+    public PastaDTO getPasta() { return pasta; }
     public double getValor() { return valor; }
     public LocalDate getDataEmissao() { return dataEmissao; }
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }

@@ -7,19 +7,19 @@ public class ConciliacaoDTO {
 
     private long id;
     private TipoMovimento tipoMovimento;
-    private Long duplicataId;
-    private long extratoId;
+    private DuplicataDTO duplicata;
+    private ExtratoDTO extrato;
 
     public ConciliacaoDTO(ConciliacaoEntity entity) {
         this.id = entity.getId();
         this.tipoMovimento = entity.getTipoMovimento();
-        this.duplicataId = entity.getDuplicata() != null ? entity.getDuplicata().getId() : null;
-        this.extratoId = entity.getExtrato() != null ? entity.getExtrato().getId() : null;
+        this.duplicata = entity.getDuplicata() != null ? new DuplicataDTO(entity.getDuplicata()) : null;
+        this.extrato = entity.getExtrato() != null ? new ExtratoDTO(entity.getExtrato()) : null;
     }
 
     public long getId() { return id; }
     public TipoMovimento getTipoMovimento() { return tipoMovimento; }
-    public Long getDuplicataId() { return duplicataId; }
-    public long getExtratoId() { return extratoId; }
+    public DuplicataDTO getDuplicata() { return duplicata; }
+    public ExtratoDTO getExtrato() { return extrato; }
 
 }
