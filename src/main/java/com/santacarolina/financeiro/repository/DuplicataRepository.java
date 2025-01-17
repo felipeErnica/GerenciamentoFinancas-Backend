@@ -17,50 +17,54 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     
     @Override
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta
+        SELECT dup, doc, dado, pix, contato, pasta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
         ORDER BY dup.dataVencimento DESC
         """) 
     List<DuplicataEntity> findAll();
 
     @Override
     @Query("""
-        SELECT dup, doc, dado, pix
+        SELECT dup, doc, dado, pix, contato, pasta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
         WHERE dup.id = :id
         """) 
     Optional<DuplicataEntity> findById(Long id);
 
     @Query("""
-        SELECT dup, doc, dado, pix
+        SELECT dup, doc, dado, pix, contato, pasta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
         WHERE dup.paga = :paga
         """) 
     List<DuplicataEntity> findByPaga(boolean paga);
 
     @Query("""
-        SELECT dup, doc, dado, pix
+        SELECT dup, doc, dado, pix, contato, pasta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
         WHERE dup.documento.id = :documentoId
         ORDER BY dup.dataVencimento
         """)
