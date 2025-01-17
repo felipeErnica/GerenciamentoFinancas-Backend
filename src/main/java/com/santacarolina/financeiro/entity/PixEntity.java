@@ -30,7 +30,7 @@ public class PixEntity {
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
-    @OneToOne(mappedBy = "pix")
+    @OneToOne(mappedBy = "pix", fetch =  FetchType.LAZY)
     private DadoEntity dado;
 
     @Enumerated(EnumType.ORDINAL)
