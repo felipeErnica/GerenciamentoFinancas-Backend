@@ -18,7 +18,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     @Override
     @Query("""
         SELECT dup, doc, dado, pix
-        FROM dup
+        FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = doc.dado.id
         LEFT JOIN PixEntity pix ON pix.id = doc.pix.id
@@ -29,7 +29,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     @Override
     @Query("""
         SELECT dup, doc, dado, pix
-        FROM dup
+        FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = doc.dado.id
         LEFT JOIN PixEntity pix ON pix.id = doc.pix.id
@@ -39,7 +39,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
 
     @Query("""
         SELECT dup, doc, dado, pix
-        FROM dup
+        FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = doc.dado.id
         LEFT JOIN PixEntity pix ON pix.id = doc.pix.id
@@ -49,7 +49,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
 
     @Query("""
         SELECT dup, doc, dado, pix
-        FROM dup
+        FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = doc.dado.id
         LEFT JOIN PixEntity pix ON pix.id = doc.pix.id
