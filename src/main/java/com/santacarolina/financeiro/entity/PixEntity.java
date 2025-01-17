@@ -15,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,7 +29,8 @@ public class PixEntity {
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
-    @OneToOne(mappedBy = "pix", fetch =  FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conta_id")
     private DadoEntity dado;
 
     @Enumerated(EnumType.ORDINAL)
