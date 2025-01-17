@@ -21,7 +21,7 @@ public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long
         SELECT d, p, c
         FROM DocumentoEntity d
         LEFT JOIN PastaEntity p ON p.id = d.pasta.id
-        LEFT JOIN ContatoEntity c ON c.id = c.contato.id
+        LEFT JOIN ContatoEntity c ON c.id = d.contato.id
         """)
     List<DocumentoEntity> findAll();
 
