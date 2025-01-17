@@ -23,7 +23,7 @@ public class ProdutoDuplicataController {
     
     @GetMapping
     public ResponseEntity<List<ProdutoDuplicataDTO>> findAll() {
-        return ResponseEntity.ok(service.findTest());
+        return ResponseEntity.ok(service.findProdutosDuplicatas());
     }
 
 }
