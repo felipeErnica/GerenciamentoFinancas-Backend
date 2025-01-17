@@ -21,7 +21,7 @@ public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEnti
             class.id, class.categoria_id, class.fluxo_caixa, class.nome_classificacao, class.numero_identificacao, 
             cat.nome, cat.numero_categoria
         FROM classificacoes_contabeis
-        LEFT JOIN categorias_contabeis ON cat.id = class.categoria_id
+        LEFT JOIN categorias_contabeis cat ON cat.id = class.categoria_id
         """, nativeQuery = true)
     List<ClassificacaoEntity> findAll();
     
