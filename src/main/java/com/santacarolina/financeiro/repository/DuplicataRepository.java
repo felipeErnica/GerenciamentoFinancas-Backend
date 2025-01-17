@@ -22,7 +22,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.emissor.id
+        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         ORDER BY dup.dataVencimento DESC
         """) 
@@ -35,7 +35,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.emissor.id
+        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         WHERE dup.id = :id
         """) 
@@ -47,7 +47,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.emissor.id
+        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         WHERE dup.paga = :paga
         """) 
@@ -59,7 +59,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.emissor.id
+        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         WHERE dup.documento.id = :documentoId
         ORDER BY dup.dataVencimento
