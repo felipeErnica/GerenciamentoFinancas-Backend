@@ -32,7 +32,7 @@ public class ProdutoDuplicataService {
 
         Map<Long, List<ProdutoDTO>> produtoMap = produtoDuplicataList.stream()
             .map(prodDup -> prodDup.getProduto())
-            .collect(Collectors.groupingBy(prod -> prod.getDocumento()));
+            .collect(Collectors.groupingBy(prod -> prod.getDocumento().getId()));
 
         Set<Long> documentoSet = produtoMap.keySet();
 
