@@ -20,12 +20,33 @@ public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEnti
         SELECT class, cat
         FROM ClassificacaoEntity class
         LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
+        ORDER BY class.numeroIdentificacao
         """)
     List<ClassificacaoEntity> findAll();
     
-    //Optional<ClassificacaoEntity> findById(long id);
+    @Override
+    @Query("""
+        SELECT class, cat
+        FROM ClassificacaoEntity class
+        LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
+        WHERE class.id = :id
+        """)
+    Optional<ClassificacaoEntity> findById(Long id);
     
+    @Query("""
+        SELECT class, cat
+        FROM ClassificacaoEntity class
+        LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
+        WHERE class.numeroIdentificacao = :numeroIdentificacao
+        """)
     Optional<ClassificacaoEntity> findByNumeroIdentificacao(String numeroIdentificacao);
     
+    @Query("""
+        SELECT class, cat
+        FROM ClassificacaoEntity class
+        LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
+        WHERE class.nomeClassificacao = :nomeClassificacao
+        """)
     Optional<ClassificacaoEntity> findByNomeClassificacao(String nomeClassificacao);
+
 }
