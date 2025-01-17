@@ -58,8 +58,8 @@ public interface PixRepository extends JpaRepository<PixEntity, Long> {
     List<PixEntity> findByContato(long contatoId);
 
     @Query("""
-        SELECT p
-        FROM PixEntity p, c, d, b
+        SELECT p, c, d, b
+        FROM PixEntity p
         LEFT JOIN ContatoEntity c ON c.id = p.contato.id
         LEFT JOIN DadoEntity d ON d.id = p.dado.id
         LEFT JOIN BancoEntity b ON b.id = d.banco.id
