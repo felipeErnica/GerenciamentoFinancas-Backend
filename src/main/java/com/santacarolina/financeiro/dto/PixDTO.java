@@ -6,22 +6,22 @@ import com.santacarolina.financeiro.enums.TipoPix;
 public class PixDTO {
 
     private long id;
-    private long contatoId;
-    private Long dadoId;
+    private ContatoDTO contato;
+    private DadoDTO dado;
     private TipoPix tipoPix;
     private String chave;
 
     public PixDTO(PixEntity entity) {
         this.id = entity.getId();
-        this.contatoId = entity.getContato() != null ? entity.getContato().getId() : 0;
-        this.dadoId = entity.getDado() != null ? entity.getDado().getId() : null;
+        this.contato = entity.getContato() != null ? new ContatoDTO(entity.getContato()) : null;
+        this.dado = entity.getDado() != null ? new DadoDTO(entity.getDado()) : null;
         this.tipoPix = entity.getTipoPix();
         this.chave = entity.getChave();
     }
 
     public long getId() { return id; }
-    public long getContatoId() { return contatoId; }
-    public Long getDadoId() { return dadoId; }
+    public ContatoDTO getContato() { return contato; }
+    public DadoDTO getDado() { return dado; }
     public TipoPix getTipoPix() { return tipoPix; }
     public String getChave() { return chave; }
 
