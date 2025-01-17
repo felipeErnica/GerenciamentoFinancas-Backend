@@ -44,7 +44,6 @@ public class DadoEntity {
     public BancoEntity getBanco() { return banco; }
     public String getAgencia() { return agencia; }
     public String getNumeroConta() { return numeroConta; }
-    public PixEntity getPix() { return pix; }
     public ContatoEntity getContato() { return contato; }
     public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
 
