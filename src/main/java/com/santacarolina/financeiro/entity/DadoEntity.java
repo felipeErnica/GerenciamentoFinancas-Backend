@@ -31,7 +31,7 @@ public class DadoEntity {
     private ContatoEntity contato;
 
     @OneToMany(mappedBy = "dado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private PixEntity pix;
+    private List<PixEntity> pixList;
 
     private String agencia;
     private String numeroConta;
@@ -44,7 +44,7 @@ public class DadoEntity {
     public String getAgencia() { return agencia; }
     public String getNumeroConta() { return numeroConta; }
     public ContatoEntity getContato() { return contato; }
-    public PixEntity getPix() { return pix; }
+    public List<PixEntity> getPixList() { return pixList; }
     public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
 
 }
