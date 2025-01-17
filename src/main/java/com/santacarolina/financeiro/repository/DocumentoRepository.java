@@ -1,6 +1,7 @@
 package com.santacarolina.financeiro.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +16,14 @@ import com.santacarolina.financeiro.enums.TipoDocumento;
  */
 @Repository
 public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long> {
+
+    @Query("""
+        SELECT d, p, c
+        FROM DocumentoEntity d
+        LEFT JOIN PastaEntity p
+        LEFT JOIN ContatoEntity c
+        """)
+    List<DocumentoEntity> findAll();
 
     @Query("""
         SELECT d
