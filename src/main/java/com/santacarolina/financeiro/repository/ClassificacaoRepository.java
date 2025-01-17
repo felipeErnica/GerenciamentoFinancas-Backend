@@ -15,6 +15,7 @@ import com.santacarolina.financeiro.entity.ClassificacaoEntity;
 @Repository
 public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEntity, Long> {
 
+    @Override
     @Query(value = """
         SELECT class.*, cat.*
         FROM classificacoes_contabeis class
@@ -23,7 +24,7 @@ public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEnti
         """, nativeQuery = true)
     List<ClassificacaoEntity> findAll();
     
-    Optional<ClassificacaoEntity> findById(long id);
+    //Optional<ClassificacaoEntity> findById(long id);
     
     Optional<ClassificacaoEntity> findByNumeroIdentificacao(String numeroIdentificacao);
     
