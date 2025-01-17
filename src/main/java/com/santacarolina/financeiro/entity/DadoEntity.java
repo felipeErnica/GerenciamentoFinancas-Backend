@@ -31,7 +31,8 @@ public class DadoEntity {
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
-    @OneToOne(mappedBy = "dado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pix_id")
     private PixEntity pix;
 
     private String agencia;
