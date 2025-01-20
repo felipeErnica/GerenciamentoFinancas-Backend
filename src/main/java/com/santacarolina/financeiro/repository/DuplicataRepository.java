@@ -70,7 +70,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
-        WHERE dup.paga = :paga
+        WHERE dup.paga = false
         ORDER BY dup.dataVencimento 
         """) 
     List<DuplicataEntity> findNaoPagas();
