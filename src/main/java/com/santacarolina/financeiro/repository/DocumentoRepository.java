@@ -18,16 +18,20 @@ import com.santacarolina.financeiro.enums.TipoDocumento;
 public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long> {
 
     @Query("""
-        SELECT d, p, c
+        SELECT d, p, c, conta
         FROM DocumentoEntity d
         LEFT JOIN PastaEntity p ON p.id = d.pasta.id
         LEFT JOIN ContatoEntity c ON c.id = d.contato.id
+        LEFT JOIN ContaEntity conta ON conta.id = p.conta.id
         """)
     List<DocumentoEntity> findAll();
 
     @Query("""
-        SELECT d
+        SELECT d, p, c, conta
         FROM DocumentoEntity d
+        LEFT JOIN PastaEntity p ON p.id = d.pasta.id
+        LEFT JOIN ContatoEntity c ON c.id = d.contato.id
+        LEFT JOIN ContaEntity conta ON conta.id = p.conta.id
         WHERE d.contato.id = :contatoId
             AND d.tipoDoc = :tipoDoc
             AND d.dataEmissao = :dataEmissao
@@ -38,8 +42,11 @@ public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long
             double valor);
 
     @Query("""
-        SELECT d
+        SELECT d, p, c, conta
         FROM DocumentoEntity d
+        LEFT JOIN PastaEntity p ON p.id = d.pasta.id
+        LEFT JOIN ContatoEntity c ON c.id = d.contato.id
+        LEFT JOIN ContaEntity conta ON conta.id = p.conta.id
         WHERE d.contato.id = :contatoId AND d.numDoc = :numDoc
         """)
     Optional<DocumentoEntity> findNotaEqual(long contatoId, long numDoc);

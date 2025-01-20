@@ -24,7 +24,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
-        LEFT JOIN ContaEntity conta ON conta.id = doc.pasta.conta.id
+        LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         ORDER BY dup.dataVencimento DESC
         """) 
     List<DuplicataEntity> findAll();
@@ -50,7 +50,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
-        LEFT JOIN ContaEntity conta ON conta.id = doc.pasta.conta.id
+        LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         WHERE dup.paga = :paga
         """) 
     List<DuplicataEntity> findByPaga(boolean paga);
@@ -63,6 +63,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
+        LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         WHERE dup.documento.id = :documentoId
         ORDER BY dup.dataVencimento
         """)
