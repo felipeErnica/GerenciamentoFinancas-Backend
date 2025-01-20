@@ -17,7 +17,7 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     
     @Override
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta, conta
+        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
@@ -25,25 +25,28 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
+        LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
         ORDER BY dup.dataVencimento DESC
         """) 
     List<DuplicataEntity> findAll();
 
     @Override
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta
+        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
+        LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
+        LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
         WHERE dup.id = :id
         """) 
     Optional<DuplicataEntity> findById(Long id);
 
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta, conta
+        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
@@ -51,12 +54,14 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
-        WHERE dup.paga = :paga
+        LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
+        WHERE dup.paga = true
+        ORDER BY dup.dataVencimento DESC
         """) 
-    List<DuplicataEntity> findByPaga(boolean paga);
+    List<DuplicataEntity> findPagas();
 
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta
+        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
@@ -64,6 +69,22 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
+        LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
+        WHERE dup.paga = :paga
+        ORDER BY dup.dataVencimento 
+        """) 
+    List<DuplicataEntity> findNaoPagas();
+
+    @Query("""
+        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
+        FROM DuplicataEntity dup
+        LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
+        LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
+        LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
+        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
+        LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
+        LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
         WHERE dup.documento.id = :documentoId
         ORDER BY dup.dataVencimento
         """)

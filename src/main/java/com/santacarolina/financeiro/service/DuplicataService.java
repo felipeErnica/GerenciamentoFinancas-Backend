@@ -32,13 +32,13 @@ public class DuplicataService {
     }
 
     public List<DuplicataDTO> findPagas() throws IllegalArgumentException {
-        return repository.findByPaga(true).stream()
+        return repository.findPagas().stream()
             .map(entity -> new DuplicataDTO(entity))
             .toList();
     }
 
     public List<DuplicataDTO> findNaoPagas() throws IllegalArgumentException {
-        return repository.findByPaga(false).stream()
+        return repository.findNaoPagas().stream()
             .map(entity -> new DuplicataDTO(entity))
             .toList();
     }
@@ -49,20 +49,9 @@ public class DuplicataService {
             .toList();
     }
 
-    public void save(DuplicataEntity d) throws IllegalArgumentException, OptimisticLockingFailureException {
-        repository.save(d);
-    }
-
-    public void saveAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
-        repository.saveAll(list);
-    }
-
-    public void deleteById(long id) throws IllegalArgumentException {
-        repository.deleteById(id);
-    }
-
-    public void deleteAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
-        repository.deleteAll(list);
-    }
+    public void save(DuplicataEntity d) throws IllegalArgumentException, OptimisticLockingFailureException { repository.save(d); }
+    public void saveAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException { repository.saveAll(list); }
+    public void deleteById(long id) throws IllegalArgumentException { repository.deleteById(id); }
+    public void deleteAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException { repository.deleteAll(list); }
 
 }
