@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.ProdutoDTO;
 import com.santacarolina.financeiro.entity.ProdutoEntity;
 import com.santacarolina.financeiro.service.ProdutoService;
+import com.santacarolina.financeiro.util.LoggerMessage;
 
 @RestController
 @RequestMapping("/produtos")
@@ -27,12 +28,14 @@ public class ProdutoController {
 
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> findAll() {
+        LoggerMessage.generateMessage("PixController - findAll");
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/documento={documentoId}")
     public ResponseEntity<List<ProdutoDTO>> findByDoc(@PathVariable long documentoId) {
         try {
+            LoggerMessage.generateMessage("PixController - findByDoc");
             return ResponseEntity.ok(service.findByDoc(documentoId));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -42,6 +45,7 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity save(@RequestBody ProdutoEntity entity) {
         try {
+            LoggerMessage.generateMessage("PixController - save");
             service.save(entity);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
@@ -52,6 +56,7 @@ public class ProdutoController {
     @PostMapping("/batch")
     public ResponseEntity saveAll(@RequestBody List<ProdutoEntity> list) {
         try {
+            LoggerMessage.generateMessage("PixController - saveAll");
             service.saveAll(list);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
@@ -62,6 +67,7 @@ public class ProdutoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
+            LoggerMessage.generateMessage("PixController - deleteById");
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
@@ -72,6 +78,7 @@ public class ProdutoController {
     @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<ProdutoEntity> list) {
         try {
+            LoggerMessage.generateMessage("PixController - deleteAll");
             service.deleteAll(list);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {

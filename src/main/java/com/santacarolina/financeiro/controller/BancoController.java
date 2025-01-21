@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.BancoDTO;
 import com.santacarolina.financeiro.entity.BancoEntity;
 import com.santacarolina.financeiro.service.BancoService;
+import com.santacarolina.financeiro.util.LoggerMessage;
 
 @RestController
 @RequestMapping("/bancos")
@@ -32,6 +33,7 @@ public class BancoController {
     @GetMapping
     public ResponseEntity<List<BancoDTO>> findAll() {
         try {
+            LoggerMessage.generateMessage("Banco - findAll");
             return ResponseEntity.ok(service.findAll());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -41,6 +43,7 @@ public class BancoController {
     @GetMapping("/{id}")
     public ResponseEntity<BancoDTO> findById(@PathVariable long id) {
         try {
+            LoggerMessage.generateMessage("Banco - findById");
             return service.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -52,6 +55,7 @@ public class BancoController {
     @GetMapping("/nomeBanco={nomeBanco}")
     public ResponseEntity<BancoDTO> findByNomeBanco(@PathVariable String nomeBanco) {
         try {
+            LoggerMessage.generateMessage("Banco - findByNomeBanco");
             return service.findByNomeBanco(nomeBanco)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -63,6 +67,7 @@ public class BancoController {
     @GetMapping("/apelido={apelido}")
     public ResponseEntity<BancoDTO> findByApelido(@PathVariable String apelido) {
         try {
+            LoggerMessage.generateMessage("Banco - findByApelido");
             return service.findByApelido(apelido)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -74,6 +79,7 @@ public class BancoController {
     @PostMapping
     public ResponseEntity save(@RequestBody BancoEntity banco) {
         try {
+            LoggerMessage.generateMessage("Banco - save");
             service.save(banco);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
@@ -85,6 +91,7 @@ public class BancoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
+            LoggerMessage.generateMessage("Banco - deleteById");
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException e) {

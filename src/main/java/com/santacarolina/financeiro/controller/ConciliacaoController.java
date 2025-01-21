@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.ConciliacaoDTO;
 import com.santacarolina.financeiro.entity.ConciliacaoEntity;
 import com.santacarolina.financeiro.service.ConciliacaoService;
+import com.santacarolina.financeiro.util.LoggerMessage;
 
 @RestController
 @RequestMapping("/conciliacoes")
@@ -26,12 +27,14 @@ public class ConciliacaoController {
 
     @GetMapping
     public ResponseEntity<List<ConciliacaoDTO>> findAll() {
+        LoggerMessage.generateMessage("ConciliacaoController - findAll");
         return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
     public ResponseEntity<ConciliacaoDTO> save(@RequestBody ConciliacaoEntity c) {
         try {
+            LoggerMessage.generateMessage("ConciliacaoController - save");
             service.save(c);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
@@ -42,6 +45,7 @@ public class ConciliacaoController {
     @PostMapping("/batch")
     public ResponseEntity saveAll(@RequestBody List<ConciliacaoEntity> list) {
         try {
+            LoggerMessage.generateMessage("ConciliacaoController - saveAll");
             service.saveAll(list);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
@@ -52,6 +56,7 @@ public class ConciliacaoController {
     @DeleteMapping
     public ResponseEntity deleteById(long id) {
         try {
+            LoggerMessage.generateMessage("ConciliacaoController - deleteById");
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException e) {

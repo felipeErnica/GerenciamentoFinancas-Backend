@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.santacarolina.financeiro.dto.ProdutoDuplicataDTO;
 import com.santacarolina.financeiro.service.ProdutoDuplicataService;
+import com.santacarolina.financeiro.util.LoggerMessage;
 
 /**
  * ProdutoDuplicataController
@@ -23,6 +24,7 @@ public class ProdutoDuplicataController {
     
     @GetMapping
     public ResponseEntity<List<ProdutoDuplicataDTO>> findAll() {
+        LoggerMessage.generateMessage("ProdutoDuplicataController - findAll");
         return ResponseEntity.ok(service.findProdutosDuplicatas());
     }
 

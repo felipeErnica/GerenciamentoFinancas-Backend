@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.CategoriaDTO;
 import com.santacarolina.financeiro.entity.CategoriaEntity;
 import com.santacarolina.financeiro.service.CategoriaService;
+import com.santacarolina.financeiro.util.LoggerMessage;
 
 import jakarta.persistence.OptimisticLockException;
 
@@ -32,6 +33,7 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDTO> findById(@PathVariable long id) {
         try {
+            LoggerMessage.generateMessage("CategoriaController - findById");
             return service.findById(id)
                 .map(dto -> ResponseEntity.ok(dto))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -43,6 +45,7 @@ public class CategoriaController {
     @GetMapping("/nome={nome}")
     public ResponseEntity<CategoriaDTO> findByNome(@PathVariable String nome) {
         try {
+            LoggerMessage.generateMessage("CategoriaController - findByNome");
             return service.findByNome(nome)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -54,6 +57,7 @@ public class CategoriaController {
     @GetMapping("/numero={numero}")
     public ResponseEntity<CategoriaDTO> findByNumero(@PathVariable String numero) {
         try {
+            LoggerMessage.generateMessage("CategoriaController - findByNumero");
             return service.findByNumero(numero)
                 .map(d -> ResponseEntity.ok(d))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -64,12 +68,14 @@ public class CategoriaController {
     
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() {
+        LoggerMessage.generateMessage("CategoriaController - findAll");
         return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
     public ResponseEntity save(@RequestBody CategoriaEntity t) {
         try {
+            LoggerMessage.generateMessage("CategoriaController - save");
             service.save(t);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
@@ -80,6 +86,7 @@ public class CategoriaController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
+            LoggerMessage.generateMessage("CategoriaController - deleteById");
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
