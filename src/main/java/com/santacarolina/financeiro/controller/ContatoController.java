@@ -108,7 +108,7 @@ public class ContatoController {
     public ResponseEntity<ContatoEntity> addContato(@RequestBody ContatoEntity contato) {
         try {
             service.save(contato);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(contato);
         } catch (OptimisticLockingFailureException e) {
             return ResponseEntity.internalServerError().build();
         }
