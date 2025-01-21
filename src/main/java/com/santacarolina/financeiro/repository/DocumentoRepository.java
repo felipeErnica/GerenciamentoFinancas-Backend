@@ -24,6 +24,7 @@ public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long
         LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
+        ORDER BY doc.dataEmissao DESC
         """)
     List<DocumentoEntity> findAll();
 
