@@ -105,10 +105,10 @@ public class ContatoController {
     }
 
     @PostMapping
-    public ResponseEntity<ContatoEntity> addContato(@RequestBody ContatoEntity contato) {
+    public ResponseEntity<ContatoDTO> addContato(@RequestBody ContatoEntity contato) {
         try {
             service.save(contato);
-            return ResponseEntity.ok(contato);
+            return ResponseEntity.ok(new ContatoDTO(contato));
         } catch (OptimisticLockingFailureException e) {
             return ResponseEntity.internalServerError().build();
         }
