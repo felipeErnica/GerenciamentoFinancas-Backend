@@ -8,7 +8,7 @@ public class LoggerMessage {
     private static final Logger logger = LogManager.getLogger();
 
     public static void generateMessage(String message) {
-        logger.debug("\n" + message);
+        logger.info("\n" + message);
     }
 
 }
