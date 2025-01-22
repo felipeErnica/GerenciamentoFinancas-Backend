@@ -31,7 +31,7 @@ public class ContatoEntity {
     @OneToMany (mappedBy = "contato",cascade = CascadeType.ALL)
     private List<PixEntity> pixList;
 
-    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "emissor", cascade = CascadeType.ALL)
     private List<DocumentoEntity> documentoList;
 
     public long getId() { return id; }
