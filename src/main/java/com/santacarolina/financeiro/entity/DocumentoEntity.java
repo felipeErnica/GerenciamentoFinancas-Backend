@@ -1,6 +1,7 @@
 package com.santacarolina.financeiro.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.santacarolina.financeiro.enums.FluxoCaixa;
@@ -50,10 +51,10 @@ public class DocumentoEntity {
     private LocalDate dataEmissao;
 
     @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
-    private List<DuplicataEntity> duplicataList;
+    private List<DuplicataEntity> duplicataList = new ArrayList<>();
 
     @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
-    private List<ProdutoEntity> produtoList;
+    private List<ProdutoEntity> produtoList = new ArrayList<>();
 
     public long getId() { return id; }
     public Long getNumDoc() { return numDoc; }
