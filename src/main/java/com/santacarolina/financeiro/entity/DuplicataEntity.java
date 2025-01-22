@@ -35,7 +35,7 @@ public class DuplicataEntity {
     private double valor;
     private boolean paga;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "documento_id")
     private DocumentoEntity documento;
 
