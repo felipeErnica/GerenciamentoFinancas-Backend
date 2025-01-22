@@ -23,7 +23,7 @@ public class DocumentoDTO {
         this.numDoc = entity.getNumDoc();
         this.tipoDoc = entity.getTipoDoc();
         this.caminhoDocumento = entity.getCaminhoDocumento();
-        this.emissor = entity.getContato() != null ? new ContatoDTO(entity.getContato()) : null;
+        this.emissor = entity.getEmissor() != null ? new ContatoDTO(entity.getEmissor()) : null;
         this.pasta = entity.getPasta() != null ? new PastaDTO(entity.getPasta()) : null;
         this.valor = entity.getValor();
         this.dataEmissao = entity.getDataEmissao();

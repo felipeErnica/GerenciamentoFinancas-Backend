@@ -40,7 +40,7 @@ public class DocumentoEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emissor_id")
-    private ContatoEntity contato;
+    private ContatoEntity emissor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pasta_id")
@@ -60,7 +60,7 @@ public class DocumentoEntity {
     public Long getNumDoc() { return numDoc; }
     public TipoDocumento getTipoDoc() { return tipoDoc; }
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
-    public ContatoEntity getContato() { return contato; }
+    public ContatoEntity getEmissor() { return emissor; }
     public String getCaminhoDocumento() { return caminhoDocumento; }
     public PastaEntity getPasta() { return pasta; }
     public double getValor() { return valor; }

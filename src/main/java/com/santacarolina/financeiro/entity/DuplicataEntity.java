@@ -61,5 +61,7 @@ public class DuplicataEntity {
     public double getValor() { return valor; }
     public boolean isPaga() { return paga; }
 
+    public void setDocumento(DocumentoEntity documento) { this.documento = documento; }
+
 }
 

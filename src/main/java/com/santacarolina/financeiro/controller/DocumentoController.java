@@ -72,9 +72,11 @@ public class DocumentoController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody DocumentoEntity dto) {
+    public ResponseEntity save(@RequestBody DocumentoEntity documento) {
         try {
-            service.save(dto);
+            documento.getProdutoList().forEach(prod -> prod.setDocumento(documento));
+            documento.getDuplicataList().forEach(dup -> dup.setDocumento(documento));
+            service.save(documento);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             return ResponseEntity.internalServerError().build();
