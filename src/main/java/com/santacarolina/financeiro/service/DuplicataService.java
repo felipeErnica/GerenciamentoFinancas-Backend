@@ -49,9 +49,20 @@ public class DuplicataService {
             .toList();
     }
 
-    public void save(DuplicataEntity d) throws IllegalArgumentException, OptimisticLockingFailureException { repository.save(d); }
-    public void saveAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException { repository.saveAll(list); }
-    public void deleteById(long id) throws IllegalArgumentException { repository.deleteById(id); }
-    public void deleteAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException { repository.deleteAll(list); }
+    public void save(DuplicataEntity d) throws IllegalArgumentException, OptimisticLockingFailureException {
+        repository.save(d); 
+    }
+
+    public void saveAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        repository.saveAll(list); 
+    }
+    
+    public void deleteById(long id) throws IllegalArgumentException {
+        repository.deleteById(id); 
+    }
+
+    public void deleteAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        list.forEach(dup -> repository.delete(dup));
+    }
 
 }

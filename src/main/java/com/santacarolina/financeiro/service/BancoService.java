@@ -45,8 +45,10 @@ public class BancoService {
         repository.save(banco);
     }
 
-    public void deleteById(long id) throws IllegalArgumentException {
-        repository.deleteById(id);
+    public void deleteById(long id) throws IllegalArgumentException { repository.deleteById(id); }
+
+    public void deleteAll(List<BancoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        list.forEach(banco -> repository.delete(banco));
     }
 
 }

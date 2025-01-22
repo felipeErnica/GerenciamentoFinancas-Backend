@@ -93,4 +93,15 @@ public class BancoController {
         }
     }
 
+    @PostMapping("delete-batch")
+    public ResponseEntity deleteAll(@RequestBody List<BancoEntity> list) {
+        try {
+            service.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
+            logger.error(e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

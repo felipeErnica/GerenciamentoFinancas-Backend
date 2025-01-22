@@ -44,8 +44,8 @@ public class ContaService {
         repository.deleteById(id);
     }
 
-    public void deleteAll(List<ContaEntity> list) throws IllegalArgumentException {
-        repository.deleteAll(list);
+    public void deleteAll(List<ContaEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        list.forEach(conta -> repository.delete(conta));
     }
 
 }
