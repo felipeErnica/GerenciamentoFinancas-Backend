@@ -5,7 +5,6 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,10 +21,10 @@ public class BancoEntity {
     private String nomeBanco;
     private String apelidoBanco;
 
-    @OneToMany(mappedBy = "banco", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "banco", cascade = CascadeType.REMOVE)
     private List<ContaEntity> contaList;
 
-    @OneToMany(mappedBy = "banco", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "banco", cascade = CascadeType.REMOVE)
     private List<DadoEntity> dadoList;
 
     public long getId() { return id; }
