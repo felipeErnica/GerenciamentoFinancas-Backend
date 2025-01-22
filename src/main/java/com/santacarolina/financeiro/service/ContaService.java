@@ -36,6 +36,12 @@ public class ContaService {
             .map(entity -> new ContaDTO(entity));
     }
 
+    public Optional<ContaDTO> findByApelido(String apelido) throws IllegalArgumentException {
+        apelido.replace("+", " ");
+        return repository.findByApelido(apelido)
+            .map(entity -> new ContaDTO(entity));
+    }
+
     public void save(ContaEntity c) throws IllegalArgumentException, OptimisticLockingFailureException {
         repository.save(c);
     }

@@ -65,6 +65,17 @@ public class ContaController {
         }
     }
 
+    @GetMapping("/apelido={apelido}")
+    public ResponseEntity<ContaDTO> findById(@PathVariable String apelido) {
+        try {
+            return service.findByApelido(apelido)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody ContaEntity c) {
         try {
