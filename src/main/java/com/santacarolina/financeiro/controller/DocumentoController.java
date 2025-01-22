@@ -74,8 +74,6 @@ public class DocumentoController {
     @PostMapping
     public ResponseEntity save(@RequestBody DocumentoEntity documento) {
         try {
-            documento.getProdutoList().forEach(prod -> prod.setDocumento(documento));
-            documento.getDuplicataList().forEach(dup -> dup.setDocumento(documento));
             service.save(documento);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
@@ -96,8 +94,6 @@ public class DocumentoController {
     @PostMapping("/delete")
     public ResponseEntity delete(@RequestBody DocumentoEntity documento) {
         try {
-            documento.getProdutoList().forEach(prod -> prod.setDocumento(documento));
-            documento.getDuplicataList().forEach(dup -> dup.setDocumento(documento));
             service.delete(documento);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {

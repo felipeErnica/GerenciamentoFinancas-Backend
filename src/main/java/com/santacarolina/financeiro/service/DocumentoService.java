@@ -44,19 +44,19 @@ public class DocumentoService {
             .map(entity -> new DocumentoDTO(entity));
     }
 
-    public void save(DocumentoEntity dto) throws IllegalArgumentException, OptimisticLockingFailureException {
-        repository.save(dto);
+    public void save(DocumentoEntity documento) throws IllegalArgumentException, OptimisticLockingFailureException {
+        documento.getProdutoList().forEach(prod -> prod.setDocumento(documento));
+        documento.getDuplicataList().forEach(dup -> dup.setDocumento(documento));
+        repository.save(documento);
     }
 
-    public void deleteById(long id) throws OptimisticLockingFailureException {
-        repository.deleteById(id);
+    public void deleteById(long id) throws OptimisticLockingFailureException { repository.deleteById(id); }
+
+    public void delete(DocumentoEntity entity) throws IllegalArgumentException, OptimisticLockingFailureException { 
+        repository.delete(entity); 
     }
 
-    public void delete(DocumentoEntity entity) throws IllegalArgumentException, OptimisticLockingFailureException {
-        repository.delete(entity);
-    }
-
-    public void deleteBatch(List<DocumentoEntity> list) {
-        repository.deleteAllInBatch(list);
+    public void deleteBatch(List<DocumentoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        list.forEach(doc -> repository.delete(doc));
     }
 }
