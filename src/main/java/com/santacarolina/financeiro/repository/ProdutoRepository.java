@@ -17,12 +17,12 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
 
     @Override
     @Query("""
-        SELECT produto, documento, classificacao, categoria, contato, pasta, conta, banco
+        SELECT produto, documento, classificacao, categoria, emissor, pasta, conta, banco
         FROM ProdutoEntity produto
         LEFT JOIN DocumentoEntity documento ON documento.id = produto.documento.id
         LEFT JOIN ClassificacaoEntity classificacao ON classificacao.id = produto.classificacao.id
         LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
-        LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = documento.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
@@ -31,12 +31,12 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
     List<ProdutoEntity> findAll();
 
     @Query("""
-        SELECT produto, documento, classificacao, categoria, contato, pasta, conta, banco
+        SELECT produto, documento, classificacao, categoria, emissor, pasta, conta, banco
         FROM ProdutoEntity produto
         LEFT JOIN DocumentoEntity documento ON documento.id = produto.documento.id
         LEFT JOIN ClassificacaoEntity classificacao ON classificacao.id = produto.classificacao.id
         LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
-        LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = documento.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
@@ -46,13 +46,13 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
 
     @Query("""
         SELECT new com.santacarolina.financeiro.dto.ProdutoDuplicataDTO(produto,duplicata), 
-            documento, classificacao, categoria, contato, pasta, conta, banco
+            documento, classificacao, categoria, emissor, pasta, conta, banco
         FROM ProdutoEntity produto
         JOIN DuplicataEntity duplicata ON produto.documento.id = duplicata.documento.id
         LEFT JOIN DocumentoEntity documento ON documento.id = produto.documento.id
         LEFT JOIN ClassificacaoEntity classificacao ON classificacao.id = produto.classificacao.id
         LEFT JOIN CategoriaEntity categoria ON categoria.id = classificacao.categoria.id
-        LEFT JOIN ContatoEntity contato ON contato.id = documento.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = documento.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id

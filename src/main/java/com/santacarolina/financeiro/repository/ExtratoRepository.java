@@ -15,22 +15,22 @@ import com.santacarolina.financeiro.entity.ExtratoEntity;
 public interface ExtratoRepository extends JpaRepository<ExtratoEntity, Long> {
 
     @Query("""
-        SELECT e, c, b
-        FROM ExtratoEntity e
-        LEFT JOIN ContaEntity c ON c.id = e.conta.id
-        LEFT JOIN BancoEntity b ON b.id = c.banco.id
-        WHERE e.conta.id = :contaId
-        ORDER BY e.dataTransacao DESC
+        SELECT extrato, conta, banco
+        FROM ExtratoEntity extrato
+        LEFT JOIN ContaEntity conta ON conta.id = extrato.conta.id
+        LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
+        WHERE extrato.conta.id = :contaId
+        ORDER BY extrato.dataTransacao DESC
     """)
     List<ExtratoEntity> findByContaId(long contaId);
 
     @Query("""
-        SELECT e, c, b
-        FROM ExtratoEntity e
-        LEFT JOIN ContaEntity c ON c.id = e.conta.id
-        LEFT JOIN BancoEntity b ON b.id = c.banco.id
-        WHERE e.conciliado = :isConciliado
-        ORDER BY e.dataTransacao DESC
+        SELECT extrato, conta, banco
+        FROM ExtratoEntity extrato
+        LEFT JOIN ContaEntity conta ON conta.id = extrato.conta.id
+        LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
+        WHERE extrato.conciliado = :isConciliado
+        ORDER BY extrato.dataTransacao DESC
     """)
     List<ExtratoEntity> findByConciliado(boolean isConciliado);
 }

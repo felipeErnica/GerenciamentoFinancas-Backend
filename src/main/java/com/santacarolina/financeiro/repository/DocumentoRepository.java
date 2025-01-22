@@ -18,10 +18,10 @@ import com.santacarolina.financeiro.enums.TipoDocumento;
 public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long> {
 
     @Query("""
-        SELECT doc, pasta, contato, conta, banco
+        SELECT doc, pasta, emissor, conta, banco
         FROM DocumentoEntity doc
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
         ORDER BY doc.dataEmissao DESC
@@ -29,13 +29,13 @@ public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long
     List<DocumentoEntity> findAll();
 
     @Query("""
-        SELECT doc, pasta, contato, conta, banco
+        SELECT doc, pasta, emissor, conta, banco
         FROM DocumentoEntity doc
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
-        WHERE doc.contato.id = :contatoId
+        WHERE doc.emissor.id = :contatoId
             AND doc.tipoDoc = :tipoDoc
             AND doc.dataEmissao = :dataEmissao
             AND doc.pasta.id = :pastaId
@@ -45,13 +45,13 @@ public interface DocumentoRepository extends JpaRepository<DocumentoEntity, Long
             double valor);
 
     @Query("""
-        SELECT doc, pasta, contato, conta, banco
+        SELECT doc, pasta, emissor, conta, banco
         FROM DocumentoEntity doc
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
-        WHERE doc.contato.id = :contatoId AND doc.numDoc = :numDoc
+        WHERE doc.emissor.id = :contatoId AND doc.numDoc = :numDoc
         """)
     Optional<DocumentoEntity> findNotaEqual(long contatoId, long numDoc);
 

@@ -17,12 +17,12 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     
     @Override
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
+        SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
@@ -32,12 +32,12 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
 
     @Override
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
+        SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
@@ -46,12 +46,12 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     Optional<DuplicataEntity> findById(Long id);
 
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
+        SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
@@ -61,12 +61,12 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     List<DuplicataEntity> findPagas();
 
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
+        SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
@@ -76,12 +76,12 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
     List<DuplicataEntity> findNaoPagas();
 
     @Query("""
-        SELECT dup, doc, dado, pix, contato, pasta, conta, banco
+        SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
         FROM DuplicataEntity dup
         LEFT JOIN DocumentoEntity doc ON doc.id = dup.documento.id
         LEFT JOIN DadoEntity dado ON dado.id = dup.dado.id
         LEFT JOIN PixEntity pix ON pix.id = dup.pix.id
-        LEFT JOIN ContatoEntity contato ON contato.id = doc.contato.id
+        LEFT JOIN ContatoEntity emissor ON emissor.id = doc.emissor.id
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 

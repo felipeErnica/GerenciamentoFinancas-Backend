@@ -14,39 +14,39 @@ public interface DadoRepository extends JpaRepository<DadoEntity, Long> {
 
     @Override
     @Query("""
-        SELECT d, b, c
-        FROM DadoEntity d
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        LEFT JOIN ContatoEntity c ON c.id = d.contato.id
-        ORDER BY c.nome
+        SELECT dado, banco, contato
+        FROM DadoEntity dado
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        LEFT JOIN ContatoEntity contato ON contato.id = dado.contato.id
+        ORDER BY contato.nome
         """)
     List<DadoEntity> findAll();
 
     @Query("""
-        SELECT d, b, c
-        FROM DadoEntity d
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        LEFT JOIN ContatoEntity c ON c.id = d.contato.id
-        WHERE d.contato.id = :contatoId
+        SELECT dado, banco, contato
+        FROM DadoEntity dado
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        LEFT JOIN ContatoEntity contato ON contato.id = dado.contato.id
+        WHERE dado.contato.id = :contatoId
         """)
     List<DadoEntity> findByContato(long contatoId);
 
     @Query("""
-        SELECT d, b, c
-        FROM DadoEntity d
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        LEFT JOIN ContatoEntity c ON c.id = d.contato.id
-        WHERE d.agencia = :agencia AND d.numeroConta = :numeroConta AND d.banco.id = :bancoId
+        SELECT dado, banco, contato
+        FROM DadoEntity dado
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        LEFT JOIN ContatoEntity contato ON contato.id = dado.contato.id
+        WHERE dado.agencia = :agencia AND dado.numeroConta = :numeroConta AND dado.banco.id = :bancoId
         """)
     Optional<DadoEntity> findEqual(String agencia, String numeroConta, long bancoId);
 
     @Override
     @Query("""
-        SELECT d, b, c
-        FROM DadoEntity d
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        LEFT JOIN ContatoEntity c ON c.id = d.contato.id
-        WHERE d.id = :id
+        SELECT dado, banco, contato
+        FROM DadoEntity dado
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        LEFT JOIN ContatoEntity contato ON contato.id = dado.contato.id
+        WHERE dado.id = :id
         """)
     Optional<DadoEntity> findById(Long id);
 
