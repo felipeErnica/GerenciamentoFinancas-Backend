@@ -98,7 +98,7 @@ public class BancoController {
         try {
             service.deleteAll(list);
             return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
+        } catch (IllegalArgumentException e) {
             logger.error(e);
             return ResponseEntity.internalServerError().build();
         }
