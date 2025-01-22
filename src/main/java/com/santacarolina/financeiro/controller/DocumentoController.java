@@ -94,9 +94,11 @@ public class DocumentoController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity delete(@RequestBody DocumentoEntity entity) {
+    public ResponseEntity delete(@RequestBody DocumentoEntity documento) {
         try {
-            service.delete(entity);
+            documento.getProdutoList().forEach(prod -> prod.setDocumento(documento));
+            documento.getDuplicataList().forEach(dup -> dup.setDocumento(documento));
+            service.delete(documento);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -105,6 +107,10 @@ public class DocumentoController {
 
     @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<DocumentoEntity> list) {
+        for (DocumentoEntity documento : list) {
+            documento.getProdutoList().forEach(prod -> prod.setDocumento(documento));
+            documento.getDuplicataList().forEach(dup -> dup.setDocumento(documento));
+        }
         service.deleteBatch(list);
         return ResponseEntity.ok().build();
     }
