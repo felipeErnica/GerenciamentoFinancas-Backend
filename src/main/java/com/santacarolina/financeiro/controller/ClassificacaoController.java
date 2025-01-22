@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.ClassificacaoDTO;
 import com.santacarolina.financeiro.entity.ClassificacaoEntity;
 import com.santacarolina.financeiro.service.ClassificacaoService;
-import com.santacarolina.financeiro.util.LoggerMessage;
 
 import jakarta.persistence.OptimisticLockException;
 
@@ -30,7 +29,6 @@ public class ClassificacaoController {
     @GetMapping
     private ResponseEntity<List<ClassificacaoDTO>> findAll() {
         try {
-            LoggerMessage.generateMessage("ClassificacaoController - findAll");
             return ResponseEntity.ok(service.findAll());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -39,7 +37,6 @@ public class ClassificacaoController {
 
     @GetMapping("/{id}")
     private ResponseEntity<ClassificacaoDTO> findById (@PathVariable long id) {
-        LoggerMessage.generateMessage("ClassificacaoController - findById");
         return service.findById(id)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
@@ -48,7 +45,6 @@ public class ClassificacaoController {
     @GetMapping("/numeroIdentificacao={numeroIdentificacao}")
     private ResponseEntity<ClassificacaoDTO> findByNumero (@PathVariable String numeroIdentificacao) {
         try {
-            LoggerMessage.generateMessage("ClassificacaoController - findByNumero");
             return service.findByNumero(numeroIdentificacao)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -60,7 +56,6 @@ public class ClassificacaoController {
     @GetMapping("/nome={nome}")
     private ResponseEntity<ClassificacaoDTO> findByNome(@PathVariable String nome) {
         try {
-            LoggerMessage.generateMessage("ClassificacaoController - findByNome");
             return service.findByNome(nome)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -72,7 +67,6 @@ public class ClassificacaoController {
     @PostMapping
     private ResponseEntity save(@RequestBody ClassificacaoEntity dto) {
         try {
-            LoggerMessage.generateMessage("ClassificacaoController - save");
             service.save(dto);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
@@ -82,7 +76,6 @@ public class ClassificacaoController {
 
     @DeleteMapping("/{id}")
     private ResponseEntity deleteById(@PathVariable long id) {
-        LoggerMessage.generateMessage("ClassificacaoController - deleteById");
         try {
             service.deleteById(id);
             return ResponseEntity.ok().build();

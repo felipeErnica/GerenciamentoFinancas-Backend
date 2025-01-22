@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.DadoDTO;
 import com.santacarolina.financeiro.entity.DadoEntity;
 import com.santacarolina.financeiro.service.DadoService;
-import com.santacarolina.financeiro.util.LoggerMessage;
 
 @RestController
 @RequestMapping("/contas")
@@ -35,7 +34,6 @@ public class DadoController {
     @GetMapping("/{id}")
     public ResponseEntity<DadoDTO> findById(@PathVariable long id) {
         try {
-            LoggerMessage.generateMessage("DadoController - findById");
             return service.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -47,7 +45,6 @@ public class DadoController {
     @GetMapping("/contato={contatoId}")
     public ResponseEntity<List<DadoDTO>> findByContato(@PathVariable long contatoId) {
         try {
-            LoggerMessage.generateMessage("DadoController - findByContato");
             return ResponseEntity.ok(service.findByContato(contatoId));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -57,7 +54,6 @@ public class DadoController {
     @GetMapping("/info")
     public ResponseEntity<DadoDTO> getEqual(@RequestParam String agencia, String numeroConta, long bancoId) {
         try {
-            LoggerMessage.generateMessage("DadoController - findEqual");
             return service.findEqual(agencia, numeroConta, bancoId)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -69,7 +65,6 @@ public class DadoController {
     @PostMapping
     public ResponseEntity save(@RequestBody DadoEntity d) {
         try {
-            LoggerMessage.generateMessage("DadoController - save");
             service.save(d);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
@@ -80,7 +75,6 @@ public class DadoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById (@PathVariable long id) {
         try {
-            LoggerMessage.generateMessage("DadoController - deleteById");
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException e) {

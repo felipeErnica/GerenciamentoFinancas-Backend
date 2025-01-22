@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.ExtratoDTO;
 import com.santacarolina.financeiro.entity.ExtratoEntity;
 import com.santacarolina.financeiro.service.ExtratoService;
-import com.santacarolina.financeiro.util.LoggerMessage;
 
 import jakarta.persistence.OptimisticLockException;
 
@@ -31,7 +30,6 @@ public class ExtratoController {
     @GetMapping("/contaId={contaId}")
     public ResponseEntity<List<ExtratoDTO>> findByConta(@PathVariable long contaId) {
         try {
-            LoggerMessage.generateMessage("ExtratoController - findByConta");
             return ResponseEntity.ok(service.findByContaId(contaId));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -41,7 +39,6 @@ public class ExtratoController {
     @GetMapping("/isConciliado={isConciliado}")
     public ResponseEntity<List<ExtratoDTO>> findByConciliacao(@PathVariable boolean isConciliado) {
         try {
-            LoggerMessage.generateMessage("ExtratoController - findByConciliacao");
             return ResponseEntity.ok(service.findByConciliacao(isConciliado));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -51,7 +48,6 @@ public class ExtratoController {
     @PostMapping
     public ResponseEntity save(@RequestBody ExtratoEntity d) {
         try {
-            LoggerMessage.generateMessage("ExtratoController - save");
             service.save(d);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
@@ -62,7 +58,6 @@ public class ExtratoController {
     @PostMapping("/batch")
     public ResponseEntity saveAll(@RequestBody List<ExtratoEntity> list)  {
         try {
-            LoggerMessage.generateMessage("ExtratoController - saveAll");
             service.saveAll(list);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
@@ -73,7 +68,6 @@ public class ExtratoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) {
         try {
-            LoggerMessage.generateMessage("ExtratoController - deleteById");
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException e) {
@@ -84,7 +78,6 @@ public class ExtratoController {
     @DeleteMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<ExtratoEntity> list)  {
         try {
-            LoggerMessage.generateMessage("ExtratoController - deleteAll");
             service.deleteAllInBatch(list);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {

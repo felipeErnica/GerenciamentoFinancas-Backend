@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santacarolina.financeiro.dto.ContatoDTO;
 import com.santacarolina.financeiro.entity.ContatoEntity;
 import com.santacarolina.financeiro.service.ContatoService;
-import com.santacarolina.financeiro.util.LoggerMessage;
 
 @RestController
 @RequestMapping("/contatos")
@@ -33,7 +32,6 @@ public class ContatoController {
     @GetMapping
     public ResponseEntity<List<ContatoDTO>> findAll(){
         try {
-            LoggerMessage.generateMessage("ContatoController - findAll");
             return ResponseEntity.ok(service.findAll());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
@@ -43,7 +41,6 @@ public class ContatoController {
     @GetMapping("/cpf={cpf}")
     public ResponseEntity<ContatoDTO> findByCpf(@PathVariable String cpf) {
         try {
-            LoggerMessage.generateMessage("ContatoController - findByCpf");
             return service.findByCpf(cpf)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -55,7 +52,6 @@ public class ContatoController {
     @GetMapping("/cnpj={cnpj}")
     public ResponseEntity<ContatoDTO> findByCnpj(@PathVariable String cnpj) {
         try {
-            LoggerMessage.generateMessage("ContatoController - findByCnpj");
             return service.findByCnpj(cnpj)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -67,7 +63,6 @@ public class ContatoController {
     @GetMapping("/ie={ie}")
     public ResponseEntity<ContatoDTO> findByIe(@PathVariable String ie) {
         try {
-            LoggerMessage.generateMessage("ContatoController - findByIe");
             return service.findByIe(ie)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -79,7 +74,6 @@ public class ContatoController {
     @GetMapping("/{id}")
     public ResponseEntity<ContatoDTO> getContato(@PathVariable long id){
         try {
-            LoggerMessage.generateMessage("ContatoController - findById");
             return service.findById(id)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -91,7 +85,6 @@ public class ContatoController {
     @GetMapping("/nome={nome}")
     public ResponseEntity<ContatoDTO> getByNome(@PathVariable String nome) {
         try {
-            LoggerMessage.generateMessage("ContatoController - findByNome");
             return service.findByNome(nome)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
@@ -103,7 +96,6 @@ public class ContatoController {
     @PostMapping("/batch")
     public ResponseEntity addContatos(@RequestBody List<ContatoEntity> contatos) {
         try {
-            LoggerMessage.generateMessage("ContatoController - addContatos");
             service.saveAll(contatos);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException e) {
@@ -115,7 +107,6 @@ public class ContatoController {
     @PostMapping
     public ResponseEntity<ContatoDTO> addContato(@RequestBody ContatoEntity contato) {
         try {
-            LoggerMessage.generateMessage("ContatoController - addContato");
             service.save(contato);
             return ResponseEntity.ok(new ContatoDTO(contato));
         } catch (OptimisticLockingFailureException e) {
@@ -126,7 +117,6 @@ public class ContatoController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteContato(@PathVariable long id) {
         try {
-            LoggerMessage.generateMessage("ContatoController - deleteById");
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockingFailureException e) {
