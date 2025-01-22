@@ -32,10 +32,10 @@ public class ContaEntity {
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
-    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PastaEntity> pastaList;
 
-    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private List<ExtratoEntity> extratoList;
 
     public long getId() { return id; }
