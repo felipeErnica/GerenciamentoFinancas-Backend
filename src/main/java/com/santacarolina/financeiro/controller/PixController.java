@@ -86,4 +86,14 @@ public class PixController {
         }
     }
 
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll (@RequestBody List<PixEntity> list) {
+        try {
+            service.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

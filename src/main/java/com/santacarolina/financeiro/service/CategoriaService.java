@@ -50,4 +50,8 @@ public class CategoriaService {
     public void deleteById(long id) throws OptimisticLockException {
         repository.deleteById(id);
     }
+
+    public void deleteAll(List<CategoriaEntity> list) {
+        list.forEach(categoria -> repository.delete(categoria));
+    }
 }

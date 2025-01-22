@@ -50,4 +50,8 @@ public class ClassificacaoService {
         repository.deleteById(id);
     }
 
+    public void deleteAll(List<ClassificacaoEntity> list) {
+        list.forEach(classificacao -> repository.delete(classificacao));
+    }
+
 }

@@ -51,4 +51,8 @@ public class DadoService {
     public void deleteById(long id) throws OptimisticLockingFailureException {
         repository.deleteById(id);
     }
+
+    public void deleteAll(List<DadoEntity> list) {
+        list.forEach(dado -> repository.delete(dado));
+    }
 }

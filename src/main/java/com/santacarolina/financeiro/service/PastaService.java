@@ -46,4 +46,8 @@ public class PastaService {
         repository.deleteById(id);
     }
 
+    public void deleteAll(List<PastaEntity> list) {
+        list.forEach(pasta -> repository.delete(pasta));
+    }
+
 }

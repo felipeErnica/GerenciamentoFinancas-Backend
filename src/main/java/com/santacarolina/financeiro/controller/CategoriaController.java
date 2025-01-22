@@ -3,6 +3,7 @@ package com.santacarolina.financeiro.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,6 +84,16 @@ public class CategoriaController {
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (OptimisticLockException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll (@RequestBody List<CategoriaEntity> list) {
+        try {
+            service.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
             return ResponseEntity.internalServerError().build();
         }
     }

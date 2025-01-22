@@ -36,4 +36,8 @@ public class ConciliacaoService {
     public void deleteById(long id) throws IllegalArgumentException {
         repository.deleteById(id);
     }
+
+    public void deleteAll(List<ConciliacaoEntity> list) {
+        list.forEach(conc -> repository.delete(conc));
+    }
 }

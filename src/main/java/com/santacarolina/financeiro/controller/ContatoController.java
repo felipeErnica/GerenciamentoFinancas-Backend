@@ -124,4 +124,14 @@ public class ContatoController {
         }
     }
 
+    @PostMapping("/delete-batch")
+    public ResponseEntity deleteAll (@RequestBody List<ContatoEntity> list) {
+        try {
+            service.deleteAll(list);
+            return ResponseEntity.ok().build();
+        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }
