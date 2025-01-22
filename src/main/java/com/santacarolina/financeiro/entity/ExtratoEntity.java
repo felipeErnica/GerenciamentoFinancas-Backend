@@ -32,7 +32,7 @@ public class ExtratoEntity {
     private double valor;
     private boolean conciliado;
 
-    @OneToMany(mappedBy = "extrato", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "extrato", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<ConciliacaoEntity> conciliacaoEntity;
 
     public long getId() { return id; }

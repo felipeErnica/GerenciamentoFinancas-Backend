@@ -51,7 +51,7 @@ public class ClassificacaoService {
     }
 
     public void deleteAll(List<ClassificacaoEntity> list) {
-        list.forEach(classificacao -> repository.delete(classificacao));
+        list.forEach(classificacao -> repository.deleteById(classificacao.getId()));
     }
 
 }

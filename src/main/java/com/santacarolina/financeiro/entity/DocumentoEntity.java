@@ -31,7 +31,7 @@ public class DocumentoEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private Long numDoc;
-    
+
     @Enumerated(EnumType.ORDINAL)
     private TipoDocumento tipoDoc;
 
@@ -50,22 +50,54 @@ public class DocumentoEntity {
     private double valor;
     private LocalDate dataEmissao;
 
-    @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "documento", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<DuplicataEntity> duplicataList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "documento", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ProdutoEntity> produtoList = new ArrayList<>();
 
-    public long getId() { return id; }
-    public Long getNumDoc() { return numDoc; }
-    public TipoDocumento getTipoDoc() { return tipoDoc; }
-    public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
-    public ContatoEntity getEmissor() { return emissor; }
-    public String getCaminhoDocumento() { return caminhoDocumento; }
-    public PastaEntity getPasta() { return pasta; }
-    public double getValor() { return valor; }
-    public LocalDate getDataEmissao() { return dataEmissao; }
-    public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
-    public List<ProdutoEntity> getProdutoList() { return produtoList; }
+    public long getId() {
+        return id;
+    }
+
+    public Long getNumDoc() {
+        return numDoc;
+    }
+
+    public TipoDocumento getTipoDoc() {
+        return tipoDoc;
+    }
+
+    public FluxoCaixa getFluxoCaixa() {
+        return fluxoCaixa;
+    }
+
+    public ContatoEntity getEmissor() {
+        return emissor;
+    }
+
+    public String getCaminhoDocumento() {
+        return caminhoDocumento;
+    }
+
+    public PastaEntity getPasta() {
+        return pasta;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public LocalDate getDataEmissao() {
+        return dataEmissao;
+    }
+
+    public List<DuplicataEntity> getDuplicataList() {
+        return duplicataList;
+    }
+
+    public List<ProdutoEntity> getProdutoList() {
+        return produtoList;
+    }
 
 }

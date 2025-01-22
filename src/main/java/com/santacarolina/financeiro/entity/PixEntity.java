@@ -37,7 +37,7 @@ public class PixEntity {
     private TipoPix tipoPix;
     private String chave;
 
-    @OneToMany(mappedBy = "pix", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pix", cascade = CascadeType.REMOVE)
     private List<DuplicataEntity> duplicataList;
 
     public long getId() { return id; }

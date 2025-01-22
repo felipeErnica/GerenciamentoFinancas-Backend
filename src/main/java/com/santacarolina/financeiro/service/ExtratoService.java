@@ -40,7 +40,7 @@ public class ExtratoService {
     }
 
     public void deleteAllInBatch(List<ExtratoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
-        list.forEach(extrato -> repository.delete(extrato));
+        list.forEach(extrato -> repository.deleteById(extrato.getId()));
     }
 
     public void deleteById(long id) {

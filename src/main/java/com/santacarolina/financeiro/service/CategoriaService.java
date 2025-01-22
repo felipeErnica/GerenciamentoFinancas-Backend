@@ -52,6 +52,6 @@ public class CategoriaService {
     }
 
     public void deleteAll(List<CategoriaEntity> list) {
-        list.forEach(categoria -> repository.delete(categoria));
+        list.forEach(categoria -> repository.deleteById(categoria.getId()));
     }
 }

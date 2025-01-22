@@ -28,7 +28,7 @@ public class PastaEntity {
     @JoinColumn(name = "conta_id")
     private ContaEntity conta;
 
-    @OneToMany(mappedBy = "pasta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pasta", cascade = CascadeType.REMOVE)
     private List<DocumentoEntity> documentoList;
 
     public long getId() {

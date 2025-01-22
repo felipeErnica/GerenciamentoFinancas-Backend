@@ -25,13 +25,13 @@ public class ContatoEntity {
     private String cnpj;
     private String ie;
 
-    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contato", cascade = CascadeType.REMOVE)
     private List<DadoEntity> dadoList;
 
-    @OneToMany (mappedBy = "contato",cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "contato",cascade = CascadeType.REMOVE)
     private List<PixEntity> pixList;
 
-    @OneToMany(mappedBy = "emissor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "emissor", cascade = CascadeType.REMOVE)
     private List<DocumentoEntity> documentoList;
 
     public long getId() { return id; }

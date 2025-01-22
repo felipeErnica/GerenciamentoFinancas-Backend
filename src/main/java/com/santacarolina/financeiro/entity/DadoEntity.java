@@ -30,13 +30,13 @@ public class DadoEntity {
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
-    @OneToMany(mappedBy = "dado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "dado", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PixEntity> pixList;
 
     private String agencia;
     private String numeroConta;
 
-    @OneToMany(mappedBy = "dado", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "dado", cascade = CascadeType.REMOVE)
     private List<DuplicataEntity> duplicataList;
 
     public long getId() { return id; }

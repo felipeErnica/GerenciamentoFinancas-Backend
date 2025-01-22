@@ -47,7 +47,7 @@ public class DuplicataEntity {
     @JoinColumn(name = "pix_id")
     private PixEntity pix;
 
-    @OneToMany(mappedBy = "duplicata", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "duplicata", cascade = CascadeType.REMOVE)
     private List<ConciliacaoEntity> conciliacaoList;
 
     public DocumentoEntity getDocumento() { return documento; }

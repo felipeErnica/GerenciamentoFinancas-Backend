@@ -35,7 +35,7 @@ public class ClassificacaoEntity {
     private String numeroIdentificacao;
     private String nomeClassificacao;
 
-    @OneToMany(mappedBy = "classificacao", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "classificacao", cascade = CascadeType.REMOVE)
     private List<ProdutoEntity> produtoList;
 
     public long getId() { return id; }

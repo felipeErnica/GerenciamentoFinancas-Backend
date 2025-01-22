@@ -27,7 +27,7 @@ public class CategoriaEntity {
     private String numeroCategoria;
     private String nome;
 
-    @OneToMany(mappedBy = "categoria", cascade =  CascadeType.ALL)
+    @OneToMany(mappedBy = "categoria", cascade =  CascadeType.REMOVE)
     private List<ClassificacaoEntity> classicacaoList;
 
     public long getId() { return id; }

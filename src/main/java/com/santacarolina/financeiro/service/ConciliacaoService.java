@@ -38,6 +38,6 @@ public class ConciliacaoService {
     }
 
     public void deleteAll(List<ConciliacaoEntity> list) {
-        list.forEach(conc -> repository.delete(conc));
+        list.forEach(conc -> repository.deleteById(conc.getId()));
     }
 }

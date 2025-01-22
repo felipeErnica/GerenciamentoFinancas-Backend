@@ -56,6 +56,6 @@ public class PixService {
     }
 
     public void deleteAll(List<PixEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
-        list.forEach(pix -> repository.delete(pix));
+        list.forEach(pix -> repository.deleteById(pix.getId()));
     }
 }

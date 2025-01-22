@@ -64,7 +64,7 @@ public class ContatoService {
     }
 
     public void deleteAll(List<ContatoEntity> list) {
-        list.forEach(contato -> repository.delete(contato));
+        list.forEach(contato -> repository.deleteById(contato.getId()));
     }
 
 }

@@ -53,6 +53,6 @@ public class DadoService {
     }
 
     public void deleteAll(List<DadoEntity> list) {
-        list.forEach(dado -> repository.delete(dado));
+        list.forEach(dado -> repository.deleteById(dado.getId()));
     }
 }

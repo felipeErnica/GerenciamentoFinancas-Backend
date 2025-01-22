@@ -62,7 +62,7 @@ public class DuplicataService {
     }
 
     public void deleteAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
-        list.forEach(dup -> repository.delete(dup));
+        list.forEach(dup -> repository.deleteById(dup.getId()));
     }
 
 }
