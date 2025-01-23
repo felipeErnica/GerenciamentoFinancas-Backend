@@ -21,6 +21,7 @@ public interface PastaRepository extends JpaRepository<PastaEntity, Long> {
         FROM PastaEntity pasta
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
+        ORDER BY pasta.nome
         """)
     List<PastaEntity> findAll();
 
