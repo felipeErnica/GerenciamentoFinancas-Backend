@@ -16,7 +16,7 @@ import com.santacarolina.financeiro.entity.CategoriaEntity;
 public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long> {
 
     @Override
-    @Query("SELECT pasta FROM PastaEntity pasta ORDER BY pasta.numeroCategoria")
+    @Query("SELECT categoria FROM CategoriaEntity categoria ORDER BY categoria.numeroCategoria")
     List<CategoriaEntity> findAll();
 
     Optional<CategoriaEntity> findByNome(String nome);
