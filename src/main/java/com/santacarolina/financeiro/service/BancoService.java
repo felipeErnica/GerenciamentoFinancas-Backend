@@ -32,11 +32,13 @@ public class BancoService {
     }
 
     public Optional<BancoDTO> findByNomeBanco(String nomeBanco) {
+        nomeBanco.replace("+", " ");
         return repository.findByNomeBanco(nomeBanco)
             .map(entity -> new BancoDTO(entity));
     }
 
     public Optional<BancoDTO> findByApelido(String apelido) {
+        apelido.replace("+", " ");
         return repository.findByApelidoBanco(apelido)
             .map(entity -> new BancoDTO(entity));
     }

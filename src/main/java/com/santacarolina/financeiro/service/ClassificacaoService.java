@@ -38,6 +38,7 @@ public class ClassificacaoService {
     }
 
     public Optional<ClassificacaoDTO> findByNome(String nome) throws IllegalArgumentException {
+        nome.replace("+", " ");
         return repository.findByNomeClassificacao(nome)
             .map(entity -> new ClassificacaoDTO(entity));
     }

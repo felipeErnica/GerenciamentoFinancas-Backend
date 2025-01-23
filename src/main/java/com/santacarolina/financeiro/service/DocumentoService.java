@@ -52,10 +52,6 @@ public class DocumentoService {
 
     public void deleteById(long id) throws OptimisticLockingFailureException { repository.deleteById(id); }
 
-    public void delete(DocumentoEntity entity) throws IllegalArgumentException, OptimisticLockingFailureException { 
-        repository.delete(entity); 
-    }
-
     public void deleteBatch(List<DocumentoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
         list.forEach(doc -> repository.delete(doc));
     }

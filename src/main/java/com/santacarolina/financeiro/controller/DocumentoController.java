@@ -91,16 +91,6 @@ public class DocumentoController {
         }
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity delete(@RequestBody DocumentoEntity documento) {
-        try {
-            service.delete(documento);
-            return ResponseEntity.ok().build();
-        } catch (OptimisticLockingFailureException | IllegalArgumentException e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
     @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<DocumentoEntity> list) {
         for (DocumentoEntity documento : list) {

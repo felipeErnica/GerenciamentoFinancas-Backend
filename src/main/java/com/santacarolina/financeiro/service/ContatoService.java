@@ -47,6 +47,7 @@ public class ContatoService {
     }
 
     public Optional<ContatoDTO> findByNome(String nome) throws IllegalArgumentException {
+        nome.replace("+", " ");
         return repository.findByNome(nome)
             .map(entity -> new ContatoDTO(entity));
     }
