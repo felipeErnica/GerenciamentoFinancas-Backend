@@ -37,7 +37,7 @@ public class CategoriaService {
             .map(entity -> new CategoriaDTO(entity));
     }
 
-    public Optional<CategoriaDTO> findByNumero(String numero) throws IllegalArgumentException {
+    public Optional<CategoriaDTO> findByNumero(Long numero) throws IllegalArgumentException {
         return repository.findByNumeroCategoria(numero)
             .map(entity -> new CategoriaDTO(entity));
     }

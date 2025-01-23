@@ -20,5 +20,5 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long
     List<CategoriaEntity> findAll();
 
     Optional<CategoriaEntity> findByNome(String nome);
-    Optional<CategoriaEntity> findByNumeroCategoria(String numeroCategoria);
+    Optional<CategoriaEntity> findByNumeroCategoria(Long numero);
 }

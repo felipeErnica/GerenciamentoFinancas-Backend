@@ -53,7 +53,7 @@ public class CategoriaController {
     }
     
     @GetMapping("/numero={numero}")
-    public ResponseEntity<CategoriaDTO> findByNumero(@PathVariable String numero) {
+    public ResponseEntity<CategoriaDTO> findByNumero(@PathVariable Long numero) {
         try {
             return service.findByNumero(numero)
                 .map(d -> ResponseEntity.ok(d))
