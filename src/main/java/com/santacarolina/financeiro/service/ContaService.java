@@ -37,8 +37,7 @@ public class ContaService {
     }
 
     public Optional<ContaDTO> findByApelido(String apelido) throws IllegalArgumentException {
-        apelido.replace("+", " ");
-        return repository.findByApelido(apelido)
+        return repository.findByApelido(apelido.replace("+"," "))
             .map(entity -> new ContaDTO(entity));
     }
 

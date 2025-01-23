@@ -33,8 +33,7 @@ public class CategoriaService {
     }
 
     public Optional<CategoriaDTO> findByNome(String nome) throws IllegalArgumentException {
-        nome = nome.replace("+", " ");
-        return repository.findByNome(nome)
+        return repository.findByNome(nome.replace("+"," "))
             .map(entity -> new CategoriaDTO(entity));
     }
 

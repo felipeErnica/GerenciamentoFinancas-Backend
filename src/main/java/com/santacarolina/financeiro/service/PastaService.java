@@ -27,8 +27,7 @@ public class PastaService {
     }
 
     public Optional<PastaDTO> findByNome(String nome) throws IllegalArgumentException {
-        nome = nome.replace("+", " ");
-        return repository.findByNome(nome)
+        return repository.findByNome(nome.replace("+"," "))
                 .map(entity -> new PastaDTO(entity));
 
     }
