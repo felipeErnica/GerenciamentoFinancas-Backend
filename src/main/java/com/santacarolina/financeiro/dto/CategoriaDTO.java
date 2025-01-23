@@ -10,7 +10,7 @@ public class CategoriaDTO {
 
     private long id;
     private FluxoCaixa fluxoCaixa;
-    private String numeroCategoria;
+    private Long numeroCategoria;
     private String nome;
 
     public CategoriaDTO(CategoriaEntity entity) {
@@ -23,6 +23,6 @@ public class CategoriaDTO {
     public long getId() { return id; }
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
     public String getNome() { return nome; }
-    public String getNumeroCategoria() { return numeroCategoria; }
+    public Long getNumeroCategoria() { return numeroCategoria; }
 
 }

@@ -24,7 +24,7 @@ public class CategoriaEntity {
     @Enumerated
     private FluxoCaixa fluxoCaixa;
     
-    private String numeroCategoria;
+    private Long numeroCategoria;
     private String nome;
 
     @OneToMany(mappedBy = "categoria", cascade =  CascadeType.REMOVE)
@@ -32,7 +32,7 @@ public class CategoriaEntity {
 
     public long getId() { return id; }
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
-    public String getNumeroCategoria() { return numeroCategoria; }
+    public Long getNumeroCategoria() { return numeroCategoria; }
     public String getNome() { return nome; }
     public List<ClassificacaoEntity> getClassicacaoList() { return classicacaoList; }
      
