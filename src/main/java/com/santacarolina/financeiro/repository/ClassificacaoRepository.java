@@ -20,7 +20,7 @@ public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEnti
         SELECT class, cat
         FROM ClassificacaoEntity class
         LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
-        ORDER BY cat.numeroCategoria AND class.numeroIdentificacao
+        ORDER BY cat.numeroCategoria, class.numeroIdentificacao
         """)
     List<ClassificacaoEntity> findAll();
     
