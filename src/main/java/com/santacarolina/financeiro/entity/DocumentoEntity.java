@@ -50,10 +50,10 @@ public class DocumentoEntity {
     private double valor;
     private LocalDate dataEmissao;
 
-    @OneToMany(mappedBy = "documento", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DuplicataEntity> duplicataList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "documento", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProdutoEntity> produtoList = new ArrayList<>();
 
     public long getId() {
