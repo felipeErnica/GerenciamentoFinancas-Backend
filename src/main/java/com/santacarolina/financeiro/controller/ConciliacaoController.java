@@ -32,12 +32,12 @@ public class ConciliacaoController {
 
     @GetMapping("/extrato/{extratoId}")
     public ResponseEntity<List<ConciliacaoDTO>> findByExtrato(@PathVariable long extratoId) {
-        return ResponseEntity.ok(service.findByExtrato());
+        return ResponseEntity.ok(service.findByExtrato(extratoId));
     }
 
     @GetMapping("/duplicata/{duplicataId}")
     public ResponseEntity<List<ConciliacaoDTO>> findByDuplicata(@PathVariable long duplicataId) {
-        return ResponseEntity.ok(service.findByDuplicata());
+        return ResponseEntity.ok(service.findByDuplicata(duplicataId));
     }
 
     @PostMapping
