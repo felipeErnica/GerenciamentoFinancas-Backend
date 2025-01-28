@@ -1,5 +1,6 @@
 package com.santacarolina.financeiro.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,11 +17,32 @@ public interface ConciliacaoRepository extends JpaRepository<ConciliacaoEntity, 
     
     @Override
     @Query("""
-        SELECT c, d, e
-        FROM ConciliacaoEntity c
-        LEFT JOIN ExtratoEntity e ON c.extrato.id = e.id
-        LEFT JOIN DuplicataEntity d ON d.id = c.duplicata.id
-        ORDER BY e.dataTransacao DESC
+        SELECT conciliacao, duplicata, extrato
+        FROM ConciliacaoEntity conciliacao
+        LEFT JOIN ExtratoEntity extrato ON conciliacao.extrato.id = extrato.id
+        LEFT JOIN DuplicataEntity duplicata ON duplicata.id = conciliacao.duplicata.id
+        ORDER BY extrato.dataTransacao DESC
         """)
     List<ConciliacaoEntity> findAll();
+
+    @Query("""
+        SELECT conciliacao, duplicata, extrato
+        FROM ConciliacaoEntity conciliacao
+        LEFT JOIN ExtratoEntity extrato ON conciliacao.extrato.id = extrato.id
+        LEFT JOIN DuplicataEntity duplicata ON duplicata.id = conciliacao.duplicata.id
+        WHERE conciliacao.extrato.id = :extratoId
+        ORDER BY extrato.dataTransacao DESC
+        """)
+    List<ConciliacaoEntity> findByExtrato(long extratoId);
+
+    @Query("""
+        SELECT conciliacao, duplicata, extrato
+        FROM ConciliacaoEntity conciliacao
+        LEFT JOIN ExtratoEntity extrato ON conciliacao.extrato.id = extrato.id
+        LEFT JOIN DuplicataEntity duplicata ON duplicata.id = conciliacao.duplicata.id
+        WHERE conciliacao.duplicata.id = :duplicataId
+        ORDER BY extrato.dataTransacao DESC
+        """)
+    Collection<ConciliacaoEntity> findByDuplicata(long duplicataId);
+
 }

@@ -40,4 +40,16 @@ public class ConciliacaoService {
     public void deleteAll(List<ConciliacaoEntity> list) {
         list.forEach(conc -> repository.deleteById(conc.getId()));
     }
+
+    public List<ConciliacaoDTO> findByExtrato(long extratoId) {
+        return repository.findByExtrato(extratoId).stream()
+            .map(conciliacao -> new ConciliacaoDTO(conciliacao))
+            .toList();
+    }
+
+    public List<ConciliacaoDTO> findByDuplicata(long duplicataId) {
+        return repository.findByDuplicata(duplicataId).stream()
+            .map(conciliacao -> new ConciliacaoDTO(conciliacao))
+            .toList();
+    }
 }
