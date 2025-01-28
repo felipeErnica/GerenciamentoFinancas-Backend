@@ -75,7 +75,7 @@ public class ExtratoController {
         }
     }
 
-    @DeleteMapping("/delete-batch")
+    @PostMapping("/delete-batch")
     public ResponseEntity deleteAll(@RequestBody List<ExtratoEntity> list)  {
         try {
             service.deleteAllInBatch(list);
