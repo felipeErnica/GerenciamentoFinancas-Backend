@@ -1,21 +1,24 @@
 package com.santacarolina.financeiro.service;
 
-import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.santacarolina.financeiro.entity.AuthToken;
 import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
     @Autowired
     private UserRepository repository;
@@ -23,10 +26,13 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuário não existe!"));
-        return new User(user.getUsername(), user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("USER")));
+    public AuthToken authenticateUser(UserEntity user) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+            user.getUsername(), 
+            user.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        UserEntity authUser = (UserEntity) authentication.getPrincipal();
+        return new AuthToken(jwtTokenService.generateToken(authUser));
     }
 
     public void register(UserEntity user) {
