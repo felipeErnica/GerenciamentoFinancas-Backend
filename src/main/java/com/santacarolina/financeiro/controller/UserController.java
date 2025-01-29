@@ -3,6 +3,7 @@ package com.santacarolina.financeiro.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<AuthToken> authenticate(@RequestBody UserEntity user) {
         AuthToken token = service.authenticateUser(user);
+        UserEntity authUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("ID usuário: " + authUser.getId());
         if (token.token() == null) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         return ResponseEntity.ok(token);
     }
