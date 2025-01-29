@@ -31,7 +31,6 @@ public class UserService {
             user.getUsername(), 
             user.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        System.out.println("\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
         UserEntity authUser = (UserEntity) authentication.getPrincipal();
         System.out.println("\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
         return new AuthToken(jwtTokenService.generateToken(authUser));
