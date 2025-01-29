@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.santacarolina.financeiro.entity.User;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User>findByUsername(String username);
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+    Optional<UserEntity>findByUsername(String username);
 }

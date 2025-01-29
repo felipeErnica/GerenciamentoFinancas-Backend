@@ -1,19 +1,15 @@
 package com.santacarolina.financeiro.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.santacarolina.financeiro.entity.User;
-import com.santacarolina.financeiro.repository.UserRepository;
+import com.santacarolina.financeiro.entity.UserEntity;
+import com.santacarolina.financeiro.service.UserService;
 
 @Controller
 @RequestMapping("/user")
@@ -21,30 +17,22 @@ import com.santacarolina.financeiro.repository.UserRepository;
 public class UserController {
 
     @Autowired
-    private UserRepository repository;
-    private static final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    
-    @PostMapping("/register")
-    public ResponseEntity save(@RequestBody User user) {
-        String encondedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encondedPassword);
+    private UserService service;
 
-        repository.save(user);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/auth")
-    public ResponseEntity authenticate(@RequestBody User user) {
-        Optional<User> optional = repository.findByUsername(user.getUsername());
-        if (optional.isPresent()) {
-            if (passwordEncoder.matches(user.getPassword(), optional.get().getPassword())) {
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.badRequest().build();
-            }
-        } else {
+    @PostMapping("/login")
+    public ResponseEntity authenticate(@RequestBody UserEntity user) {
+        try {
+            service.loadUserByUsername(user.getUsername());
+            return ResponseEntity.ok().build();
+        } catch (UsernameNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity register (@RequestBody UserEntity user) {
+        service.register(user);
+        return ResponseEntity.ok().build();
+    }
+    
 }
