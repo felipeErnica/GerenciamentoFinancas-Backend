@@ -13,12 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) 
-    throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-            .withUser("username").password(passwordEncoder().encode("password")).roles("USER")
-            .and()
-            .withUser("admin").password(passwordEncoder().encode("password")).roles("USER", "ADMIN");
+            .withUser("username").password(passwordEncoder().encode("password"));
     }
 
     @Bean
