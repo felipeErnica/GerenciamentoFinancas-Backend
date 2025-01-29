@@ -27,11 +27,9 @@ public class UserService {
     private PasswordEncoder encoder;
 
     public AuthToken authenticateUser(UserEntity user) {
-        System.out.println("\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             user.getUsername(), 
             user.getPassword());
-        System.out.println("\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         System.out.println("\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
         UserEntity authUser = (UserEntity) authentication.getPrincipal();
