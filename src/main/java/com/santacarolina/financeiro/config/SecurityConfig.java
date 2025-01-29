@@ -16,13 +16,13 @@ public class SecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) 
     throws Exception {
         auth.inMemoryAuthentication()
-            .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
+            .withUser("username").password(passwordEncoder().encode("password")).roles("USER")
             .and()
             .withUser("admin").password(passwordEncoder().encode("password")).roles("USER", "ADMIN");
     }
 
     @Bean
-    private PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
     
