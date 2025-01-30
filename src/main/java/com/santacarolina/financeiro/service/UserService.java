@@ -15,6 +15,8 @@ import com.santacarolina.financeiro.repository.UserRepository;
 @Service
 public class UserService {
 
+    private static UserEntity LOGGED_USER;
+    
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -33,6 +35,7 @@ public class UserService {
             login.password());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         UserEntity user = (UserEntity) authentication.getPrincipal();
+        System.out.println("\nId usuario: " + user.getId());
         return new AuthToken(jwtTokenService.generateToken(user));
     }
 
@@ -40,6 +43,14 @@ public class UserService {
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         repository.save(user);
+    }
+
+    public static UserEntity getLoggedUser() { 
+        return LOGGED_USER; 
+    }
+
+    public static void setLoggedUser(UserEntity loggedUser) { 
+        LOGGED_USER = loggedUser; 
     }
 
 }
