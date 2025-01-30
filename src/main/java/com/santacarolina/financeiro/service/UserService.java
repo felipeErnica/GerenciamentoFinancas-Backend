@@ -28,20 +28,13 @@ public class UserService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public AuthToken authenticateUser(UserEntity user) throws BadCredentialsException {
+    public AuthToken authenticateUser(UserEntity user) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             user.getUsername(), 
             user.getPassword());
-        try {
-            System.out.println("\nComeça authenticação!!!\n");
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            System.out.println("\nProcesso autenticação finalizado!\n");
-            System.out.println("\nVerifica autenticação: " + authentication.isAuthenticated()+"\n");
-            UserEntity authUser = (UserEntity) authentication.getPrincipal();
-            return new AuthToken(jwtTokenService.generateToken(authUser));
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Senha Incorreta!");
-        }
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        UserEntity authUser = (UserEntity) authentication.getPrincipal();
+        return new AuthToken(jwtTokenService.generateToken(authUser));
     }
 
     public void register(UserEntity user) {
