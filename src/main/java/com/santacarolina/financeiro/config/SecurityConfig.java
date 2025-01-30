@@ -24,6 +24,9 @@ public class SecurityConfig {
     @Autowired
     private UserAuthenticationFilter userAuthenticationFilter;
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
         "/user/login",
         "/user/register"
@@ -38,7 +41,6 @@ public class SecurityConfig {
                 .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
                 .anyRequest().authenticated()
             )
-            .authenticationManager(authenticationManager())
             .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
@@ -49,7 +51,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(passwordEncoder());
-        authenticationProvider.setUserDetailsService(new CustomUserDetailsService());
+        authenticationProvider.setUserDetailsService(customUserDetailsService);
         return new ProviderManager(authenticationProvider);
     }
 
