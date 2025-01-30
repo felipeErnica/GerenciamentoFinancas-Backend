@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.PastaDTO;
 import com.santacarolina.financeiro.entity.PastaEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.PastaRepository;
 
 /**
@@ -21,13 +22,15 @@ public class PastaService {
     private PastaRepository repository;
 
     public List<PastaDTO> findAll() throws IllegalArgumentException {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
                 .map(entity -> new PastaDTO(entity))
                 .toList();
     }
 
     public Optional<PastaDTO> findByNome(String nome) throws IllegalArgumentException {
-        return repository.findByNome(nome.replace("+"," "))
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByNome(nome.replace("+"," "), user)
                 .map(entity -> new PastaDTO(entity));
 
     }

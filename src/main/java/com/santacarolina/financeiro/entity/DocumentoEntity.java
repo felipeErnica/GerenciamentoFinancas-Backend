@@ -46,6 +46,10 @@ public class DocumentoEntity {
     @JoinColumn(name = "pasta_id")
     private PastaEntity pasta;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     private String caminhoDocumento;
     private double valor;
     private LocalDate dataEmissao;
@@ -56,48 +60,16 @@ public class DocumentoEntity {
     @OneToMany(mappedBy = "documento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProdutoEntity> produtoList = new ArrayList<>();
 
-    public long getId() {
-        return id;
-    }
-
-    public Long getNumDoc() {
-        return numDoc;
-    }
-
-    public TipoDocumento getTipoDoc() {
-        return tipoDoc;
-    }
-
-    public FluxoCaixa getFluxoCaixa() {
-        return fluxoCaixa;
-    }
-
-    public ContatoEntity getEmissor() {
-        return emissor;
-    }
-
-    public String getCaminhoDocumento() {
-        return caminhoDocumento;
-    }
-
-    public PastaEntity getPasta() {
-        return pasta;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public LocalDate getDataEmissao() {
-        return dataEmissao;
-    }
-
-    public List<DuplicataEntity> getDuplicataList() {
-        return duplicataList;
-    }
-
-    public List<ProdutoEntity> getProdutoList() {
-        return produtoList;
-    }
+    public long getId() { return id; }
+    public Long getNumDoc() { return numDoc; }
+    public TipoDocumento getTipoDoc() { return tipoDoc; }
+    public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
+    public ContatoEntity getEmissor() { return emissor; }
+    public String getCaminhoDocumento() { return caminhoDocumento; }
+    public PastaEntity getPasta() { return pasta; }
+    public double getValor() { return valor; }
+    public LocalDate getDataEmissao() { return dataEmissao; }
+    public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
+    public List<ProdutoEntity> getProdutoList() { return produtoList; }
 
 }

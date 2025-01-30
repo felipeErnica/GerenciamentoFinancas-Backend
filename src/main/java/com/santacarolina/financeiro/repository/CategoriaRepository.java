@@ -8,17 +8,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.santacarolina.financeiro.entity.CategoriaEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 /**
  * CategoriaRepository
  */
 @Repository
 public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long> {
+    
+    @Query("SELECT categoria FROM CategoriaEntity categoria ORDER BY categoria.numeroCategoria WHERE categoria.user.id = :user.id")
+    List<CategoriaEntity> findbyUser(long userId);
 
-    @Override
-    @Query("SELECT categoria FROM CategoriaEntity categoria ORDER BY categoria.numeroCategoria")
-    List<CategoriaEntity> findAll();
+    Optional<CategoriaEntity> findByNomeAndUser(String nome, UserEntity user);
+    Optional<CategoriaEntity> findByNumeroCategoriaAndUser(Long numero, UserEntity user);
 
-    Optional<CategoriaEntity> findByNome(String nome);
-    Optional<CategoriaEntity> findByNumeroCategoria(Long numero);
 }

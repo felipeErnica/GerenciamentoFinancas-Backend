@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.ExtratoDTO;
 import com.santacarolina.financeiro.entity.ExtratoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.ExtratoRepository;
 
 /**
@@ -26,7 +27,8 @@ public class ExtratoService {
     }
 
     public List<ExtratoDTO> findByConciliacao(boolean isConciliado) throws IllegalArgumentException {
-        return repository.findByConciliado(isConciliado).stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByConciliado(isConciliado, user).stream()
             .map(entity -> new ExtratoDTO(entity))
             .toList();
     }

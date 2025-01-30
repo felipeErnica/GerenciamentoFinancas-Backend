@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.santacarolina.financeiro.entity.ContaEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 /**
  * ContaRepository
@@ -16,14 +17,14 @@ import com.santacarolina.financeiro.entity.ContaEntity;
 @Repository
 public interface ContaRepository extends JpaRepository<ContaEntity, Long> {
 
-    @Override
     @Query("""
         SELECT conta, banco 
         FROM ContaEntity conta
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
         ORDER BY conta.nomeConta
+        WHERE conta.user = :user
         """)
-    List<ContaEntity> findAll();
+    List<ContaEntity> findByUser(UserEntity user);
 
 
     @Override
@@ -39,19 +40,20 @@ public interface ContaRepository extends JpaRepository<ContaEntity, Long> {
         SELECT conta, banco 
         FROM ContaEntity conta
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
-        WHERE conta.agencia = :agencia AND conta.numeroConta = :numeroConta AND conta.banco.id = :bancoId
+        WHERE conta.agencia = :agencia AND conta.numeroConta = :numeroConta AND conta.banco.id = :bancoId AND conta.user = :user
         """)
     Optional<ContaEntity> findEqual(@Param("agencia") String agencia, 
             @Param("numeroConta") String numeroConta, 
-            @Param("bancoId") long bancoId);
+            @Param("bancoId") long bancoId,
+            @Param("user") UserEntity user);
 
 
     @Query("""
         SELECT conta, banco 
         FROM ContaEntity conta
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
-        WHERE conta.nomeConta = :apelido
+        WHERE conta.nomeConta = :apelido AND conta.user = :user
         """)
-    Optional<ContaEntity> findByApelido(String apelido);
+    Optional<ContaEntity> findByApelido(String apelido, UserEntity user);
 
 }

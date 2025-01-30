@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.DadoDTO;
 import com.santacarolina.financeiro.entity.DadoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.DadoRepository;
 
 /**
@@ -21,7 +22,8 @@ public class DadoService {
     private DadoRepository repository;
 
     public List<DadoDTO> findAll() {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
             .map(entity -> new DadoDTO(entity))
             .toList();
     }
@@ -40,7 +42,8 @@ public class DadoService {
     public Optional<DadoDTO> findEqual(String agencia, 
         String numeroConta, 
         long bancoId) throws IllegalArgumentException {
-        return repository.findEqual(agencia, numeroConta, bancoId)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findEqual(agencia, numeroConta, bancoId, user)
             .map(entity -> new DadoDTO(entity));
     }
 

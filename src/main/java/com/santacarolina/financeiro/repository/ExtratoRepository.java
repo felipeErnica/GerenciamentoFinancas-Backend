@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.santacarolina.financeiro.entity.ExtratoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 /**
  * ExtratoRepository
@@ -29,8 +30,8 @@ public interface ExtratoRepository extends JpaRepository<ExtratoEntity, Long> {
         FROM ExtratoEntity extrato
         LEFT JOIN ContaEntity conta ON conta.id = extrato.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
-        WHERE extrato.conciliado = :isConciliado
+        WHERE extrato.conciliado = :isConciliado AND extrato.user = :user
         ORDER BY extrato.dataTransacao DESC
     """)
-    List<ExtratoEntity> findByConciliado(boolean isConciliado);
+    List<ExtratoEntity> findByConciliado(boolean isConciliado, UserEntity user);
 }

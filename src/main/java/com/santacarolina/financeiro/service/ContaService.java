@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.ContaDTO;
 import com.santacarolina.financeiro.entity.ContaEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.ContaRepository;
 
 /**
@@ -21,13 +22,15 @@ public class ContaService {
     private ContaRepository repository;
 
     public List<ContaDTO> findAll() throws IllegalArgumentException {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
             .map(entity -> new ContaDTO(entity))
             .toList();
     }
 
     public Optional<ContaDTO> findEqual(String agencia, String numeroConta, long bancoId) throws IllegalArgumentException {
-        return repository.findEqual(agencia, numeroConta, bancoId)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findEqual(agencia, numeroConta, bancoId, user)
             .map(entity -> new ContaDTO(entity));
     }
 
@@ -37,7 +40,8 @@ public class ContaService {
     }
 
     public Optional<ContaDTO> findByApelido(String apelido) throws IllegalArgumentException {
-        return repository.findByApelido(apelido.replace("+"," "))
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByApelido(apelido.replace("+"," "), user)
             .map(entity -> new ContaDTO(entity));
     }
 

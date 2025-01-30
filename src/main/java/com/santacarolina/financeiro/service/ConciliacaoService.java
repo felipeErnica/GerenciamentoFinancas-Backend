@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.ConciliacaoDTO;
 import com.santacarolina.financeiro.entity.ConciliacaoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.ConciliacaoRepository;
 
 /**
@@ -20,7 +21,8 @@ public class ConciliacaoService {
     private ConciliacaoRepository repository;
 
     public List<ConciliacaoDTO> findAll() {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
             .map(entity -> new ConciliacaoDTO(entity))
             .toList();
     }

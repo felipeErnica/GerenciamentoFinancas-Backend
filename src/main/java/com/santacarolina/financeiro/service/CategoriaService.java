@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.CategoriaDTO;
 import com.santacarolina.financeiro.entity.CategoriaEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.CategoriaRepository;
 
 import jakarta.persistence.OptimisticLockException;
@@ -27,18 +28,21 @@ public class CategoriaService {
     }
 
     public List<CategoriaDTO> findAll() {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findbyUser(user.getId()).stream()
             .map(entity -> new CategoriaDTO(entity))
             .toList();
     }
 
     public Optional<CategoriaDTO> findByNome(String nome) throws IllegalArgumentException {
-        return repository.findByNome(nome.replace("+"," "))
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByNomeAndUser(nome.replace("+"," "), user)
             .map(entity -> new CategoriaDTO(entity));
     }
 
     public Optional<CategoriaDTO> findByNumero(Long numero) throws IllegalArgumentException {
-        return repository.findByNumeroCategoria(numero)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByNumeroCategoriaAndUser(numero, user)
             .map(entity -> new CategoriaDTO(entity));
     }
 

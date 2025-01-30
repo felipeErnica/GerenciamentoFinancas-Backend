@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.santacarolina.financeiro.entity.PixEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 /**
  * PixRepository
@@ -15,55 +16,55 @@ import com.santacarolina.financeiro.entity.PixEntity;
 @Repository
 public interface PixRepository extends JpaRepository<PixEntity, Long> {
 
-    @Override
     @Query("""
-        SELECT p, c, d, b
-        FROM PixEntity p
-        LEFT JOIN ContatoEntity c ON c.id = p.contato.id
-        LEFT JOIN DadoEntity d ON d.id = p.dado.id
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        ORDER BY c.nome
+        SELECT pix, contato, dado, banco
+        FROM PixEntity pix
+        LEFT JOIN ContatoEntity contato ON contato.id = pix.contato.id
+        LEFT JOIN DadoEntity dado ON dado.id = pix.dado.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        WHERE pix.user = :user
+        ORDER BY contato.nome
         """)
-    List<PixEntity> findAll();
+    List<PixEntity> findByUser(UserEntity user);
 
     @Override
     @Query("""
-        SELECT p, c, d, b
-        FROM PixEntity p
-        LEFT JOIN ContatoEntity c ON c.id = p.contato.id
-        LEFT JOIN DadoEntity d ON d.id = p.dado.id
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        WHERE p.id = :id
+        SELECT pix, contato, dado, banco
+        FROM PixEntity pix
+        LEFT JOIN ContatoEntity contato ON contato.id = pix.contato.id
+        LEFT JOIN DadoEntity dado ON dado.id = pix.dado.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        WHERE pix.id = :id
         """)
     Optional<PixEntity> findById(Long id);
 
     @Query("""
-        SELECT p, c, d, b
-        FROM PixEntity p
-        LEFT JOIN ContatoEntity c ON c.id = p.contato.id
-        LEFT JOIN DadoEntity d ON d.id = p.dado.id
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        WHERE p.chave = :chave
+        SELECT pix, contato, dado, banco
+        FROM PixEntity pix
+        LEFT JOIN ContatoEntity contato ON contato.id = pix.contato.id
+        LEFT JOIN DadoEntity dado ON dado.id = pix.dado.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        WHERE pix.chave = :chave AND pix.user = :user
         """)
-    Optional<PixEntity> findByChave(String chave);
+    Optional<PixEntity> findByChave(String chave, UserEntity user);
 
     @Query("""
-        SELECT p, c, d, b
-        FROM PixEntity p
-        LEFT JOIN ContatoEntity c ON c.id = p.contato.id
-        LEFT JOIN DadoEntity d ON d.id = p.dado.id
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        WHERE p.contato.id = :contatoId
+        SELECT pix, contato, dado, banco
+        FROM PixEntity pix
+        LEFT JOIN ContatoEntity contato ON contato.id = pix.contato.id
+        LEFT JOIN DadoEntity dado ON dado.id = pix.dado.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        WHERE pix.contato.id = :contatoId
         """)
     List<PixEntity> findByContato(long contatoId);
 
     @Query("""
-        SELECT p, c, d, b
-        FROM PixEntity p
-        LEFT JOIN ContatoEntity c ON c.id = p.contato.id
-        LEFT JOIN DadoEntity d ON d.id = p.dado.id
-        LEFT JOIN BancoEntity b ON b.id = d.banco.id
-        WHERE p.dado.id = :dadoId
+        SELECT pix, contato, dado, banco
+        FROM PixEntity pix
+        LEFT JOIN ContatoEntity contato ON contato.id = pix.contato.id
+        LEFT JOIN DadoEntity dado ON dado.id = pix.dado.id
+        LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
+        WHERE pix.dado.id = :dadoId
         """)
     Optional<PixEntity> findByDado(long dadoId);
 }

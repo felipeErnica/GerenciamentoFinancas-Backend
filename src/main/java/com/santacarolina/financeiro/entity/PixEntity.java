@@ -33,6 +33,10 @@ public class PixEntity {
     @JoinColumn(name = "conta_id")
     private DadoEntity dado;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     @Enumerated(EnumType.ORDINAL)
     private TipoPix tipoPix;
     private String chave;

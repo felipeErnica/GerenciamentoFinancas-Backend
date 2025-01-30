@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.santacarolina.financeiro.entity.ClassificacaoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 /**
  * ClassificacaoRepository
@@ -15,14 +16,14 @@ import com.santacarolina.financeiro.entity.ClassificacaoEntity;
 @Repository
 public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEntity, Long> {
 
-    @Override
     @Query("""
         SELECT class, cat
         FROM ClassificacaoEntity class
         LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
+        WHERE class.user = :user
         ORDER BY cat.numeroCategoria, class.numeroIdentificacao
         """)
-    List<ClassificacaoEntity> findAll();
+    List<ClassificacaoEntity> findByUser(UserEntity user);
     
     @Override
     @Query("""
@@ -37,16 +38,16 @@ public interface ClassificacaoRepository extends JpaRepository<ClassificacaoEnti
         SELECT class, cat
         FROM ClassificacaoEntity class
         LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
-        WHERE class.numeroIdentificacao = :numeroIdentificacao
+        WHERE class.numeroIdentificacao = :numeroIdentificacao AND class.user = :user
         """)
-    Optional<ClassificacaoEntity> findByNumeroIdentificacao(String numeroIdentificacao);
+    Optional<ClassificacaoEntity> findByNumeroIdentificacao(String numeroIdentificacao, UserEntity user);
     
     @Query("""
         SELECT class, cat
         FROM ClassificacaoEntity class
         LEFT JOIN CategoriaEntity cat ON cat.id = class.categoria.id
-        WHERE class.nomeClassificacao = :nomeClassificacao
+        WHERE class.nomeClassificacao = :nomeClassificacao AND class.user = :user
         """)
-    Optional<ClassificacaoEntity> findByNomeClassificacao(String nomeClassificacao);
+    Optional<ClassificacaoEntity> findByNomeClassificacao(String nomeClassificacao, UserEntity user);
 
 }

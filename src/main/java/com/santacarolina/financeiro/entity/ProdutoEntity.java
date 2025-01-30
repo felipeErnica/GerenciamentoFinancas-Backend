@@ -25,6 +25,10 @@ public class ProdutoEntity {
     @JoinColumn(name = "classificacao_id")
     private ClassificacaoEntity classificacao;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     private String descricao;
     private String und;
     private double quantidade;

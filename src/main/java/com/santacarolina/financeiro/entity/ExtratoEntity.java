@@ -26,6 +26,10 @@ public class ExtratoEntity {
     @JoinColumn(name = "conta_id")
     private ContaEntity conta;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     private LocalDate dataTransacao;
     private String categoriaExtrato;
     private String descricao;

@@ -40,6 +40,10 @@ public class DuplicataEntity {
     private DocumentoEntity documento;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dado_id")
     private DadoEntity dado;
 

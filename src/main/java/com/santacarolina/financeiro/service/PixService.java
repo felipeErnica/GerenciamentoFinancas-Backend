@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.PixDTO;
 import com.santacarolina.financeiro.entity.PixEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.PixRepository;
 
 /**
@@ -21,7 +22,8 @@ public class PixService {
     private PixRepository repository;
 
     public List<PixDTO> findAll() {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
             .map(entity -> new PixDTO(entity))
             .toList();
     }
@@ -32,7 +34,8 @@ public class PixService {
     }
 
     public Optional<PixDTO> findByChavePix(String chave) throws IllegalArgumentException {
-        return repository.findByChave(chave)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByChave(chave, user)
             .map(entity -> new PixDTO(entity));
     }
 

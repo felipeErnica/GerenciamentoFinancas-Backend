@@ -29,14 +29,18 @@ public class ClassificacaoEntity {
     @JoinColumn(name = "categoria_id")
     private CategoriaEntity categoria;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+    
     @Enumerated(EnumType.ORDINAL)
     private FluxoCaixa fluxoCaixa;
     
     private long numeroIdentificacao;
     private String nomeClassificacao;
 
-    @OneToMany(mappedBy = "classificacao", cascade = CascadeType.REMOVE)
-    private List<ProdutoEntity> produtoList;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "classificacao")
+    private List<ProdutoEntity> listProdutos;
 
     public long getId() { return id; }
     public CategoriaEntity getCategoria() { return categoria; }

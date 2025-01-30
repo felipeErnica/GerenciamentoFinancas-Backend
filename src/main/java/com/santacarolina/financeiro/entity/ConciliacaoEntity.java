@@ -29,6 +29,10 @@ public class ConciliacaoEntity {
     @JoinColumn(name = "extrato_id")
     private ExtratoEntity extrato;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     @Enumerated(EnumType.ORDINAL)
     private TipoMovimento tipoMovimento;
 

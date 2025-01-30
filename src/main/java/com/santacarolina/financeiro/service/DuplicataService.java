@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.DuplicataDTO;
 import com.santacarolina.financeiro.entity.DuplicataEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.DuplicataRepository;
 
 /**
@@ -21,7 +22,8 @@ public class DuplicataService {
     private DuplicataRepository repository;
 
     public List<DuplicataDTO> findAll() {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
             .map(entity -> new DuplicataDTO(entity))
             .toList();
     }
@@ -32,13 +34,15 @@ public class DuplicataService {
     }
 
     public List<DuplicataDTO> findPagas() throws IllegalArgumentException {
-        return repository.findPagas().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findPagas(user).stream()
             .map(entity -> new DuplicataDTO(entity))
             .toList();
     }
 
     public List<DuplicataDTO> findNaoPagas() throws IllegalArgumentException {
-        return repository.findNaoPagas().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findNaoPagas(user).stream()
             .map(entity -> new DuplicataDTO(entity))
             .toList();
     }

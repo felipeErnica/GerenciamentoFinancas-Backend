@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.ContatoDTO;
 import com.santacarolina.financeiro.entity.ContatoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.ContatoRepository;
 
 /**
@@ -21,23 +22,27 @@ public class ContatoService {
     private ContatoRepository repository;
 
     public List<ContatoDTO> findAll() {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
             .map(entity -> new ContatoDTO(entity))
             .toList();
     }
 
     public Optional<ContatoDTO> findByCpf(String cpf) throws IllegalArgumentException {
-        return repository.findByCpf(cpf)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByCpfAndUser(cpf, user)
             .map(entity -> new ContatoDTO(entity));
     }
 
     public Optional<ContatoDTO> findByCnpj(String cnpj) throws IllegalArgumentException {
-        return repository.findByCnpj(cnpj)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByCnpjAndUser(cnpj, user)
             .map(entity -> new ContatoDTO(entity));
     }
 
     public Optional<ContatoDTO> findByIe(String ie) throws IllegalArgumentException {
-        return repository.findByIe(ie)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByIeAndUser(ie, user)
             .map(entity -> new ContatoDTO(entity));
     }
 
@@ -47,7 +52,8 @@ public class ContatoService {
     }
 
     public Optional<ContatoDTO> findByNome(String nome) throws IllegalArgumentException {
-        return repository.findByNome(nome.replace("+", " "))
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByNomeAndUser(nome.replace("+", " "), user)
             .map(entity -> new ContatoDTO(entity));
     }
 

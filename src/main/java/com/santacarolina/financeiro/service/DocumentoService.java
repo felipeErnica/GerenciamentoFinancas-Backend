@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.santacarolina.financeiro.dto.DocumentoDTO;
 import com.santacarolina.financeiro.entity.DocumentoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.enums.TipoDocumento;
 import com.santacarolina.financeiro.repository.DocumentoRepository;
 
@@ -23,7 +24,8 @@ public class DocumentoService {
     private DocumentoRepository repository;
 
     public List<DocumentoDTO> findAll() {
-        return repository.findAll().stream()
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findByUser(user).stream()
             .map(entity -> new DocumentoDTO(entity))
             .toList();
     }
@@ -35,12 +37,14 @@ public class DocumentoService {
 
     public Optional<DocumentoDTO> findEqual(long contatoId, TipoDocumento tipoDoc, LocalDate dataEmissao, long pastaId,
             double valor) throws IllegalArgumentException {
-        return repository.findEqual(contatoId, tipoDoc, dataEmissao, pastaId, valor)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findEqual(contatoId, tipoDoc, dataEmissao, pastaId, valor, user)
             .map(entity -> new DocumentoDTO(entity));
     }
 
     public Optional<DocumentoDTO> findNotaEqual(long contatoId, long numDoc) {
-        return repository.findNotaEqual(contatoId, numDoc)
+        UserEntity user = UserService.getLoggedUser();
+        return repository.findNotaEqual(contatoId, numDoc, user)
             .map(entity -> new DocumentoDTO(entity));
     }
 

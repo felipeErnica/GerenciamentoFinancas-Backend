@@ -32,6 +32,10 @@ public class ContaEntity {
     @JoinColumn(name = "banco_id")
     private BancoEntity banco;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     @OneToMany(mappedBy = "conta", cascade = CascadeType.REMOVE)
     private List<PastaEntity> pastaList;
 

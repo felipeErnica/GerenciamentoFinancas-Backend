@@ -30,6 +30,10 @@ public class DadoEntity {
     @JoinColumn(name = "contato_id")
     private ContatoEntity contato;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     @OneToMany(mappedBy = "dado", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PixEntity> pixList;
 

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.santacarolina.financeiro.entity.DuplicataEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 /**
  * DuplicataRepository
@@ -15,7 +16,6 @@ import com.santacarolina.financeiro.entity.DuplicataEntity;
 @Repository
 public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long> {
     
-    @Override
     @Query("""
         SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
         FROM DuplicataEntity dup
@@ -26,9 +26,10 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
+        WHERE dup.user = :user
         ORDER BY dup.dataVencimento DESC
         """) 
-    List<DuplicataEntity> findAll();
+    List<DuplicataEntity> findByUser(UserEntity user);
 
     @Override
     @Query("""
@@ -55,10 +56,10 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
-        WHERE dup.paga = true
+        WHERE dup.paga = true AND dup.user = :user
         ORDER BY dup.dataVencimento DESC
         """) 
-    List<DuplicataEntity> findPagas();
+    List<DuplicataEntity> findPagas(UserEntity user);
 
     @Query("""
         SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
@@ -70,10 +71,10 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         LEFT JOIN PastaEntity pasta ON pasta.id = doc.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id 
-        WHERE dup.paga = false
+        WHERE dup.paga = false AND dup.user = :user
         ORDER BY dup.dataVencimento 
         """) 
-    List<DuplicataEntity> findNaoPagas();
+    List<DuplicataEntity> findNaoPagas(UserEntity user);
 
     @Query("""
         SELECT dup, doc, dado, pix, emissor, pasta, conta, banco
@@ -89,4 +90,5 @@ public interface DuplicataRepository extends JpaRepository<DuplicataEntity, Long
         ORDER BY dup.dataVencimento
         """)
     List<DuplicataEntity> findByDoc(long documentoId);
+
 }
