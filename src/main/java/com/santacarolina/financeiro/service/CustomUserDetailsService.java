@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.UserRepository;
 
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository repository;
