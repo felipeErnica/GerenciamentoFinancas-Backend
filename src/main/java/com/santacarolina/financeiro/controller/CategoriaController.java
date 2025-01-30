@@ -1,6 +1,5 @@
 package com.santacarolina.financeiro.controller;
 
-import java.security.Security;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import com.santacarolina.financeiro.dto.CategoriaDTO;
 import com.santacarolina.financeiro.entity.CategoriaEntity;
 import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.service.CategoriaService;
+import com.santacarolina.financeiro.service.UserService;
 
 import jakarta.persistence.OptimisticLockException;
 
@@ -68,7 +68,7 @@ public class CategoriaController {
     
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() { 
-        UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userEntity = UserService.getLoggedUser();
         System.out.println("\n User ID: " + userEntity.getId() + "\n");
         return ResponseEntity.ok(service.findAll());
     }

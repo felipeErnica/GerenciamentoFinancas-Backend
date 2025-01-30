@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ import com.santacarolina.financeiro.repository.UserRepository;
 @Service
 public class UserService {
 
-    private static UserEntity LOGGED_USER;
+    private static UserEntity loggedUser;
     
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -36,6 +35,7 @@ public class UserService {
             login.password());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         UserEntity user = (UserEntity) authentication.getPrincipal();
+        loggedUser = user;
         return new AuthToken(jwtTokenService.generateToken(user));
     }
 
@@ -45,12 +45,7 @@ public class UserService {
         repository.save(user);
     }
 
-    public static UserEntity getLoggedUser() { 
-        return LOGGED_USER; 
-    }
-
-    public static void setLoggedUser(UserEntity loggedUser) { 
-        LOGGED_USER = loggedUser; 
-    }
+    public static UserEntity getLoggedUser() { return loggedUser; }
+    public static void setLoggedUser(UserEntity loggedUser) { UserService.loggedUser = loggedUser; }
 
 }
