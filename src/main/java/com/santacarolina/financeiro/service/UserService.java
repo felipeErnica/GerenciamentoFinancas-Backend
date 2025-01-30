@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.santacarolina.financeiro.dto.LoginDTO;
 import com.santacarolina.financeiro.entity.AuthToken;
 import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.UserRepository;
@@ -26,13 +27,13 @@ public class UserService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public AuthToken authenticateUser(UserEntity user) {
+    public AuthToken authenticateUser(LoginDTO login) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-            user.getUsername(), 
-            user.getPassword());
+            login.username(), 
+            login.password());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        UserEntity authUser = (UserEntity) authentication.getPrincipal();
-        return new AuthToken(jwtTokenService.generateToken(authUser));
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        return new AuthToken(jwtTokenService.generateToken(user));
     }
 
     public void register(UserEntity user) {

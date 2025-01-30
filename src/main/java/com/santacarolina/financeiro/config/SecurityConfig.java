@@ -36,7 +36,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((auth) -> auth
                 .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-                .anyRequest().denyAll()
+                .anyRequest().authenticated()
             )
             .authenticationManager(authenticationManager())
             .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
