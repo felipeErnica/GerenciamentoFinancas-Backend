@@ -52,7 +52,7 @@ public class JwtTokenService {
     }
 
     private Instant expirationDate() {
-        return ZonedDateTime.now(ZoneId.systemDefault()).plusHours(4).toInstant();
+        return ZonedDateTime.now(ZoneId.systemDefault()).plusMinutes(1).toInstant();
     }
 
 }
