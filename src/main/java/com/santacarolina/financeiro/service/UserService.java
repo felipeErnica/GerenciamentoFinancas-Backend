@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class UserService {
             login.password());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         UserEntity user = (UserEntity) authentication.getPrincipal();
-        System.out.println("\nId usuario: " + user.getId());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return new AuthToken(jwtTokenService.generateToken(user));
     }
 

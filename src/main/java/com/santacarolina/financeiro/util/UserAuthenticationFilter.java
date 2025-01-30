@@ -35,7 +35,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
             if (token != null) {
                 String subject = jwtTokenService.getSubjectFromToken(token); 
                 UserEntity user = userRepository.findByUsername(subject).get(); 
-                Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
+                Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
                 throw new RuntimeException("O token está ausente.");

@@ -1,5 +1,6 @@
 package com.santacarolina.financeiro.controller;
 
+import java.security.Security;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,8 @@ public class CategoriaController {
     
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() { 
+        UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("\n User ID: " + userEntity.getId() + "\n");
         return ResponseEntity.ok(service.findAll());
     }
 
