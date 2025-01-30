@@ -25,8 +25,8 @@ public class SecurityConfig {
     private UserAuthenticationFilter userAuthenticationFilter;
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
-        "user/login",
-        "user/register"
+        "/user/login",
+        "/user/register"
     };
 
     @Bean
