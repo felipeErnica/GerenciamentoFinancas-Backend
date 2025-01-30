@@ -32,6 +32,7 @@ public class UserService {
             user.getUsername(), 
             user.getPassword());
         try {
+            System.out.println("\nComeça authenticação!!!\n");
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             System.out.println("\nProcesso autenticação finalizado!\n");
             System.out.println("\nVerifica autenticação: " + authentication.isAuthenticated()+"\n");
