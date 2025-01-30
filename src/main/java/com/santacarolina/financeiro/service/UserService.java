@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class UserService {
             System.out.println("\nVerifica autenticação: " + authentication.isAuthenticated()+"\n");
             UserEntity authUser = (UserEntity) authentication.getPrincipal();
             return new AuthToken(jwtTokenService.generateToken(authUser));
-        } catch (BadCredentialsException e) {
+        } catch (AuthenticationException e) {
             throw new BadCredentialsException("Senha Incorreta!");
         }
     }
