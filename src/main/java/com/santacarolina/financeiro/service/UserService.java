@@ -31,9 +31,15 @@ public class UserService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             user.getUsername(), 
             user.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        UserEntity authUser = (UserEntity) authentication.getPrincipal();
-        return new AuthToken(jwtTokenService.generateToken(authUser));
+        try {
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            System.out.println("\nProcesso autenticação finalizado!\n");
+            System.out.println("\nVerifica autenticação: " + authentication.isAuthenticated()+"\n");
+            UserEntity authUser = (UserEntity) authentication.getPrincipal();
+            return new AuthToken(jwtTokenService.generateToken(authUser));
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Senha Incorreta!");
+        }
     }
 
     public void register(UserEntity user) {
