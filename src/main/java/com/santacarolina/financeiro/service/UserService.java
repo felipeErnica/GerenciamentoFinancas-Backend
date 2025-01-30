@@ -36,7 +36,6 @@ public class UserService {
             login.password());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         UserEntity user = (UserEntity) authentication.getPrincipal();
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         return new AuthToken(jwtTokenService.generateToken(user));
     }
 
