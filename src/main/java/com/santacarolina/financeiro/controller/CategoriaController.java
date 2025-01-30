@@ -67,8 +67,8 @@ public class CategoriaController {
     
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() {
-        UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-        System.out.println("\n" + "User ID: " + user.getId());
+        String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+        System.out.println("\n" + "User ID: " + user);
         return ResponseEntity.ok(service.findAll());
     }
 
