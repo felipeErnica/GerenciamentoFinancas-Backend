@@ -1,10 +1,9 @@
 package com.santacarolina.financeiro.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
@@ -34,8 +33,6 @@ public class UserEntity implements UserDetails {
     public void setPassword(String password) { this.password = password; }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
-    }
+    public Collection<? extends GrantedAuthority> getAuthorities() { return new ArrayList<>(); }
 
 }
