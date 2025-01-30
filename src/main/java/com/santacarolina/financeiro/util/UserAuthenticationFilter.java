@@ -58,9 +58,9 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         System.out.println("\n URL: " + requestURI + "\n");
         for (String uri : SecurityConfig.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED) {
-            if (uri.equals(requestURI)) return true;
+            if (uri.equals(requestURI)) return false;
         }
-        return false;
+        return true;
     }
 
 }
