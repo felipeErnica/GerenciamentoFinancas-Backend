@@ -2,6 +2,7 @@ package com.santacarolina.financeiro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +27,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public AuthToken authenticateUser(UserEntity user) {
+    public AuthToken authenticateUser(UserEntity user) throws BadCredentialsException {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             user.getUsername(), 
             user.getPassword());
