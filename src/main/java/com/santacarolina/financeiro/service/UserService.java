@@ -2,10 +2,9 @@ package com.santacarolina.financeiro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +32,7 @@ public class UserService {
             user.getUsername(), 
             user.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         UserEntity authUser = (UserEntity) authentication.getPrincipal();
         return new AuthToken(jwtTokenService.generateToken(authUser));
     }
