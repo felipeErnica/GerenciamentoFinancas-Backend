@@ -21,8 +21,8 @@ public interface ContaRepository extends JpaRepository<ContaEntity, Long> {
         SELECT conta, banco 
         FROM ContaEntity conta
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
-        ORDER BY conta.nomeConta
         WHERE conta.user = :user
+        ORDER BY conta.nomeConta
         """)
     List<ContaEntity> findByUser(UserEntity user);
 
@@ -40,7 +40,10 @@ public interface ContaRepository extends JpaRepository<ContaEntity, Long> {
         SELECT conta, banco 
         FROM ContaEntity conta
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
-        WHERE conta.agencia = :agencia AND conta.numeroConta = :numeroConta AND conta.banco.id = :bancoId AND conta.user = :user
+        WHERE conta.agencia = :agencia 
+            AND conta.numeroConta = :numeroConta 
+            AND conta.banco.id = :bancoId 
+            AND conta.user = :user
         """)
     Optional<ContaEntity> findEqual(@Param("agencia") String agencia, 
             @Param("numeroConta") String numeroConta, 

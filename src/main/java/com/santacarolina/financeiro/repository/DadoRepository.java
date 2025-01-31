@@ -18,8 +18,8 @@ public interface DadoRepository extends JpaRepository<DadoEntity, Long> {
         FROM DadoEntity dado
         LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
         LEFT JOIN ContatoEntity contato ON contato.id = dado.contato.id
-        ORDER BY contato.nome
         WHERE dado.user = :user
+        ORDER BY contato.nome
         """)
     List<DadoEntity> findByUser(UserEntity user);
 
@@ -37,7 +37,10 @@ public interface DadoRepository extends JpaRepository<DadoEntity, Long> {
         FROM DadoEntity dado
         LEFT JOIN BancoEntity banco ON banco.id = dado.banco.id
         LEFT JOIN ContatoEntity contato ON contato.id = dado.contato.id
-        WHERE dado.agencia = :agencia AND dado.numeroConta = :numeroConta AND dado.banco.id = :bancoId AND dado.user = :user
+        WHERE dado.agencia = :agencia 
+            AND dado.numeroConta = :numeroConta 
+            AND dado.banco.id = :bancoId 
+            AND dado.user = :user
         """)
     Optional<DadoEntity> findEqual(String agencia, String numeroConta, long bancoId, UserEntity user);
 

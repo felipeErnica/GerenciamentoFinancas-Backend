@@ -16,7 +16,7 @@ import com.santacarolina.financeiro.entity.UserEntity;
 @Repository
 public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long> {
     
-    @Query("SELECT categoria FROM CategoriaEntity categoria ORDER BY categoria.numeroCategoria WHERE categoria.user = :user")
+    @Query("SELECT categoria FROM CategoriaEntity categoria WHERE categoria.user = :user ORDER BY categoria.numeroCategoria")
     List<CategoriaEntity> findbyUser(UserEntity user);
 
     Optional<CategoriaEntity> findByNomeAndUser(String nome, UserEntity user);

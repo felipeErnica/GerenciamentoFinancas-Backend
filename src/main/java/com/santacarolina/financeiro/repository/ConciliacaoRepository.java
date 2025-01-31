@@ -20,8 +20,8 @@ public interface ConciliacaoRepository extends JpaRepository<ConciliacaoEntity, 
         FROM ConciliacaoEntity conciliacao
         LEFT JOIN ExtratoEntity extrato ON conciliacao.extrato.id = extrato.id
         LEFT JOIN DuplicataEntity duplicata ON duplicata.id = conciliacao.duplicata.id
+        WHERE conciliacao.user = :user
         ORDER BY extrato.dataTransacao DESC
-        "WHERE conciliacao.user = :user"
         """)
     List<ConciliacaoEntity> findByUser(UserEntity user);
 
