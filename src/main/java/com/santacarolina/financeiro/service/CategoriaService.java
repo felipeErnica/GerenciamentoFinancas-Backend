@@ -29,7 +29,7 @@ public class CategoriaService {
 
     public List<CategoriaDTO> findAll() {
         UserEntity user = UserService.getLoggedUser();
-        return repository.findbyUser(user.getId()).stream()
+        return repository.findbyUser(user).stream()
             .map(entity -> new CategoriaDTO(entity))
             .toList();
     }
