@@ -52,5 +52,6 @@ public class UserService {
     }
 
     public static UserEntity getLoggedUser() { return loggedUser; }
+    public static void setLoggedUser(UserEntity user) { loggedUser = user; }
 
 }

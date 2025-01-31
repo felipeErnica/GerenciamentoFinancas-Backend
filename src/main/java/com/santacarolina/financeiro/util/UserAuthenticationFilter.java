@@ -13,6 +13,7 @@ import com.santacarolina.financeiro.config.SecurityConfig;
 import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.UserRepository;
 import com.santacarolina.financeiro.service.JwtTokenService;
+import com.santacarolina.financeiro.service.UserService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,6 +37,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
                 String subject = jwtTokenService.getSubjectFromToken(token); 
                 UserEntity user = userRepository.findByUsername(subject).get(); 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
+                UserService.setLoggedUser(user);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
                 throw new RuntimeException("O token está ausente.");
