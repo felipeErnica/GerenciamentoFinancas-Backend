@@ -1,5 +1,7 @@
 package com.santacarolina.financeiro.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,7 +47,10 @@ public class UserService {
         repository.save(user);
     }
 
+    public Optional<UserEntity> findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
+
     public static UserEntity getLoggedUser() { return loggedUser; }
-    public static void setLoggedUser(UserEntity loggedUser) { UserService.loggedUser = loggedUser; }
 
 }

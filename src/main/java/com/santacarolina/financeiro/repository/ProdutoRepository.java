@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.santacarolina.financeiro.dto.ProdutoDuplicataDTO;
 import com.santacarolina.financeiro.entity.ProdutoEntity;
+import com.santacarolina.financeiro.entity.UserEntity;
 
 /**
  * ProdutoRepository
@@ -15,7 +16,6 @@ import com.santacarolina.financeiro.entity.ProdutoEntity;
 @Repository
 public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
 
-    @Override
     @Query("""
         SELECT produto, documento, classificacao, categoria, emissor, pasta, conta, banco
         FROM ProdutoEntity produto
@@ -26,9 +26,10 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
         LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
+        WHERE produto.user = :user
         ORDER BY documento.dataEmissao DESC
         """)
-    List<ProdutoEntity> findAll();
+    List<ProdutoEntity> findByUser(UserEntity user);
 
     @Query("""
         SELECT produto, documento, classificacao, categoria, emissor, pasta, conta, banco
@@ -56,7 +57,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
         LEFT JOIN PastaEntity pasta ON pasta.id = documento.pasta.id
         LEFT JOIN ContaEntity conta ON conta.id = pasta.conta.id
         LEFT JOIN BancoEntity banco ON banco.id = conta.banco.id
+        WHERE produto.user = :user
         ORDER BY duplicata.dataVencimento DESC
         """)
-    List<ProdutoDuplicataDTO> findProdutosDuplicatas();
+    List<ProdutoDuplicataDTO> findProdutosDuplicatas(UserEntity user);
 }

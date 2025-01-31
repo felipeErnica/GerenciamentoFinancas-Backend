@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.santacarolina.financeiro.dto.DuplicataDTO;
 import com.santacarolina.financeiro.dto.ProdutoDTO;
 import com.santacarolina.financeiro.dto.ProdutoDuplicataDTO;
+import com.santacarolina.financeiro.entity.UserEntity;
 import com.santacarolina.financeiro.repository.ProdutoRepository;
 
 /**
@@ -24,7 +25,8 @@ public class ProdutoDuplicataService {
     private ProdutoRepository repository;
 
     public List<ProdutoDuplicataDTO> findProdutosDuplicatas() {
-        List<ProdutoDuplicataDTO> produtoDuplicataList = repository.findProdutosDuplicatas();
+        UserEntity user = UserService.getLoggedUser();
+        List<ProdutoDuplicataDTO> produtoDuplicataList = repository.findProdutosDuplicatas(user);
         
         Map<Long, List<DuplicataDTO>> duplicataMap = produtoDuplicataList.stream()
             .map(prodDup -> prodDup.getDuplicata())
