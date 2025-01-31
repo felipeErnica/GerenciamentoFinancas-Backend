@@ -56,9 +56,8 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
     // Verifica se o endpoint requer autenticação antes de processar a requisição
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        System.out.println("\n URL: " + requestURI + "\n");
         for (String uri : SecurityConfig.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED) {
-            if (uri.equals(requestURI)) return false;
+            if (uri.contains(requestURI)) return false;
         }
         return true;
     }
