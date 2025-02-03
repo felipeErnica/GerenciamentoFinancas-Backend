@@ -29,6 +29,9 @@ public class UserController {
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<UserEntity> getUser() { return ResponseEntity.ok(UserService.getLoggedUser()); }
+
     @PostMapping("/login")
     public ResponseEntity<AuthToken> authenticate(@RequestBody LoginDTO login) {
         AuthToken token = service.authenticateUser(login);
