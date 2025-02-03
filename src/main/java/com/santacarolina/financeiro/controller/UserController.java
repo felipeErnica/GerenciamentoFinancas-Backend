@@ -30,7 +30,9 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<UserEntity> getUser() { return ResponseEntity.ok(UserService.getLoggedUser()); }
+    public ResponseEntity<UserEntity> getUser() { 
+        return ResponseEntity.ok(UserService.getLoggedUser()); 
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthToken> authenticate(@RequestBody LoginDTO login) {
