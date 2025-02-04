@@ -1,16 +1,16 @@
 package com.santacarolina.financeiro.enums;
 
 public enum FluxoCaixa {
-    DESPESA(0),
-    RECEITA(1);
+    DESPESA("DESPESA"),
+    RECEITA("RECEITA");
 
-    private int fluxoCaixa;
-    FluxoCaixa(int fluxoCaixa) { this.fluxoCaixa = fluxoCaixa; }
-    public int getValue() { return fluxoCaixa; }
+    private String fluxoCaixa;
+    FluxoCaixa(String fluxoCaixa) { this.fluxoCaixa = fluxoCaixa; }
+    public String getValue() { return fluxoCaixa; }
 
-    public static FluxoCaixa fromValue(int value) {
+    public static FluxoCaixa fromValue(String value) {
         for (FluxoCaixa f : FluxoCaixa.values()) {
-            if (f.getValue() == value) return f;
+            if (f.getValue().equals(value)) return f;
         }
         throw  new ArrayIndexOutOfBoundsException();
     }

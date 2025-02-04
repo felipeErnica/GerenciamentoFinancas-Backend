@@ -9,7 +9,6 @@ import com.santacarolina.financeiro.enums.TipoDocumento;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,10 +31,10 @@ public class DocumentoEntity {
     private long id;
     private Long numDoc;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private TipoDocumento tipoDoc;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private FluxoCaixa fluxoCaixa;
 
     @ManyToOne(fetch = FetchType.LAZY)

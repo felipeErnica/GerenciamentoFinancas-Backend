@@ -6,7 +6,6 @@ import com.santacarolina.financeiro.enums.TipoPix;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +36,7 @@ public class PixEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private TipoPix tipoPix;
     private String chave;
 

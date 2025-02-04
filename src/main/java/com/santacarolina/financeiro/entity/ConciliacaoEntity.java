@@ -33,7 +33,7 @@ public class ConciliacaoEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private TipoMovimento tipoMovimento;
 
     public long getId() { return id; }

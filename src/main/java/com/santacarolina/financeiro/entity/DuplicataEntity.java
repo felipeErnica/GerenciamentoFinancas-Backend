@@ -7,7 +7,6 @@ import com.santacarolina.financeiro.enums.TipoPagamento;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +26,7 @@ public class DuplicataEntity {
     private long id;
     private int numDup;
     
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private TipoPagamento tipoPagamento;
 
     private LocalDate  dataVencimento;

@@ -2,20 +2,19 @@ package com.santacarolina.financeiro.enums;
 
 public enum TipoPix {
 
-    CPF(0),
-    CNPJ(1),
-    EMAIL(2),
-    TELEFONE(3),
-    CHAVE_ALEATORIA(4);
+    CPF("CPF"),
+    CNPJ("CNPJ"),
+    EMAIL("EMAIL"),
+    CHAVE_ALEATORIA("CHAVE ALEATÓRIA");
 
-    private int tipoPix;
+    private String tipoPix;
 
-    TipoPix(int tipoPix) { this.tipoPix = tipoPix; }
-    public int getValue() { return tipoPix; }
+    TipoPix(String tipoPix) { this.tipoPix = tipoPix; }
+    public String getValue() { return tipoPix; }
 
-    public static TipoPix fromValue (int value) {
+    public static TipoPix fromValue (String value) {
         for (TipoPix t : TipoPix.values()) {
-            if (t.getValue() == value) return t;
+            if (t.getValue().equals(value)) return t;
         }
         throw new ArrayIndexOutOfBoundsException();
     }

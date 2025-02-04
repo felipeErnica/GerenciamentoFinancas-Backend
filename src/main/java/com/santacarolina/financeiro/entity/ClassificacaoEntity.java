@@ -6,7 +6,6 @@ import com.santacarolina.financeiro.enums.FluxoCaixa;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +32,7 @@ public class ClassificacaoEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
     
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private FluxoCaixa fluxoCaixa;
     
     private long numeroIdentificacao;
