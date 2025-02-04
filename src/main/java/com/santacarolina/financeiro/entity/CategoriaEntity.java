@@ -6,6 +6,7 @@ import com.santacarolina.financeiro.enums.FluxoCaixa;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class CategoriaEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private FluxoCaixa fluxoCaixa;
     
     private Long numeroCategoria;
