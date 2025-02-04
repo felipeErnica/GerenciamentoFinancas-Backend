@@ -5,6 +5,7 @@ public enum TipoPix {
     CPF("CPF"),
     CNPJ("CNPJ"),
     EMAIL("EMAIL"),
+    TELEFONE("TELEFONE"),
     CHAVE_ALEATORIA("CHAVE ALEATÓRIA");
 
     private String tipoPix;
