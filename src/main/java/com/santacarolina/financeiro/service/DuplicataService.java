@@ -54,10 +54,13 @@ public class DuplicataService {
     }
 
     public void save(DuplicataEntity d) throws IllegalArgumentException, OptimisticLockingFailureException {
+        d.setUser(UserService.getLoggedUser());
         repository.save(d); 
     }
 
     public void saveAll(List<DuplicataEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        UserEntity user = UserService.getLoggedUser();
+        list.forEach(dup -> dup.setUser(user));
         repository.saveAll(list); 
     }
     

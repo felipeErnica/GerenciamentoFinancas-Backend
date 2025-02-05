@@ -46,6 +46,7 @@ public class ContaService {
     }
 
     public void save(ContaEntity c) throws IllegalArgumentException, OptimisticLockingFailureException {
+        c.setUser(UserService.getLoggedUser());
         repository.save(c);
     }
 

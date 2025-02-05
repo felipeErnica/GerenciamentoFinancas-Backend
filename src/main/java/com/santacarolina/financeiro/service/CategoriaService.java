@@ -47,6 +47,7 @@ public class CategoriaService {
     }
 
     public void save(CategoriaEntity t) throws OptimisticLockException {
+        t.setUser(UserService.getLoggedUser());
         repository.save(t);
     }
 

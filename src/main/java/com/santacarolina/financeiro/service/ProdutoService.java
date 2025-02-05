@@ -34,6 +34,8 @@ public class ProdutoService {
     }
 
     public void saveAll(List<ProdutoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        UserEntity user = UserService.getLoggedUser();
+        list.forEach(prod -> prod.setUser(user));
         repository.saveAll(list);
     }
 

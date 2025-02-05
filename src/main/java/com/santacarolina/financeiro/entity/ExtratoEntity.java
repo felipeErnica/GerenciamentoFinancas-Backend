@@ -47,5 +47,7 @@ public class ExtratoEntity {
     public double getValor() { return valor; }
     public boolean isConciliado() { return conciliado; }
 
+    public void setUser(UserEntity user) { this.user = user; }
+
 }
 

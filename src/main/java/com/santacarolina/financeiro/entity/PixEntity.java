@@ -51,4 +51,5 @@ public class PixEntity {
     public DadoEntity getDado() { return dado; }
     public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
 
+    public void setUser(UserEntity user) { this.user = user; }
 }

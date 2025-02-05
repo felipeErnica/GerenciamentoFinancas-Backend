@@ -41,6 +41,7 @@ public class PastaService {
     }
 
     public void save(PastaEntity pasta) throws IllegalArgumentException, OptimisticLockingFailureException {
+        pasta.setUser(UserService.getLoggedUser());
         repository.save(pasta);
     }
 

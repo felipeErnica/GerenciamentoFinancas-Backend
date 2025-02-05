@@ -28,10 +28,13 @@ public class ConciliacaoService {
     }
 
     public void save(ConciliacaoEntity c) throws IllegalArgumentException, OptimisticLockingFailureException {
+        c.setUser(UserService.getLoggedUser());
         repository.save(c);
     }
 
     public void saveAll(List<ConciliacaoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        UserEntity user = UserService.getLoggedUser();
+        list.forEach(conciliacao -> conciliacao.setUser(user));
         repository.saveAll(list);
     }
 

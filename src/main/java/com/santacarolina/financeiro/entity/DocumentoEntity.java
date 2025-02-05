@@ -70,6 +70,8 @@ public class DocumentoEntity {
     public double getValor() { return valor; }
     public LocalDate getDataEmissao() { return dataEmissao; }
     public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
+    public void setUser(UserEntity user) { this.user = user; }
+
     public List<ProdutoEntity> getProdutoList() { return produtoList; }
 
 }

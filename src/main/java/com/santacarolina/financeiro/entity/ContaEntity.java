@@ -51,4 +51,5 @@ public class ContaEntity {
     public List<PastaEntity> getPastaList() { return pastaList; }
     public List<ExtratoEntity> getExtratoList() { return extratoList; }
 
+    public void setUser(UserEntity user) { this.user = user; }
 }

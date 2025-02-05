@@ -58,10 +58,13 @@ public class ContatoService {
     }
 
     public void saveAll(List<ContatoEntity> contatos) throws OptimisticLockingFailureException, IllegalArgumentException {
+        UserEntity user = UserService.getLoggedUser();
+        contatos.forEach(contato -> contato.setUser(user));
         repository.saveAll(contatos);
     }
 
     public void save(ContatoEntity contato) throws IllegalArgumentException, OptimisticLockingFailureException {
+        contato.setUser(UserService.getLoggedUser());
         repository.save(contato);
     }
 

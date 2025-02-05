@@ -48,6 +48,7 @@ public class DadoService {
     }
 
     public void save(DadoEntity d) throws IllegalArgumentException, OptimisticLockingFailureException {
+        d.setUser(UserService.getLoggedUser());
         repository.save(d);
     }
 

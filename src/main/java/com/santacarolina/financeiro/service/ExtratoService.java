@@ -33,11 +33,14 @@ public class ExtratoService {
             .toList();
     }
 
-    public void save(ExtratoEntity d) throws IllegalArgumentException, OptimisticLockingFailureException {
-        repository.save(d);
+    public void save(ExtratoEntity extrato) throws IllegalArgumentException, OptimisticLockingFailureException {
+        extrato.setUser(UserService.getLoggedUser());
+        repository.save(extrato);
     }
 
     public void saveAll(List<ExtratoEntity> list) throws IllegalArgumentException, OptimisticLockingFailureException {
+        UserEntity user = UserService.getLoggedUser();
+        list.forEach(extrato -> extrato.setUser(user));
         repository.saveAll(list);
     }
 

@@ -49,8 +49,19 @@ public class DocumentoService {
     }
 
     public void save(DocumentoEntity documento) throws IllegalArgumentException, OptimisticLockingFailureException {
-        documento.getProdutoList().forEach(prod -> prod.setDocumento(documento));
-        documento.getDuplicataList().forEach(dup -> dup.setDocumento(documento));
+        UserEntity user = UserService.getLoggedUser();
+        documento.setUser(user);
+
+        documento.getProdutoList().forEach(prod -> {
+            prod.setUser(user);
+            prod.setDocumento(documento);
+        });
+
+        documento.getDuplicataList().forEach(dup -> {
+            dup.setDocumento(documento);
+            dup.setUser(user);
+        });
+
         repository.save(documento);
     }
 

@@ -50,4 +50,6 @@ public class ContatoEntity {
     public List<PixEntity> getPixList() { return pixList; }
     public List<DocumentoEntity> getDocumentoList() { return documentoList; }
 
+    public void setUser(UserEntity user) { this.user = user; }
+
 }

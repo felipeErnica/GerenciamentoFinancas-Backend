@@ -46,8 +46,9 @@ public class ClassificacaoService {
             .map(entity -> new ClassificacaoDTO(entity));
     }
 
-    public void save(ClassificacaoEntity dto) throws OptimisticLockException {
-        repository.save(dto);
+    public void save(ClassificacaoEntity classificacao) throws OptimisticLockException {
+        classificacao.setUser(UserService.getLoggedUser());
+        repository.save(classificacao);
     }
 
     public void deleteById(long id) throws OptimisticLockException {

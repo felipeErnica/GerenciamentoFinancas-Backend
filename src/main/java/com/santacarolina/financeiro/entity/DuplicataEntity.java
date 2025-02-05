@@ -66,6 +66,7 @@ public class DuplicataEntity {
     public boolean isPaga() { return paga; }
 
     public void setDocumento(DocumentoEntity documento) { this.documento = documento; }
+    public void setUser(UserEntity user) { this.user = user; }
 
 }
 

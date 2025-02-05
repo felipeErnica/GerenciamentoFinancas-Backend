@@ -51,5 +51,8 @@ public class DadoEntity {
     public List<PixEntity> getPixList() { return pixList; }
     public List<DuplicataEntity> getDuplicataList() { return duplicataList; }
 
+    public void setUser(UserEntity user) { this.user = user; }
+
 }
+
 

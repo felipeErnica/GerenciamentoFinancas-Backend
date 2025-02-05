@@ -48,5 +48,7 @@ public class ClassificacaoEntity {
     public long getNumeroIdentificacao() { return numeroIdentificacao; }
     public String getNomeClassificacao() { return nomeClassificacao; }
 
+    public void setUser(UserEntity user) { this.user = user; }
+
 }
 

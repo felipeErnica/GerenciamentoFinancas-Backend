@@ -51,6 +51,7 @@ public class PixService {
     }
 
     public void save(PixEntity chavePix) throws IllegalArgumentException, OptimisticLockingFailureException {
+        chavePix.setUser(UserService.getLoggedUser());
         repository.save(chavePix);
     }
 

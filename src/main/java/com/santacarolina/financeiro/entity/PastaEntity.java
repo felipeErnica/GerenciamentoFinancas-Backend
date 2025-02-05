@@ -41,4 +41,5 @@ public class PastaEntity {
     public ContaEntity getConta() { return conta; }
     public List<DocumentoEntity> getDocumentoList() { return documentoList; }
 
+    public void setUser(UserEntity user) { this.user = user; }
 }

@@ -42,6 +42,8 @@ public class CategoriaEntity {
     public FluxoCaixa getFluxoCaixa() { return fluxoCaixa; }
     public Long getNumeroCategoria() { return numeroCategoria; }
     public String getNome() { return nome; }
+
+    public void setUser(UserEntity loggedUser) { this.user = loggedUser; }
      
 }
 

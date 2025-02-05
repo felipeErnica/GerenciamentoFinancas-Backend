@@ -41,5 +41,7 @@ public class ConciliacaoEntity {
     public ExtratoEntity getExtrato() { return extrato; }
     public TipoMovimento getTipoMovimento() { return tipoMovimento; }
 
+    public void setUser(UserEntity user) { this.user = user; }
+
 }
 

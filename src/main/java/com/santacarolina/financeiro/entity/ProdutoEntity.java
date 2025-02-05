@@ -44,6 +44,7 @@ public class ProdutoEntity {
 
     public void setQuantidade(double quantidade) { this.quantidade = quantidade; }
     public void setDocumento(DocumentoEntity documento) { this.documento = documento; }
+    public void setUser(UserEntity user) { this.user = user; }
 
 }
 
